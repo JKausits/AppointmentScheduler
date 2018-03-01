@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Produces("application/json")]
     [Route("api/Professor")]
+    [EnableCors("SiteCorsPolicy")]
     public class ProfessorController : Controller
     {
         private readonly ProfessorRespository _respository;

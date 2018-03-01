@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.Entities;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,17 @@ namespace AppointmentScheduler
             {
                 options.UseMySQL("server=localhost;database=appointmentScheduler;user=root;password=root");
             });
+
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
             services.AddMvc();
         }
 
@@ -41,6 +53,7 @@ namespace AppointmentScheduler
             }
 
             app.UseMvc();
+            app.UseCors("SiteCorsPolicy");
         }
     }
 }
