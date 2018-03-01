@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import Result from '../../result';
 @Component({
@@ -10,7 +11,7 @@ export class RegisterComponent implements OnInit {
   email: string;
   errors = { email: '', password: '' };
   result: Result;
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {}
 
@@ -25,7 +26,9 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.errors.email === '' && this.errors.password === '') {
-      console.log('Registering');
+      this.auth
+        .register(this.email, this.password)
+        .subscribe(res => (this.result = res));
     }
   }
 }
