@@ -12,5 +12,7 @@ namespace AppointmentScheduler.Entities
         {
 
         }
+
+        public DbSet<Professor> Professors { get; set; }
     }
 }
