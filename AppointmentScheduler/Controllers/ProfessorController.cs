@@ -27,6 +27,15 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(_respository.Insert(professor));
         }
 
+        [HttpGet("{id}", Name = "GetProfessor")]
+        public IActionResult GetById(int id) {
+            var professor = _respository.GetById(id);
+            if (professor == null) {
+                return NotFound();
+            }
+
+            return new ObjectResult(professor);
+        }
         
     }
 }

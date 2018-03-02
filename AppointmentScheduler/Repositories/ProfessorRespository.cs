@@ -1,4 +1,5 @@
-﻿using AppointmentScheduler.Entities;
+﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,10 @@ namespace AppointmentScheduler.Repositories
 
         public Professor FindByEmail(string email) {
             return _context.Professors.FirstOrDefault(p => p.Email == email);
+        }
+
+        public ProfessorPublicDTO GetById(int id) {
+            return _context.Professors.Where(p => p.ID == id).Select(p => new ProfessorPublicDTO { ID=p.ID, Email = p.Email, Name = p.Name, RoomNumber = p.RoomNumber, Title = p.Title}).SingleOrDefault();
         }
     }
 }

@@ -1,0 +1,64 @@
+<div class="card">
+
+  <div class="card-body">
+    <div class="card-title">
+      <button class="btn btn-success float-right" (click)="isEdit = true" *ngIf="!isEdit">Edit</button>
+      <button class="btn btn-primary float-right" (click)="isHidden = !isHidden">{{isHidden ? 'Show' : 'Hide'}}</button>
+      <h4>
+        Basic Information
+      </h4>
+
+    </div>
+
+    <div *ngIf="!isEdit && !isHidden">
+      <hr>
+      <div class="alert alert-success alert-dismissable" *ngIf="result && result.success">{{result.message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+      </div>
+      <p>
+        <strong>Name: </strong> {{professorData.name}}
+      </p>
+      <p>
+        <strong>Title: </strong> {{professorData.title}}
+      </p>
+      <p>
+        <strong>Email: </strong> {{professorData.email}}
+      </p>
+      <p>
+        <strong>Room Number: </strong> {{professorData.roomNumber}}
+      </p>
+
+    </div>
+    <div *ngIf="isEdit && !isHidden">
+      <hr>
+      <div class="alert alert-danger alert-dismissable" *ngIf="result && !result.success">{{result.message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+
+      </div>
+      <form>
+        <div class="form-group row">
+          <label for="name" class="col-md-1"><strong>Name:</strong></label>
+          <input type="text" [(ngModel)]="professorData.name" name="name" id="name" class="form-control col-md-10">
+        </div>
+        <div class="form-group row">
+          <label for="title" class="col-md-1"><strong>Title:</strong></label>
+          <input type="text" [(ngModel)]="professorData.title" name="title" id="title" class="form-control col-md-10">
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-md-1"><strong>Email:</strong></label>
+          <input type="email" [(ngModel)]="professorData.email" name="email" id="email" class="form-control col-md-10">
+        </div>
+        <div class="form-group row">
+          <label for="roomNumber" class="col-md-1"><strong>Room Number:</strong></label>
+          <input type="text" [(ngModel)]="professorData.roomNumber" name="roomNumber" id="roomNumber" class="form-control col-md-10">
+        </div>
+      </form>
+      <button class="btn btn-success" (click)="updateInformation()">Update</button>
+      <button class="btn btn-danger" (click)="isEdit = false">Cancel</button>
+    </div>
+  </div>
+</div>
