@@ -36,11 +36,15 @@ namespace AppointmentScheduler.Controllers
         [HttpPost, AllowAnonymous]
         public IActionResult Login([FromBody] TokenRequest request) {
             var professor = Authenticate(request);
-            if (professor == null) {
-                return new ObjectResult(new { success = false, message = "Could not authenticate using email/password combination."});
+            if (professor == null)
+            {
+                return new ObjectResult(new { success = false, message = "Could not authenticate using email/password combination." });
+            }
+            else if (!professor.Active) {
+                return new ObjectResult(new { success = false, message = "This account is currently deactivated. Contact Admin to gain access."});
             }
 
-            return new ObjectResult(new { success = true, message= buildToken(professor)});
+            return new ObjectResult(new { success = true, message= new JwtSecurityTokenHandler().WriteToken(buildToken(professor))});
 
 
         }

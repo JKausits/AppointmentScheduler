@@ -1,5 +1,7 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import Result from '../../result';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,7 @@ export class LoginComponent implements OnInit {
   result: Result;
   keepLogged = false;
   errors = { password: '', email: '' };
-  constructor() {}
+  constructor(private auth: AuthService, private location: Location) {}
 
   ngOnInit() {}
 
@@ -24,6 +26,21 @@ export class LoginComponent implements OnInit {
 
     if (!this.email) {
       this.errors.email = 'You must enter in a password';
+    }
+
+    if (this.errors.email === '' && this.errors.password === '') {
+      this.auth.login(this.email, this.password).subscribe(res => {
+        this.result = res;
+
+        if (this.result.success) {
+          if (this.keepLogged) {
+            window.localStorage.setItem('token', this.result.message);
+          } else if (this.result.success) {
+            window.sessionStorage.setItem('token', this.result.message);
+          }
+          location.replace('');
+        }
+      });
     }
   }
 }

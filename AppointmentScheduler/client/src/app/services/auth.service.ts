@@ -11,4 +11,11 @@ export class AuthService {
       password
     });
   }
+
+  login(email, password) {
+    return this.httpClient.post(`${this.baseUrl}/api/authentication`, {
+      email,
+      password
+    });
+  }
 }
