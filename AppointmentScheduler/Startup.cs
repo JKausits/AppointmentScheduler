@@ -66,5 +66,7 @@ namespace AppointmentScheduler
             app.UseMvc();
             app.UseCors("SiteCorsPolicy");
         }
+
+       
     }
 }

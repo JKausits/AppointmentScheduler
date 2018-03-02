@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppointmentScheduler.Entities;
+﻿using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppointmentScheduler.Controllers
@@ -31,5 +26,7 @@ namespace AppointmentScheduler.Controllers
 
             return new ObjectResult(_respository.Insert(professor));
         }
+
+        
     }
 }

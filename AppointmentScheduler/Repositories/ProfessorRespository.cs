@@ -36,5 +36,9 @@ namespace AppointmentScheduler.Repositories
 
             return new { success = true, message = "Account created! You will be notified when the account has been activated" };
         }
+
+        public Professor FindByEmail(string email) {
+            return _context.Professors.FirstOrDefault(p => p.Email == email);
+        }
     }
 }
