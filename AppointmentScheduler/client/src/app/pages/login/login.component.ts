@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
           } else if (this.result.success) {
             window.sessionStorage.setItem('token', this.result.message);
           }
-          location.replace('');
+          location.replace('home');
         }
       });
     }
