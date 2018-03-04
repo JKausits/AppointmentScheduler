@@ -1,0 +1,72 @@
+<!-- Modal -->
+<div class="modal fade" id="addOfficeHourModal" tabindex="-1" role="dialog" aria-labelledby="addOfficeHourModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Hours</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetValues()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label><strong>Day(s):</strong></label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="monday" type="checkbox" id="monday" name="monday">
+              <label class="form-check-label" for="monday">M</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="tuesday" type="checkbox" id="tuesday" name="tuesday">
+              <label class="form-check-label" for="tuesday">T</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="wednesday" type="checkbox" id="wednesday" name="wednesday">
+              <label class="form-check-label" for="wednesday">W</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="thursday" type="checkbox" id="thursday" name="thursday">
+              <label class="form-check-label" for="thursday">R</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="friday" type="checkbox" id="friday" name="friday">
+              <label class="form-check-label" for="friday">F</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="startTime"><strong>Start Time:</strong></label>
+              <input type="time" [(ngModel)]="startTime" name="startTime" id="startTime" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="endTime"><strong>End Time: </strong> </label>
+              <input type="time" [(ngModel)]="endTime" name="endTime" id="endTime" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="startDate"><strong>Start Date:</strong></label>
+              <input type="date" [(ngModel)]="startDate" name="startDate" id="startDate" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="endDate"><strong>End Date: </strong> </label>
+              <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="typeID"><strong>Type: </strong></label>
+              <select [(ngModel)]="typeID" name="typeID" id="typeID" class="form-control">
+                <option value="">Office Hour</option>
+                <option value="">Cancellation</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addOfficeHour()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

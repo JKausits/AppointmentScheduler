@@ -13,6 +13,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfessorHomeComponent } from './pages/professor-home/professor-home.component';
 import { ProfessorInfoComponent } from './components/professor-info/professor-info.component';
+import { OfficeHoursListComponent } from './components/office-hours-list/office-hours-list.component';
+import { ScheduleOfficeHoursModalComponent } from './components/schedule-office-hours-modal/schedule-office-hours-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ProfessorInfoComponent } from './components/professor-info/professor-in
     RegisterComponent,
     LoginComponent,
     ProfessorHomeComponent,
-    ProfessorInfoComponent
+    ProfessorInfoComponent,
+    OfficeHoursListComponent,
+    ScheduleOfficeHoursModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [AuthService, AccessGuard, ProfessorService],
