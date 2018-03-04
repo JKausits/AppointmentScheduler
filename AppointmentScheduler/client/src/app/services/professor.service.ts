@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -10,9 +10,18 @@ export class ProfessorService {
   }
 
   updateProfessorPublicInfo(info) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${window.localStorage.getItem('token') ||
+        window.sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    });
+
     return this.httpClient.put(
       `${this.baseUrl}/api/professor/${info.ID}`,
-      info
+      info,
+      {
+        headers
+      }
     );
   }
 }
