@@ -8,6 +8,7 @@ namespace AppointmentScheduler.DTO
 {
     public class ScheduledHourDTO
     {
+        public int ID { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public DateTime StartDate { get; set; }

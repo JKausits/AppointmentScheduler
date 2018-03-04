@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Add Hours</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetValues()">
+        <button id="dismiss-button" type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetValues()">
             <span aria-hidden="true">&times;</span>
           </button>
       </div>
@@ -57,8 +57,8 @@
             <div class="form-group col-md-12">
               <label for="typeID"><strong>Type: </strong></label>
               <select [(ngModel)]="typeID" name="typeID" id="typeID" class="form-control">
-                <option value="">Office Hour</option>
-                <option value="">Cancellation</option>
+                <option value="OfficeHour">Office Hour</option>
+                <option value="Cancellation">Cancellation</option>
               </select>
             </div>
           </div>

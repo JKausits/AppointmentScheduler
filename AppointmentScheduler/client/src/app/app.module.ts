@@ -1,3 +1,4 @@
+import { ScheduledHourService } from './services/scheduled-hour.service';
 import { ProfessorService } from './services/professor.service';
 import { AccessGuard } from './access.guard';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -28,7 +29,7 @@ import { ScheduleOfficeHoursModalComponent } from './components/schedule-office-
     ScheduleOfficeHoursModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [AuthService, AccessGuard, ProfessorService],
+  providers: [AuthService, AccessGuard, ProfessorService, ScheduledHourService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

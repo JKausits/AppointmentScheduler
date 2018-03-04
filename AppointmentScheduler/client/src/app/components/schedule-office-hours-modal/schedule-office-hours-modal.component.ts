@@ -1,5 +1,7 @@
+import { AuthService } from './../../services/auth.service';
+import { ScheduledHourService } from './../../services/scheduled-hour.service';
 import { Component, OnInit, Input } from '@angular/core';
-
+import Result from '../../Result';
 @Component({
   selector: 'app-schedule-office-hours-modal',
   templateUrl: './schedule-office-hours-modal.component.html',
@@ -17,7 +19,11 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
   startDate: string;
   endDate: string;
   typeID: string;
-  constructor() {}
+  result: Result;
+  constructor(
+    private scheduledHourService: ScheduledHourService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit() {}
 
@@ -45,10 +51,19 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
       endDate: this.endDate,
       startTime: this.startTime,
       endTime: this.endTime,
-      typeID: this.typeID
+      typeID: this.typeID,
+      professorID: this.auth.getTokenData().ID
     };
     console.log(info);
-    this.resetValues();
+
+    this.scheduledHourService.createScheduledHour(info).subscribe(res => {
+      this.result = res;
+      console.log(res);
+
+      if (this.result.success) {
+        document.getElementById('dismiss-button').click();
+      }
+    });
   }
 
   validateInfo() {

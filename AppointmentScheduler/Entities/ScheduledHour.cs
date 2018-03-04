@@ -27,5 +27,6 @@ namespace AppointmentScheduler.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public virtual Professor Professor { get; set; }
+        public virtual IEnumerable<Appointment> Appointments { get; set; }
     }
 }
