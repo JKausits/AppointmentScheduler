@@ -8,4 +8,11 @@ export class ProfessorService {
   getProfessorInfo(id) {
     return this.httpClient.get(`${this.baseUrl}/api/professor/${id}`);
   }
+
+  updateProfessorPublicInfo(info) {
+    return this.httpClient.put(
+      `${this.baseUrl}/api/professor/${info.ID}`,
+      info
+    );
+  }
 }

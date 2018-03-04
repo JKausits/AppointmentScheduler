@@ -13,22 +13,32 @@ export class ProfessorInfoComponent implements OnInit {
   result: Result;
   isHidden = false;
   constructor(private professorService: ProfessorService) {}
-
-  ngOnInit() {}
+  info = { id: '', email: '', name: '', title: '', roomNumber: '' };
+  ngOnInit() {
+    this.info.id = this.professorData.id;
+    this.info.email = this.professorData.email;
+    this.info.name = this.professorData.name;
+    this.info.title = this.professorData.title;
+    this.info.roomNumber = this.professorData.roomNumber;
+  }
 
   updateInformation() {
     const info = {
       ID: this.professorData.id,
-      Email: this.professorData.email,
-      Name: this.professorData.name,
-      Title: this.professorData.title,
-      RoomNumber: this.professorData.roomNumber
+      Email: this.info.email,
+      Name: this.info.name,
+      Title: this.info.title,
+      RoomNumber: this.info.roomNumber
     };
-    // this.professorService.updateProfessorPublicInfo(info).subscribe(res => {
-    //   this.result = res;
-    //   if (this.result.success) {
-    //     this.isEdit = false;
-    //   }
-    // });
+    this.professorService.updateProfessorPublicInfo(info).subscribe(res => {
+      this.result = res;
+      if (this.result.success) {
+        this.isEdit = false;
+        this.professorData.email = this.info.email;
+        this.professorData.name = this.info.name;
+        this.professorData.title = this.info.title;
+        this.professorData.roomNumber = this.info.roomNumber;
+      }
+    });
   }
 }

@@ -1,7 +1,9 @@
-﻿using AppointmentScheduler.Entities;
+﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace AppointmentScheduler.Controllers
 {
@@ -35,6 +37,13 @@ namespace AppointmentScheduler.Controllers
             }
 
             return new ObjectResult(professor);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdatePublic(int id, [FromBody] ProfessorPublicDTO professor) {
+
+   
+            return new ObjectResult(_respository.UpdatePublic(id, professor));
         }
         
     }

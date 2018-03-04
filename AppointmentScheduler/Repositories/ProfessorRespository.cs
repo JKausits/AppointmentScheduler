@@ -45,5 +45,21 @@ namespace AppointmentScheduler.Repositories
         public ProfessorPublicDTO GetById(int id) {
             return _context.Professors.Where(p => p.ID == id).Select(p => new ProfessorPublicDTO { ID=p.ID, Email = p.Email, Name = p.Name, RoomNumber = p.RoomNumber, Title = p.Title}).SingleOrDefault();
         }
+
+        public Object UpdatePublic(int id, ProfessorPublicDTO entity) {
+            var professor = _context.Professors.SingleOrDefault(p => p.ID == id);
+            if (professor == null) {
+                return new { success = false, message = "Could not find professor" };
+            }
+
+            professor.Email = entity.Email;
+            professor.Name = entity.Name;
+            professor.RoomNumber = entity.RoomNumber;
+            professor.Title = entity.Title;
+
+            _context.Professors.Update(professor);
+            _context.SaveChanges();
+            return new { success = true, message = "Information updated" };
+        }
     }
 }
