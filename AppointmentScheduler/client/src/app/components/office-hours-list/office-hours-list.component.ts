@@ -1,3 +1,5 @@
+import { AuthService } from './../../services/auth.service';
+import { ScheduledHourService } from './../../services/scheduled-hour.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,7 +9,23 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OfficeHoursListComponent implements OnInit {
   @Input() professorData;
-  constructor() {}
+  @Input() officeHours;
+  constructor(
+    private scheduledHourService: ScheduledHourService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit() {}
+
+  getScheduledHours() {
+    this.scheduledHourService
+      .getOfficeHourItems(this.auth.getTokenData().ID)
+      .subscribe(res => {
+        this.officeHours = res;
+      });
+  }
+
+  onAddedScheduledHour(scheduledHour) {
+    this.officeHours.push(scheduledHour);
+  }
 }

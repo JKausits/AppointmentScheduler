@@ -1,0 +1,30 @@
+.status-bar {
+  background-color: lightgreen;
+  height: 100%;
+  width: 5%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: 15px;
+}
+
+.cancellation {
+  background-color: lightcoral;
+}
+
+.card {
+  margin-top: 1%;
+}
+
+.btn-danger {
+  background-color: lightcoral;
+}
+
+.btn-warning {
+  background-color: lightgoldenrodyellow;
+}
+
+.btn {
+  max-width: 80px;
+  width: 28%;
+}

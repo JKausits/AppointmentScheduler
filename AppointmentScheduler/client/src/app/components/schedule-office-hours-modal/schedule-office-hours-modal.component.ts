@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth.service';
 import { ScheduledHourService } from './../../services/scheduled-hour.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Result from '../../Result';
 @Component({
   selector: 'app-schedule-office-hours-modal',
@@ -9,6 +9,7 @@ import Result from '../../Result';
 })
 export class ScheduleOfficeHoursModalComponent implements OnInit {
   @Input() professorID: number;
+  @Output() addScheduledHour = new EventEmitter();
   monday = false;
   tuesday = false;
   wednesday = false;
@@ -54,13 +55,10 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
       typeID: this.typeID,
       professorID: this.auth.getTokenData().ID
     };
-    console.log(info);
-
     this.scheduledHourService.createScheduledHour(info).subscribe(res => {
       this.result = res;
-      console.log(res);
-
       if (this.result.success) {
+        this.addScheduledHour.emit(info);
         document.getElementById('dismiss-button').click();
       }
     });

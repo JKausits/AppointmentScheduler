@@ -1,0 +1,22 @@
+<div class="card" *ngIf="officeHour">
+  <div class="card-body" style="position: relative;">
+    <div class="status-bar" [class.cancellation]="officeHour.typeID == 1"></div>
+
+    <div class="row">
+      <span class="col-md-12"><strong>Type: </strong> {{officeHour.typeID == 0 ? "Office Hour" : "Cancellation"}}</span>
+    </div>
+    <div class="row">
+      <span class="col-md-12"><strong>Days: </strong><span>{{days}}</span></span>
+    </div>
+    <div class="row">
+      <span class="col-md-3"><strong>Start Time: </strong>{{formatTime(officeHour.startTime)}}</span>
+      <span class="col-md-3"><strong>End Time: </strong>{{formatTime(officeHour.endTime)}}</span>
+    </div>
+    <div class="row">
+      <span class="col-md-3"><strong>Start Date: </strong>{{officeHour.startDate | date: 'shortDate'}}</span>
+      <span class="col-md-3"><strong>End Date: </strong>{{officeHour.endDate | date: 'shortDate'}}</span>
+    </div>
+    <button class="btn btn-warning float-right">Edit</button>
+    <button class="btn btn-danger float-right">Delete</button>
+  </div>
+</div>
