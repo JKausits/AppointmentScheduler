@@ -39,6 +39,24 @@ namespace AppointmentScheduler.Repositories
             return new { success = false, message = "Office hour type invalid" };
         }
 
+        public Object DeleteScheduledHour(int id) {
+            var scheduledHour = _context.ScheduledHours.FirstOrDefault(s => s.ID == id);
+            if (scheduledHour == null) {
+                return new { success = false, message = "Invalid scheduled hour ID" };
+            }
+
+            if (scheduledHour.TypeID == ScheduledHour.ScheduledHourType.Cancellation)
+            {
+                UncancelAppointments(scheduledHour);
+            }
+            else {
+                DeleteAppointments(scheduledHour);
+            }
+
+
+            return new { success = true, message ="Scheduled hour deleted"};
+        }
+
         private void CreateAppointments(ScheduledHour entity)
         {
             DateTime startTime = DateTime.Now;
@@ -109,6 +127,35 @@ namespace AppointmentScheduler.Repositories
                         }
                         appointment.Status = status;
                         _context.Appointments.Update(appointment);
+                    }
+
+                    currentTime = currentTime.Add(appointmentLength);
+                }
+                _context.SaveChanges();
+                currentDate = currentDate.AddDays(1);
+            }
+        }
+
+        private void DeleteAppointments(ScheduledHour entity) {
+
+            DateTime startTime = DateTime.Now;
+            DateTime currentDate = entity.StartDate;
+            DateTime endDate = entity.EndDate;
+            var appointmentLength = new TimeSpan(0, 15, 0);
+            endDate = endDate.AddDays(1);
+            while (currentDate != endDate)
+            {
+                var currentTime = entity.StartTime;
+                while (currentTime < entity.EndTime)
+                {
+                    var currentDateTime = currentDate + currentTime;
+                    var appointment = _context.Appointments.FirstOrDefault(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID);
+                    if (appointment != null)
+                    {
+                        if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled) {
+                            AlertAppointmentChange(appointment);
+                        }
+                        _context.Appointments.Remove(appointment);
                     }
 
                     currentTime = currentTime.Add(appointmentLength);

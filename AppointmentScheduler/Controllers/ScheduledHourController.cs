@@ -32,6 +32,11 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(_respository.CreateScheduledHour(scheduledHour));
 
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteScheduledHour(int id) {
+            return new ObjectResult(_respository.DeleteScheduledHour(id));
+        }
         
     }
 }
