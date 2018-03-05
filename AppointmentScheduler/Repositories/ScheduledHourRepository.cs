@@ -18,10 +18,14 @@ namespace AppointmentScheduler.Repositories
 
         public IEnumerable<ScheduledHourDTO> GetProfessorHours(int id)
         {
-            return _context.ScheduledHours.Where(s => s.ProfessorID == id).Select(s => new ScheduledHourDTO { ID = s.ID, Monday = s.Monday, Tuesday = s.Tuesday, Wednesday = s.Wednesday, Thursday = s.Thursday, Friday = s.Friday, StartDate = s.StartDate, EndDate = s.EndDate, EndTime = s.EndTime, StartTime = s.StartTime, TypeID = s.TypeID });
+            return _context.ScheduledHours.Where(s => s.ProfessorID == id)
+                .Select(s => new ScheduledHourDTO { ID = s.ID, Monday = s.Monday, Tuesday = s.Tuesday, Wednesday = s.Wednesday,
+                    Thursday = s.Thursday, Friday = s.Friday, StartDate = s.StartDate, EndDate = s.EndDate, EndTime = s.EndTime, StartTime = s.StartTime, TypeID = s.TypeID })
+                .OrderBy(s => s.TypeID);
         }
 
-        public Object CreateScheduledHour(ScheduledHour entity ) {
+        public Object CreateScheduledHour(ScheduledHour entity)
+        {
             entity.CreatedAt = DateTime.Now;
             entity.ModifiedAt = DateTime.Now;
             _context.ScheduledHours.Add(entity);
@@ -29,19 +33,21 @@ namespace AppointmentScheduler.Repositories
             if (entity.TypeID == ScheduledHour.ScheduledHourType.OfficeHour)
             {
                 CreateAppointments(entity);
-                return new { success = true, message = "Office hours scheduled" };
+                return new { success = true, message = "Office hours scheduled", ScheduledHour = entity };
             }
             else if (entity.TypeID == ScheduledHour.ScheduledHourType.Cancellation)
             {
                 CancelAppointments(entity);
-                return new { success = true, message = "Office hours cancelled" };
+                return new { success = true, message = "Office hours cancelled", ScheduledHour = entity };
             }
-            return new { success = false, message = "Office hour type invalid" };
+            return new { success = false, message = "Office hour type invalid", ScheduledHour = entity };
         }
 
-        public Object DeleteScheduledHour(int id) {
+        public Object DeleteScheduledHour(int id)
+        {
             var scheduledHour = _context.ScheduledHours.FirstOrDefault(s => s.ID == id);
-            if (scheduledHour == null) {
+            if (scheduledHour == null)
+            {
                 return new { success = false, message = "Invalid scheduled hour ID" };
             }
 
@@ -49,12 +55,14 @@ namespace AppointmentScheduler.Repositories
             {
                 UncancelAppointments(scheduledHour);
             }
-            else {
+            else
+            {
                 DeleteAppointments(scheduledHour);
             }
+            _context.ScheduledHours.Remove(scheduledHour);
+            _context.SaveChanges();
 
-
-            return new { success = true, message ="Scheduled hour deleted"};
+            return new { success = true, message = "Scheduled hour deleted" };
         }
 
         private void CreateAppointments(ScheduledHour entity)
@@ -66,14 +74,10 @@ namespace AppointmentScheduler.Repositories
             endDate = endDate.AddDays(1);
             while (currentDate != endDate)
             {
-                var currentTime = entity.StartTime;
-                while (currentTime < entity.EndTime)
+                if (CheckDayOfWeek(entity, currentDate))
                 {
-                    if ((entity.Monday && currentDate.DayOfWeek == DayOfWeek.Monday)
-                        || (entity.Tuesday && currentDate.DayOfWeek == DayOfWeek.Tuesday)
-                        || (entity.Wednesday && currentDate.DayOfWeek == DayOfWeek.Wednesday)
-                        || (entity.Thursday && currentDate.DayOfWeek == DayOfWeek.Thursday)
-                        || (entity.Friday && currentDate.DayOfWeek == DayOfWeek.Friday))
+                    var currentTime = entity.StartTime;
+                    while (currentTime < entity.EndTime)
                     {
                         var appointment = new Appointment();
                         appointment.ProfessorID = entity.ProfessorID;
@@ -82,11 +86,11 @@ namespace AppointmentScheduler.Repositories
                         appointment.ScheduledHourID = entity.ID;
                         _context.Appointments.Add(appointment);
 
-                    }
 
-                    currentTime = currentTime.Add(appointmentLength);
+                        currentTime = currentTime.Add(appointmentLength);
+                    }
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
                 currentDate = currentDate.AddDays(1);
             }
         }
@@ -110,33 +114,41 @@ namespace AppointmentScheduler.Repositories
             endDate = endDate.AddDays(1);
             while (currentDate != endDate)
             {
-                var currentTime = entity.StartTime;
-                while (currentTime < entity.EndTime)
+                if (CheckDayOfWeek(entity, currentDate))
                 {
-                    var currentDateTime = currentDate + currentTime;
-                    var appointment = _context.Appointments.FirstOrDefault(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID);
-                    if (appointment != null)
+
+                    var currentTime = entity.StartTime;
+                    while (currentTime < entity.EndTime)
                     {
-                        if (status == Appointment.StatusType.Cancelled)
+                        var currentDateTime = currentDate + currentTime;
+
+                        var appointment = _context.Appointments.FirstOrDefault(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID);
+                        if (appointment != null)
                         {
-
-                            if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
+                            if (status == Appointment.StatusType.Cancelled)
                             {
-                                AlertAppointmentChange(appointment);
-                            }
-                        }
-                        appointment.Status = status;
-                        _context.Appointments.Update(appointment);
-                    }
 
-                    currentTime = currentTime.Add(appointmentLength);
+                                if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
+                                {
+                                    AlertAppointmentChange(appointment);
+                                }
+                            }
+                            appointment.Status = status;
+                            _context.Appointments.Update(appointment);
+                        }
+
+
+                        currentTime = currentTime.Add(appointmentLength);
+                    }
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
+
                 currentDate = currentDate.AddDays(1);
             }
         }
 
-        private void DeleteAppointments(ScheduledHour entity) {
+        private void DeleteAppointments(ScheduledHour entity)
+        {
 
             DateTime startTime = DateTime.Now;
             DateTime currentDate = entity.StartDate;
@@ -145,29 +157,45 @@ namespace AppointmentScheduler.Repositories
             endDate = endDate.AddDays(1);
             while (currentDate != endDate)
             {
-                var currentTime = entity.StartTime;
-                while (currentTime < entity.EndTime)
+                if (CheckDayOfWeek(entity, currentDate))
                 {
-                    var currentDateTime = currentDate + currentTime;
-                    var appointment = _context.Appointments.FirstOrDefault(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID);
-                    if (appointment != null)
-                    {
-                        if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled) {
-                            AlertAppointmentChange(appointment);
-                        }
-                        _context.Appointments.Remove(appointment);
-                    }
 
-                    currentTime = currentTime.Add(appointmentLength);
+                    var currentTime = entity.StartTime;
+                    while (currentTime < entity.EndTime)
+                    {
+                        var currentDateTime = currentDate + currentTime;
+                        var appointment = _context.Appointments.FirstOrDefault(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID);
+                        if (appointment != null)
+                        {
+
+                            if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
+                            {
+                                AlertAppointmentChange(appointment);
+                            }
+                            _context.Appointments.Remove(appointment);
+                        }
+
+                        currentTime = currentTime.Add(appointmentLength);
+                    }
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
                 currentDate = currentDate.AddDays(1);
+
             }
         }
 
         private void AlertAppointmentChange(Appointment entity)
         {
             Console.WriteLine("Cancelled Pending/Scheduled Appointment, Sending Email");
+        }
+
+        private bool CheckDayOfWeek(ScheduledHour entity, DateTime currentDate)
+        {
+            return (entity.Monday && currentDate.DayOfWeek == DayOfWeek.Monday)
+                        || (entity.Tuesday && currentDate.DayOfWeek == DayOfWeek.Tuesday)
+                        || (entity.Wednesday && currentDate.DayOfWeek == DayOfWeek.Wednesday)
+                        || (entity.Thursday && currentDate.DayOfWeek == DayOfWeek.Thursday)
+                        || (entity.Friday && currentDate.DayOfWeek == DayOfWeek.Friday);
         }
     }
 }

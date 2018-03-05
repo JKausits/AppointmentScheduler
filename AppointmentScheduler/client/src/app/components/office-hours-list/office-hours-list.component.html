@@ -8,7 +8,7 @@
     </div>
     <hr>
     <div *ngFor="let officeHour of officeHours">
-      <app-office-hour-item [officeHour]="officeHour"></app-office-hour-item>
+      <app-office-hour-item [officeHour]="officeHour" (deleteOfficeHour)="onDeleteScheduledHour($event)"></app-office-hour-item>
     </div>
   </div>
   <app-schedule-office-hours-modal [professorID]="professorData.id" (addScheduledHour)="onAddedScheduledHour($event)"></app-schedule-office-hours-modal>

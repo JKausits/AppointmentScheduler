@@ -2,6 +2,7 @@ import { AuthService } from './../../services/auth.service';
 import { ScheduledHourService } from './../../services/scheduled-hour.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Result from '../../Result';
+import ScheduledHourResult from '../../scheduledHourResult';
 @Component({
   selector: 'app-schedule-office-hours-modal',
   templateUrl: './schedule-office-hours-modal.component.html',
@@ -20,7 +21,7 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
   startDate: string;
   endDate: string;
   typeID: string;
-  result: Result;
+  result: ScheduledHourResult;
   constructor(
     private scheduledHourService: ScheduledHourService,
     private auth: AuthService
@@ -58,7 +59,7 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
     this.scheduledHourService.createScheduledHour(info).subscribe(res => {
       this.result = res;
       if (this.result.success) {
-        this.addScheduledHour.emit(info);
+        this.addScheduledHour.emit(this.result.scheduledHour);
         document.getElementById('dismiss-button').click();
       }
     });

@@ -28,4 +28,10 @@ export class OfficeHoursListComponent implements OnInit {
   onAddedScheduledHour(scheduledHour) {
     this.officeHours.push(scheduledHour);
   }
+
+  onDeleteScheduledHour(id) {
+    this.officeHours = this.officeHours.filter(
+      scheduledHour => scheduledHour.id !== id
+    );
+  }
 }

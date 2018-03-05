@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ScheduledHourService {
   baseUrl = 'http://localhost:49495';
-  scheduledHours;
   constructor(private http: HttpClient) {}
 
   createScheduledHour(scheduledHour) {
@@ -13,5 +12,9 @@ export class ScheduledHourService {
 
   getOfficeHourItems(id) {
     return this.http.get(`${this.baseUrl}/api/ScheduledHour/${id}`);
+  }
+
+  deleteScheduledHour(id) {
+    return this.http.delete(`${this.baseUrl}/api/ScheduledHour/${id}`);
   }
 }

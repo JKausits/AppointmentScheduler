@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ScheduledHourService } from './../../services/scheduled-hour.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import Result from '../../result';
 
 @Component({
   selector: 'app-office-hour-item',
@@ -9,7 +11,9 @@ import { DatePipe } from '@angular/common';
 export class OfficeHourItemComponent implements OnInit {
   @Input() officeHour;
   days: string;
-  constructor() {}
+  result: Result;
+  @Output() deleteOfficeHour = new EventEmitter();
+  constructor(private scheduledHourService: ScheduledHourService) {}
 
   ngOnInit() {
     this.setDays();
@@ -55,5 +59,20 @@ export class OfficeHourItemComponent implements OnInit {
     }
 
     return `${hh}:${mm}${a}`;
+  }
+
+  delete() {
+    console.log(this.officeHour);
+
+    this.scheduledHourService
+      .deleteScheduledHour(this.officeHour.id)
+      .subscribe(res => {
+        this.result = res;
+        console.log(this.result);
+
+        if (this.result.success) {
+          this.deleteOfficeHour.emit(this.officeHour.id);
+        }
+      });
   }
 }
