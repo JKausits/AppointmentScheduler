@@ -1,3 +1,4 @@
+import { CalendarViewComponent } from './../pages/calendar-view/calendar-view.component';
 import { AccessGuard } from './../access.guard';
 import { ProfessorHomeComponent } from './../pages/professor-home/professor-home.component';
 import { LoginComponent } from './../pages/login/login.component';
@@ -24,6 +25,10 @@ const routes: Routes = [
     component: ProfessorHomeComponent,
     data: { requiresLogin: true },
     canActivate: [AccessGuard]
+  },
+  {
+    path: 'calendar',
+    component: CalendarViewComponent
   }
 ];
 

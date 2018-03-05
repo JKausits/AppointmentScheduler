@@ -1,0 +1,21 @@
+.table {
+  background-color: #ddd;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+th,
+td {
+  border: 1px solid black;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: lightblue;
+  color: blue;
+  margin-left: 1px;
+  margin-right: 1px;
+}

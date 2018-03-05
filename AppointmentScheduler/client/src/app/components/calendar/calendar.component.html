@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="card-body">
+
+    <button class="btn btn-primary float-right" (click)="getNextWeek()">>></button>
+    <button class="btn btn-primary float-right" (click)="getPreviousWeek()"><<</button>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Monday {{days[0] | date: 'MM/dd'}}</th>
+            <th>Tuesday {{days[1] | date: 'MM/dd'}}</th>
+            <th>Wednesday {{days[2] | date: 'MM/dd'}}</th>
+            <th>Thursday {{days[3] | date: 'MM/dd'}}</th>
+            <th>Friday {{days[4] | date: 'MM/dd'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let time of times">
+            <td>{{time | date: 'shortTime'}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

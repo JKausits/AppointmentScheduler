@@ -17,6 +17,8 @@ import { ProfessorInfoComponent } from './components/professor-info/professor-in
 import { OfficeHoursListComponent } from './components/office-hours-list/office-hours-list.component';
 import { ScheduleOfficeHoursModalComponent } from './components/schedule-office-hours-modal/schedule-office-hours-modal.component';
 import { OfficeHourItemComponent } from './components/office-hour-item/office-hour-item.component';
+import { CalendarViewComponent } from './pages/calendar-view/calendar-view.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { OfficeHourItemComponent } from './components/office-hour-item/office-ho
     ProfessorInfoComponent,
     OfficeHoursListComponent,
     ScheduleOfficeHoursModalComponent,
-    OfficeHourItemComponent
+    OfficeHourItemComponent,
+    CalendarViewComponent,
+    CalendarComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [AuthService, AccessGuard, ProfessorService, ScheduledHourService],
