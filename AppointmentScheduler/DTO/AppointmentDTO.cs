@@ -11,6 +11,7 @@ namespace AppointmentScheduler.DTO
         public int ID { get; set; }
         public int ProfessorID { get; set; }
         public int ScheduledHourID { get; set; }
+        public ProfessorPublicDTO Professor { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
