@@ -27,5 +27,13 @@ namespace AppointmentScheduler.Entities
 
         public virtual Professor Professor { get; set; }
         public virtual ScheduledHour ScheduledHour { get; set; }
+
+        public void generateCancelationCode()
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random = new Random();
+            CancelCode = new string(Enumerable.Repeat(chars, 10)
+                .Select(s => s[random.Next(s.Length)]).ToArray()); ;
+        }
     }
 }

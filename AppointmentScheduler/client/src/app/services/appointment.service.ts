@@ -20,4 +20,8 @@ export class AppointmentService {
       params
     });
   }
+
+  scheduleAppointment(appointment) {
+    return this.http.post(`${this.baseUrl}/api/appointment`, appointment);
+  }
 }

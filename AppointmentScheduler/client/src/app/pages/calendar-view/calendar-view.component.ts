@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar-view.component.css']
 })
 export class CalendarViewComponent implements OnInit {
+  selectedAppointment;
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit() {}
+  onAppointmentSelected(appointment) {
+    this.selectedAppointment = appointment;
   }
-
 }

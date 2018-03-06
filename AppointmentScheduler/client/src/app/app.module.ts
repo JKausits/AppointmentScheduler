@@ -20,6 +20,7 @@ import { ScheduleOfficeHoursModalComponent } from './components/schedule-office-
 import { OfficeHourItemComponent } from './components/office-hour-item/office-hour-item.component';
 import { CalendarViewComponent } from './pages/calendar-view/calendar-view.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { StudentScheduleModalComponent } from './components/student-schedule-modal/student-schedule-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     ScheduleOfficeHoursModalComponent,
     OfficeHourItemComponent,
     CalendarViewComponent,
-    CalendarComponent
+    CalendarComponent,
+    StudentScheduleModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

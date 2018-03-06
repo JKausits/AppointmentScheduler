@@ -1,0 +1,56 @@
+<!-- Modal -->
+<div class="modal fade" id="studentScheduleModal" tabindex="-1" role="dialog" aria-labelledby="studentScheduleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Schedule Appointment</h5>
+        <button id="dismiss-button" type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetValues()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div class="modal-body" *ngIf="professor">
+        <form>
+          <div class="form-group">
+            <strong>Professor: </strong><span>{{professor.name}}</span>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <strong>Date: </strong><span>{{selectedAppointment.dateTime | date: 'mediumDate'}}</span>
+            </div>
+            <div class="form-group col-md-4">
+              <strong>Time: </strong><span>{{selectedAppointment.dateTime | date: 'shortTime'}}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label for="firstName" class="col-md-3"><strong>First Name:</strong> </label>
+              <input type="text" [(ngModel)]="firstName" name="firstName" id="firstName" class="form-control col-md-8" required autocomplete="given-name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label for="lastName" class="col-md-3"><strong>Last Name:</strong> </label>
+              <input type="text" [(ngModel)]="lastName" name="lastName" id="lastName" class="form-control col-md-8" required autocomplete="family-name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label for="email" class="col-md-3"><strong>Email:</strong> </label>
+              <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control col-md-8" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label for="bannerID" class="col-md-3"><strong>Banner ID:</strong> </label>
+              <input type="text" [(ngModel)]="bannerID" name="bannerID" id="bannerID" class="form-control col-md-8" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="scheduleAppointment()">Submit</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

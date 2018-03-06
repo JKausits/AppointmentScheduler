@@ -39,5 +39,10 @@ namespace AppointmentScheduler.Controllers
         public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id) {
             return _repository.GetPendingOrScheduledAppointmentsByProfessor(id);
         }
+
+        [HttpPost]
+        public IActionResult ScheduleAppointment([FromBody] Appointment appointment) {
+            return new ObjectResult(_repository.ScheduleAppointment(appointment));
+        }
     }
 }

@@ -1,6 +1,12 @@
 import { AppointmentService } from './../../services/appointment.service';
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit, ApplicationRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ApplicationRef,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 @Component({
   selector: 'app-calendar',
@@ -17,7 +23,7 @@ export class CalendarComponent implements OnInit {
   times = [];
   days = [];
   appointments = [];
-  changed = false;
+  @Output() appointmentSelected = new EventEmitter();
   professorID: number;
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +64,7 @@ export class CalendarComponent implements OnInit {
       const cell = table.rows[row].cells[column];
 
       cell.dataset.index = index;
+      // data-toggle="modal" data-target="#addOfficeHourModal"
       if (appointment.status === 1) {
         cell.classList.add('appointment');
         cell.classList.add('pending');
@@ -74,6 +81,8 @@ export class CalendarComponent implements OnInit {
         cell.classList.add('cancelled');
       } else {
         cell.classList.add('appointment');
+        cell.dataset.toggle = 'modal';
+        cell.dataset.target = '#studentScheduleModal';
       }
     });
   }
@@ -154,8 +163,8 @@ export class CalendarComponent implements OnInit {
   handleTableClick(event) {
     const index = event.target.getAttribute('data-index');
     if (index !== null) {
-      const appointment = this.appointments[index];
-      console.log(appointment);
+      this.appointmentSelected.emit(this.appointments[index]);
+      // this.selectedAppointment = this.appointments[index];
     }
   }
 }
