@@ -23,6 +23,15 @@ namespace AppointmentScheduler.Repositories
                 .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID});
         }
 
+        public IEnumerable<AppointmentDTO> GetWeeklyAppointmentsByProfessor(int id, DateTime currentWeek)
+        {
+            DateTime endOfWeek = currentWeek.AddDays(6);
+            currentWeek = currentWeek.AddDays(-1);
+            return _context.Appointments
+                .Where(a => a.ProfessorID == id && a.DateTime >= currentWeek && a.DateTime <= endOfWeek)
+                .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID });
+        }
+
         public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id) {
             return _context.Appointments
                .Where(a => a.ProfessorID == id && (a.Status != Appointment.StatusType.Open && a.Status != Appointment.StatusType.Cancelled))

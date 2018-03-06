@@ -1,3 +1,4 @@
+import { AppointmentService } from './services/appointment.service';
 import { ScheduledHourService } from './services/scheduled-hour.service';
 import { ProfessorService } from './services/professor.service';
 import { AccessGuard } from './access.guard';
@@ -35,7 +36,13 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     CalendarComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [AuthService, AccessGuard, ProfessorService, ScheduledHourService],
+  providers: [
+    AuthService,
+    AccessGuard,
+    ProfessorService,
+    ScheduledHourService,
+    AppointmentService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

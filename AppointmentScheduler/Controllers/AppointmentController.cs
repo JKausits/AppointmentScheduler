@@ -26,10 +26,14 @@ namespace AppointmentScheduler.Controllers
         }
 
         [HttpGet("professor/{id}")]
-        public IEnumerable<AppointmentDTO> GetAppointmentsByProfessor(int id) {
-
+        public IEnumerable<AppointmentDTO> GetAppointmentsByProfessor(int id, [FromQuery(Name = "currentWeek")] DateTime? currentWeek) {
+            if(currentWeek.HasValue)
+            {
+                return _repository.GetWeeklyAppointmentsByProfessor(id, currentWeek.Value);
+            }
             return _repository.GetAppointmentsByProfessor(id);
         }
+
 
         [HttpGet("professor/active/{id}")]
         public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id) {

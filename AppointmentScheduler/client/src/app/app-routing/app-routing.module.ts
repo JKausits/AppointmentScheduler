@@ -27,6 +27,10 @@ const routes: Routes = [
     canActivate: [AccessGuard]
   },
   {
+    path: 'calendar/:id',
+    component: CalendarViewComponent
+  },
+  {
     path: 'calendar',
     component: CalendarViewComponent
   }

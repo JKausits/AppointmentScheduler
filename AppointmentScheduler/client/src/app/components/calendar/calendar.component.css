@@ -19,3 +19,24 @@ td {
   margin-left: 1px;
   margin-right: 1px;
 }
+
+.appointment {
+  cursor: pointer;
+  background-color: white;
+}
+
+.pending {
+  background-color: lightgoldenrodyellow;
+}
+
+.scheduled {
+  background-color: lightgreen;
+}
+
+.cancelled {
+  background-color: lightcoral;
+}
+
+.pending-student {
+  background-color: lightsalmon;
+}
