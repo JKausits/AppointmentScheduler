@@ -58,6 +58,19 @@ namespace AppointmentScheduler.Repositories
             return new { success = true, message = "Appointment scheduled, you will be receiving a cancellation code in your email shortly" };
         }
 
+        public Object CancelAppointment(int id, string cancelCode) {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
+            if (appointment == null) {
+                return new { success = false, message = "Could not find appointment" };
+            }
+
+            if (appointment.CancelCode != cancelCode) {
+                return new { success = false, message = "Invalid cancel code" };
+            }
+
+            return new { success = true, message = "Appointment Cancelled" };
+        }
+
         private void emailCancellationCode() {
             Console.WriteLine("Sending now");
         }
