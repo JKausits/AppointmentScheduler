@@ -24,4 +24,11 @@ export class AppointmentService {
   scheduleAppointment(appointment) {
     return this.http.post(`${this.baseUrl}/api/Appointment`, appointment);
   }
+
+  cancelAppointment(id, cancelCode) {
+    return this.http.put(
+      `${this.baseUrl}/api/Appointment/cancel/${id}?cancelCode=${cancelCode}`,
+      {}
+    );
+  }
 }

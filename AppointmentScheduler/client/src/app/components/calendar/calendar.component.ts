@@ -94,26 +94,32 @@ export class CalendarComponent implements OnInit {
       const column = this.getTableColumn(appointment);
       const row = this.getTableRow(appointment);
       const cell = table.rows[row].cells[column];
-
+      const isLoggedIn = this.auth.isLoggedIn();
       cell.dataset.index = index;
       // data-toggle="modal" data-target="#addOfficeHourModal"
       if (appointment.status === 1) {
         cell.classList.add('appointment');
         cell.classList.add('pending');
         cell.dataset.toggle = 'modal';
-        cell.dataset.target = '#studentCancelModal';
+        cell.dataset.target = isLoggedIn
+          ? 'professorCancelModal'
+          : '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 2) {
         cell.classList.add('appointment');
         cell.classList.add('pending-student');
         cell.dataset.toggle = 'modal';
-        cell.dataset.target = '#studentCancelModal';
+        cell.dataset.target = isLoggedIn
+          ? 'professorConfirmModal'
+          : '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 3) {
         cell.classList.add('appointment');
         cell.classList.add('scheduled');
         cell.dataset.toggle = 'modal';
-        cell.dataset.target = '#studentCancelModal';
+        cell.dataset.target = isLoggedIn
+          ? 'professorCancelModal'
+          : '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 4) {
         cell.classList.add('cancelled');

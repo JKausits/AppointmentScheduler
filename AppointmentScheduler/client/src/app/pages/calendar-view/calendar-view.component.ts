@@ -23,4 +23,13 @@ export class CalendarViewComponent implements OnInit {
     });
     this.refreshedOn = new Date();
   }
+
+  onAppointmentCancelled(event) {
+    swal({
+      title: 'Appointment Cancelled',
+      text: event.message,
+      type: 'success'
+    });
+    this.refreshedOn = new Date();
+  }
 }

@@ -1,10 +1,13 @@
+import { AppointmentService } from './../../services/appointment.service';
 import { ProfessorService } from './../../services/professor.service';
 import {
   Component,
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 @Component({
@@ -14,10 +17,14 @@ import {
 })
 export class StudentCancelModalComponent implements OnInit {
   @Input() selectedAppointment: any;
+  @Output() appointmentCancelled = new EventEmitter();
   professor: any;
   cancellationCode = '';
   cancelCodeError: string;
-  constructor(private professorService: ProfessorService) {}
+  constructor(
+    private professorService: ProfessorService,
+    private appointmentService: AppointmentService
+  ) {}
 
   ngOnInit() {}
 
@@ -32,11 +39,26 @@ export class StudentCancelModalComponent implements OnInit {
     }
   }
 
+  resetValues() {
+    this.cancellationCode = '';
+    this.cancelCodeError = '';
+  }
+
   cancelAppointment() {
     if (this.cancellationCode === '') {
       this.cancelCodeError = `You didn't enter in a code`;
     } else {
-      console.log(this.cancellationCode);
+      this.appointmentService
+        .cancelAppointment(this.selectedAppointment.id, this.cancellationCode)
+        .subscribe((res: any) => {
+          if (res.success) {
+            this.resetValues();
+            document.getElementById('student-cancel-dismiss-button').click();
+            this.appointmentCancelled.emit(res);
+          } else {
+            this.cancelCodeError = res.message;
+          }
+        });
     }
   }
 }

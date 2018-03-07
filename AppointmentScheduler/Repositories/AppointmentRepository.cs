@@ -68,6 +68,14 @@ namespace AppointmentScheduler.Repositories
                 return new { success = false, message = "Invalid cancel code" };
             }
 
+            appointment.FirstName = null;
+            appointment.LastName = null;
+            appointment.Email = null;
+            appointment.ModifiedAt = new DateTime();
+            appointment.Status = Appointment.StatusType.Open;
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+
             return new { success = true, message = "Appointment Cancelled" };
         }
 
