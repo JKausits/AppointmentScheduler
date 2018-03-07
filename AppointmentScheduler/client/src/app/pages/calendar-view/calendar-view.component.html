@@ -3,5 +3,5 @@
   <app-calendar (appointmentSelected)="onAppointmentSelected($event)" [parentRefreshed]="refreshedOn"></app-calendar>
   <app-student-schedule-modal [selectedAppointment]="selectedAppointment" (appointmentScheduled)="onAppointmentScheduled($event)"></app-student-schedule-modal>
   <app-student-cancel-modal [selectedAppointment]="selectedAppointment" (appointmentCancelled)="onAppointmentCancelled($event)"></app-student-cancel-modal>
-
+  <app-professor-confirm-modal [selectedAppointment]="selectedAppointment" [professor]="professor"></app-professor-confirm-modal>
 </div>
