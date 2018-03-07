@@ -1,5 +1,5 @@
 <div>
 
-  <app-calendar (appointmentSelected)="onAppointmentSelected($event)"></app-calendar>
-  <app-student-schedule-modal [selectedAppointment]="selectedAppointment"></app-student-schedule-modal>
+  <app-calendar (appointmentSelected)="onAppointmentSelected($event)" [parentRefreshed]="refreshedOn"></app-calendar>
+  <app-student-schedule-modal [selectedAppointment]="selectedAppointment" (appointmentScheduled)="onAppointmentScheduled($event)"></app-student-schedule-modal>
 </div>

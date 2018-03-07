@@ -42,6 +42,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPost]
         public IActionResult ScheduleAppointment([FromBody] Appointment appointment) {
+            Console.WriteLine("Scheduling Appointment");
             return new ObjectResult(_repository.ScheduleAppointment(appointment));
         }
     }

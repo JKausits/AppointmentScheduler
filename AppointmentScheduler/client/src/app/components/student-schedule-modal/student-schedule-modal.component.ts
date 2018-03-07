@@ -1,10 +1,14 @@
+import { AppointmentService } from './../../services/appointment.service';
 import { ProfessorService } from './../../services/professor.service';
+
 import {
   Component,
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 @Component({
@@ -19,8 +23,12 @@ export class StudentScheduleModalComponent implements OnInit {
   firstName;
   lastName;
   bannerID;
-  errors;
-  constructor(private professorService: ProfessorService) {}
+  errors: any = {};
+  @Output() appointmentScheduled = new EventEmitter();
+  constructor(
+    private professorService: ProfessorService,
+    private appointmentSevice: AppointmentService
+  ) {}
 
   ngOnInit() {}
 
@@ -43,12 +51,21 @@ export class StudentScheduleModalComponent implements OnInit {
 
   scheduleAppointment() {
     this.validateData();
-    if (this.errors.length === 0) {
+
+    if (Object.keys(this.errors).length === 0) {
       this.selectedAppointment.firstName = this.firstName;
       this.selectedAppointment.lastName = this.lastName;
       this.selectedAppointment.email = this.email;
       this.selectedAppointment.bannerID = this.bannerID;
-      console.log(this.selectedAppointment);
+      this.appointmentSevice
+        .scheduleAppointment(this.selectedAppointment)
+        .subscribe((res: any) => {
+          if (res.success) {
+            this.appointmentScheduled.emit(res);
+            document.getElementById('dismiss-button').click();
+            this.resetValues();
+          }
+        });
     } else {
       console.log(this.errors);
     }

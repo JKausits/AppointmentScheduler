@@ -1,11 +1,15 @@
 import { AppointmentService } from './../../services/appointment.service';
 import { AuthService } from './../../services/auth.service';
+import swal from 'sweetalert2';
 import {
   Component,
   OnInit,
   ApplicationRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  Input,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 @Component({
@@ -22,9 +26,10 @@ export class CalendarComponent implements OnInit {
   friday = new Date();
   times = [];
   days = [];
-  appointments = [];
+  appointments: any;
+  @Input() parentRefreshed;
   @Output() appointmentSelected = new EventEmitter();
-  professorID: number;
+  professorID: Number;
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
@@ -36,6 +41,32 @@ export class CalendarComponent implements OnInit {
     this.buildAppointmentArray();
     this.setProfessorID();
     this.getAppointments();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.parentRefreshed) {
+      this.setCurrentWeek();
+      this.resetTable();
+    }
+  }
+
+  resetTable() {
+    this.clearAppointments();
+    this.buildAppointmentArray();
+    this.setProfessorID();
+    this.getAppointments();
+  }
+
+  clearAppointments() {
+    const table: any = document.getElementById('calendarTable');
+    for (let i = 0; i < this.days.length; i++) {
+      for (let j = 0; j < this.times.length; j++) {
+        const cell = table.rows[j + 1].cells[i + 1];
+        cell.classList = '';
+        cell.dataset.index = '';
+        cell.innerHTML = '';
+      }
+    }
   }
 
   setProfessorID() {
@@ -56,7 +87,7 @@ export class CalendarComponent implements OnInit {
   }
 
   fillCalendarDates() {
-    const table = document.getElementById('calendarTable');
+    const table: any = document.getElementById('calendarTable');
     this.appointments.forEach((appointment, index) => {
       appointment.dateTime = new Date(appointment.dateTime);
       const column = this.getTableColumn(appointment);
@@ -116,8 +147,9 @@ export class CalendarComponent implements OnInit {
     let startTime = new Date();
     const endTime = new Date();
 
-    startTime.setHours(8, 0);
-    endTime.setHours(20, 0);
+    startTime.setHours(10, 0);
+    endTime.setHours(19, 0);
+    this.times = [];
     while (startTime <= endTime) {
       this.times.push(startTime);
 
@@ -145,13 +177,14 @@ export class CalendarComponent implements OnInit {
   getNextWeek() {
     this.currentWeek.setDate(this.currentWeek.getDate() + 7);
     this.setWeekDays();
-    this.getAppointments();
+    this.resetTable();
   }
 
   getPreviousWeek() {
     this.currentWeek.setDate(this.currentWeek.getDate() - 7);
     this.setWeekDays();
     this.getAppointments();
+    this.resetTable();
   }
 
   addDays(days) {
@@ -164,7 +197,6 @@ export class CalendarComponent implements OnInit {
     const index = event.target.getAttribute('data-index');
     if (index !== null) {
       this.appointmentSelected.emit(this.appointments[index]);
-      // this.selectedAppointment = this.appointments[index];
     }
   }
 }

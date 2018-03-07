@@ -22,6 +22,6 @@ export class AppointmentService {
   }
 
   scheduleAppointment(appointment) {
-    return this.http.post(`${this.baseUrl}/api/appointment`, appointment);
+    return this.http.post(`${this.baseUrl}/api/Appointment`, appointment);
   }
 }
