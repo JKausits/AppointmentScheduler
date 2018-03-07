@@ -43,6 +43,7 @@ export class CalendarComponent implements OnInit {
     this.getAppointments();
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnChanges(changes: SimpleChanges) {
     if (changes.parentRefreshed) {
       this.setCurrentWeek();
@@ -99,14 +100,20 @@ export class CalendarComponent implements OnInit {
       if (appointment.status === 1) {
         cell.classList.add('appointment');
         cell.classList.add('pending');
+        cell.dataset.toggle = 'modal';
+        cell.dataset.target = '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 2) {
         cell.classList.add('appointment');
         cell.classList.add('pending-student');
+        cell.dataset.toggle = 'modal';
+        cell.dataset.target = '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 3) {
         cell.classList.add('appointment');
         cell.classList.add('scheduled');
+        cell.dataset.toggle = 'modal';
+        cell.dataset.target = '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 4) {
         cell.classList.add('cancelled');
