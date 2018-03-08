@@ -10,6 +10,17 @@ export class AppointmentService {
     return this.http.get(`${this.baseUrl}/api/appointment/professor/${id}`);
   }
 
+  getPendingOrScheduleProfessorAppointmentsAfterThisWeek(id) {
+    const date = new Date();
+
+    return this.http.get(
+      `${this
+        .baseUrl}/api/appointment/professor/active/${id}?currentDate=${date
+        .toISOString()
+        .slice(0, 10)}`
+    );
+  }
+
   getWeeklyProfessorAppointments(id, currentWeek) {
     const params = new HttpParams().set(
       'currentWeek',

@@ -1,4 +1,4 @@
-import { ListViewComponent } from './../pages/list-view/list-view.component';
+import { AppointmentListViewComponent } from './../pages/appointment-list-view/appointment-list-view.component';
 import { CalendarViewComponent } from './../pages/calendar-view/calendar-view.component';
 import { AccessGuard } from './../access.guard';
 import { ProfessorHomeComponent } from './../pages/professor-home/professor-home.component';
@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: ListViewComponent
+    component: AppointmentListViewComponent
   }
 ];
 
