@@ -39,7 +39,6 @@ export class CalendarViewComponent implements OnInit {
   onAppointmentCancelled(event) {
     swal({
       title: 'Appointment Cancelled',
-      text: event.message,
       type: 'success'
     });
     this.refreshedOn = new Date();
@@ -48,7 +47,6 @@ export class CalendarViewComponent implements OnInit {
   onAppointmentAccepted(event) {
     swal({
       title: 'Appointment Accepted',
-      text: event.message,
       type: 'success'
     });
     this.refreshedOn = new Date();
@@ -57,7 +55,6 @@ export class CalendarViewComponent implements OnInit {
   onAppointmentRejected(event) {
     swal({
       title: 'Appointment Rejected',
-      text: event.message,
       type: 'success'
     });
     this.refreshedOn = new Date();
@@ -66,7 +63,6 @@ export class CalendarViewComponent implements OnInit {
   onAppointmentRescheduled(event) {
     swal({
       title: 'Appointment Rejected',
-      text: event.message,
       type: 'success'
     });
     this.refreshedOn = new Date();

@@ -110,7 +110,7 @@ export class CalendarComponent implements OnInit {
         cell.classList.add('pending-student');
         cell.dataset.toggle = 'modal';
         cell.dataset.target = isLoggedIn
-          ? '#professorCancelModal'
+          ? '#professorScheduledModal'
           : '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 3) {
@@ -118,7 +118,7 @@ export class CalendarComponent implements OnInit {
         cell.classList.add('scheduled');
         cell.dataset.toggle = 'modal';
         cell.dataset.target = isLoggedIn
-          ? '#professorCancelModal'
+          ? '#professorScheduledModal'
           : '#studentCancelModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 4) {

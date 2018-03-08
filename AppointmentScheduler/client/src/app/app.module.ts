@@ -22,6 +22,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { StudentScheduleModalComponent } from './components/student-schedule-modal/student-schedule-modal.component';
 import { StudentCancelModalComponent } from './components/student-cancel-modal/student-cancel-modal.component';
 import { ProfessorConfirmModalComponent } from './components/professor-confirm-modal/professor-confirm-modal.component';
+import { ProfessorScheduledModalComponent } from './components/professor-scheduled-modal/professor-scheduled-modal.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ProfessorConfirmModalComponent } from './components/professor-confirm-m
     CalendarComponent,
     StudentScheduleModalComponent,
     StudentCancelModalComponent,
-    ProfessorConfirmModalComponent
+    ProfessorConfirmModalComponent,
+    ProfessorScheduledModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

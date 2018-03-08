@@ -41,8 +41,6 @@ export class AppointmentService {
   }
 
   rescheduleAppointment(id, requestedDateTime) {
-    console.log(requestedDateTime.toISOString());
-
     return this.http.post(
       `${this.baseUrl}/api/Appointment/reschedule/${id}
     ?requestedDateTime=${requestedDateTime.toISOString()}`,
