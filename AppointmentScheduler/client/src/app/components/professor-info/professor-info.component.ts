@@ -31,16 +31,15 @@ export class ProfessorInfoComponent implements OnInit {
       Title: this.info.title,
       RoomNumber: this.info.roomNumber
     };
-    this.update.emit(info);
-    // this.professorService.updateProfessorPublicInfo(info).subscribe(res => {
-    //   this.result = res;
-    //   if (this.result.success) {
-    //     this.isEdit = false;
-    //     this.professorData.email = this.info.email;
-    //     this.professorData.name = this.info.name;
-    //     this.professorData.title = this.info.title;
-    //     this.professorData.roomNumber = this.info.roomNumber;
-    //   }
-    // });
+    this.professorService.updateProfessorPublicInfo(info).subscribe(res => {
+      this.result = res;
+      if (this.result.success) {
+        this.isEdit = false;
+        this.professorData.email = this.info.email;
+        this.professorData.name = this.info.name;
+        this.professorData.title = this.info.title;
+        this.professorData.roomNumber = this.info.roomNumber;
+      }
+    });
   }
 }
