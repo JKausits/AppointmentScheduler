@@ -20,7 +20,7 @@ namespace AppointmentScheduler.Repositories
 
             return _context.Appointments
                 .Where(a => a.ProfessorID == id)
-                .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID});
+                .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID, BannerID = a.BannerID});
         }
 
         public IEnumerable<AppointmentDTO> GetWeeklyAppointmentsByProfessor(int id, DateTime currentWeek)
@@ -29,13 +29,13 @@ namespace AppointmentScheduler.Repositories
             currentWeek = currentWeek.AddDays(-1);
             return _context.Appointments
                 .Where(a => a.ProfessorID == id && a.DateTime >= currentWeek && a.DateTime <= endOfWeek)
-                .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID });
+                .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID, BannerID = a.BannerID });
         }
 
         public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id) {
             return _context.Appointments
                .Where(a => a.ProfessorID == id && (a.Status != Appointment.StatusType.Open && a.Status != Appointment.StatusType.Cancelled))
-               .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID });
+               .Select(a => new AppointmentDTO { ID = a.ID, FirstName = a.FirstName, LastName = a.LastName, Email = a.Email, DateTime = a.DateTime, Status = a.Status, ProfessorID = a.ProfessorID, BannerID = a.BannerID });
         }
 
         public Object ScheduleAppointment(Appointment entity) {
@@ -51,6 +51,7 @@ namespace AppointmentScheduler.Repositories
             appointment.LastName = entity.LastName;
             appointment.Email = entity.Email;
             appointment.Status = Appointment.StatusType.Pending;
+            appointment.BannerID = entity.BannerID;
             appointment.generateCancelationCode();
             _context.Appointments.Update(appointment);
             _context.SaveChanges();
@@ -71,7 +72,8 @@ namespace AppointmentScheduler.Repositories
             appointment.FirstName = null;
             appointment.LastName = null;
             appointment.Email = null;
-            appointment.ModifiedAt = new DateTime();
+            appointment.BannerID = null;
+            appointment.ModifiedAt = DateTime.Now;
             appointment.Status = Appointment.StatusType.Open;
             _context.Appointments.Update(appointment);
             _context.SaveChanges();
@@ -103,7 +105,8 @@ namespace AppointmentScheduler.Repositories
             appointment.FirstName = null;
             appointment.LastName = null;
             appointment.Email = null;
-            appointment.ModifiedAt = DateTime.Today;
+            appointment.BannerID = null;
+            appointment.ModifiedAt = DateTime.Now;
             appointment.Status = Appointment.StatusType.Open;
             _context.Appointments.Update(appointment);
             _context.SaveChanges();
@@ -121,12 +124,13 @@ namespace AppointmentScheduler.Repositories
 
             if (rescheduledAppointment == null)
             {
-                rescheduledAppointment = new Appointment { FirstName = appointment.FirstName, LastName = appointment.LastName, Email = appointment.Email, DateTime = requestedDateTime, CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now, ProfessorID = appointment.ProfessorID, Status = Appointment.StatusType.PendingStudent };
+                rescheduledAppointment = new Appointment { FirstName = appointment.FirstName, LastName = appointment.LastName, Email = appointment.Email, DateTime = requestedDateTime, CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now, ProfessorID = appointment.ProfessorID, Status = Appointment.StatusType.PendingStudent, BannerID = appointment.BannerID };
                 rescheduledAppointment.generateCancelationCode();
                 appointment.Status = Appointment.StatusType.Open;
                 appointment.FirstName = null;
                 appointment.LastName = null;
                 appointment.Email = null;
+                appointment.BannerID = null;
                 _context.Appointments.Update(appointment);
                 _context.Appointments.Add(rescheduledAppointment);
                 emailRescheduledNotification(rescheduledAppointment.Email);
