@@ -36,9 +36,11 @@ namespace AppointmentScheduler.Controllers
 
 
         [HttpGet("professor/active/{id}")]
-        public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id) {
-            return _repository.GetPendingOrScheduledAppointmentsByProfessor(id);
+        public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id, [FromQuery(Name = "currentDate")] DateTime? currentDate) {
+
+            return _repository.GetPendingOrScheduledAppointmentsByProfessor(id, currentDate);
         }
+
 
         [HttpPut("accept/{id}")]
         public IActionResult ConfirmAppointment(int id) {

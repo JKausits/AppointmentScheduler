@@ -23,6 +23,7 @@ import { StudentScheduleModalComponent } from './components/student-schedule-mod
 import { StudentCancelModalComponent } from './components/student-cancel-modal/student-cancel-modal.component';
 import { ProfessorConfirmModalComponent } from './components/professor-confirm-modal/professor-confirm-modal.component';
 import { ProfessorScheduledModalComponent } from './components/professor-scheduled-modal/professor-scheduled-modal.component';
+import { ListViewComponent } from './pages/list-view/list-view.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProfessorScheduledModalComponent } from './components/professor-schedul
     StudentScheduleModalComponent,
     StudentCancelModalComponent,
     ProfessorConfirmModalComponent,
-    ProfessorScheduledModalComponent
+    ProfessorScheduledModalComponent,
+    ListViewComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
