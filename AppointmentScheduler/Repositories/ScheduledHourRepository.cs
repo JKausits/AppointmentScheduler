@@ -83,7 +83,7 @@ namespace AppointmentScheduler.Repositories
                         appointment.ProfessorID = entity.ProfessorID;
                         appointment.Status = Appointment.StatusType.Open;
                         appointment.DateTime = currentDate + currentTime;
-                        appointment.ScheduledHourID = entity.ID;
+                        //appointment.ScheduledHourID = entity.ID;
                         _context.Appointments.Add(appointment);
 
 

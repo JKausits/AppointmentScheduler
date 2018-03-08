@@ -79,8 +79,98 @@ namespace AppointmentScheduler.Repositories
             return new { success = true, message = "Appointment Cancelled" };
         }
 
+        public Object AcceptAppointment(int id) {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
+            if (appointment == null) {
+                return new { success = false, message = "Unable to find appointment" };
+            }
+
+            appointment.Status = Appointment.StatusType.Scheduled;
+            appointment.ModifiedAt = DateTime.Today;
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+            emailAppointmentConfirmation(appointment.Email);
+            return new { success = true, message = "Appointment Accepted"};
+        }
+
+        public Object RejectAppointment(int id) {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
+            if (appointment == null)
+            {
+                return new { success = false, message = "Could not find appointment" };
+            }
+
+            appointment.FirstName = null;
+            appointment.LastName = null;
+            appointment.Email = null;
+            appointment.ModifiedAt = DateTime.Today;
+            appointment.Status = Appointment.StatusType.Open;
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+
+            return new { success = true, message = "Appointment Rejected" };
+        }
+
+        public Object RescheduleAppointment(int id, DateTime requestedDateTime) {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
+            if (appointment == null) {
+                return new { success = false, message = "could not find original appointment"};
+            }
+
+            var rescheduledAppointment = _context.Appointments.FirstOrDefault(a => a.ProfessorID == appointment.ProfessorID && a.DateTime == requestedDateTime);
+
+            if (rescheduledAppointment == null)
+            {
+                rescheduledAppointment = new Appointment { FirstName = appointment.FirstName, LastName = appointment.LastName, Email = appointment.Email, DateTime = requestedDateTime, CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now, ProfessorID = appointment.ProfessorID, Status = Appointment.StatusType.PendingStudent };
+                rescheduledAppointment.generateCancelationCode();
+                appointment.Status = Appointment.StatusType.Open;
+                appointment.FirstName = null;
+                appointment.LastName = null;
+                appointment.Email = null;
+                _context.Appointments.Update(appointment);
+                _context.Appointments.Add(rescheduledAppointment);
+                emailRescheduledNotification(rescheduledAppointment.Email);
+
+            }
+            else if (rescheduledAppointment.Status != Appointment.StatusType.Open)
+            {
+                return new { success = false, message = "That appointment time is already taken" };
+            }
+            else {
+                rescheduledAppointment.Status = Appointment.StatusType.PendingStudent;
+                rescheduledAppointment.FirstName = appointment.FirstName;
+                rescheduledAppointment.LastName = appointment.LastName;
+                rescheduledAppointment.Email = appointment.Email;
+                rescheduledAppointment.BannerID = appointment.BannerID;
+                appointment.Status = Appointment.StatusType.Open;
+                appointment.FirstName = null;
+                appointment.LastName = null;
+                appointment.Email = null;
+                appointment.BannerID = null;
+                _context.Appointments.Update(appointment);
+                _context.Appointments.Update(rescheduledAppointment);
+                emailRescheduledNotification(rescheduledAppointment.Email);
+            }
+
+            _context.SaveChanges();
+
+
+            return new { success = true, message = "Appointment Rescheduled"};
+        }
+
+
         private void emailCancellationCode() {
             Console.WriteLine("Sending now");
         }
+
+        private void emailAppointmentConfirmation(string email) {
+            Console.WriteLine("Sending email to " + email);
+        }
+
+        private void emailRescheduledNotification(string email) {
+            Console.WriteLine("Sending email to " + email);
+        }
+
+
     }
 }

@@ -40,15 +40,32 @@ namespace AppointmentScheduler.Controllers
             return _repository.GetPendingOrScheduledAppointmentsByProfessor(id);
         }
 
-        [HttpPost]
-        public IActionResult ScheduleAppointment([FromBody] Appointment appointment) {
-            Console.WriteLine("Scheduling Appointment");
-            return new ObjectResult(_repository.ScheduleAppointment(appointment));
+        [HttpPut("accept/{id}")]
+        public IActionResult ConfirmAppointment(int id) {
+            return new ObjectResult(_repository.AcceptAppointment(id));
         }
+
+        [HttpPut("reject/{id}")]
+        public IActionResult RejectAppointment(int id) {
+            return new ObjectResult(_repository.RejectAppointment(id));
+        }
+
 
         [HttpPut("cancel/{id}")]
         public IActionResult CancelAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode) {
             return new ObjectResult(_repository.CancelAppointment(id, cancelCode));
         }
+
+        [HttpPost]
+        public IActionResult ScheduleAppointment([FromBody] Appointment appointment) {
+            return new ObjectResult(_repository.ScheduleAppointment(appointment));
+        }
+
+        [HttpPost("reschedule/{id}")]
+        public IActionResult RescheduleAppointment(int id, [FromQuery(Name = "requestedDateTime")] DateTime requestedDateTime) {
+            Console.WriteLine(requestedDateTime);
+            return new ObjectResult(_repository.RescheduleAppointment(id, requestedDateTime));
+        }
+
     }
 }
