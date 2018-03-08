@@ -1,0 +1,53 @@
+<div class="card" *ngIf="appointment">
+  <div class="card-body" style="position: relative;">
+    <div class="status-bar" [class.pending]="appointment.status == 1" [class.pending-student]="appointment.status == 2"></div>
+    <div class="alert alert-danger alert-dismissible fade show" *ngIf="appointmentError" role="alert">
+      {{appointmentError}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <strong>Date: </strong>
+        <span *ngIf="!isReschedule">{{appointment.dateTime | date: 'shortDate' }}</span>
+        <input type="date" *ngIf="isReschedule" [(ngModel)]="appointmentDate" class="form-control">
+
+      </div>
+      <div class="col-md-4">
+        <strong>Time: </strong>
+        <span *ngIf="!isReschedule">{{appointment.dateTime | date: 'shortTime' }}</span>
+        <input type="time" *ngIf="isReschedule" [(ngModel)]="appointmentTime" class="form-control" step="900">
+      </div>
+    </div>
+    <div>
+      <strong>First Name: </strong><span>{{appointment.firstName}}</span>
+    </div>
+    <div>
+      <strong>Last Name: </strong><span>{{appointment.lastName}}</span>
+    </div>
+    <div>
+      <strong>Banner ID: </strong><span>{{appointment.bannerID}}</span>
+
+    </div>
+    <div *ngIf="appointment.status == 1">
+      <strong>Status: </strong><span>Pending</span>
+    </div>
+    <div *ngIf="appointment.status == 2">
+      <strong>Status: </strong><span>Pending Student</span>
+    </div>
+    <div *ngIf="appointment.status == 3">
+      <strong>Status: </strong><span>Scheduled</span>
+    </div>
+    <div *ngIf="!isReschedule">
+      <button class="btn btn-warning float-right" (click)="toggleReschedule()">Reschedule</button>
+      <button class="btn btn-danger float-right" (click)="rejectAppointment()">{{appointment.status == 1 ? 'Reject' : 'Cancel'}}</button>
+      <button class="btn btn-success float-right" *ngIf="appointment.status == 1" (click)="acceptAppointment()">Accept</button>
+
+    </div>
+    <div *ngIf="isReschedule">
+      <button class="btn btn-danger float-right" (click)="toggleReschedule()">Cancel</button>
+      <button class="btn btn-primary float-right" (click)="rescheduleAppointment()">Reschedule</button>
+    </div>
+  </div>
+</div>

@@ -24,7 +24,13 @@ export class AppointmentListViewComponent implements OnInit {
         this.auth.getTokenData().ID
       )
       .subscribe((res: any) => {
-        console.log(res);
+        this.appointments = res;
       });
+  }
+
+  onAppointmentRejected(id) {
+    this.appointments = this.appointments.filter(
+      appointment => appointment.id !== id
+    );
   }
 }

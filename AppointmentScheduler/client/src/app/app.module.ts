@@ -24,6 +24,7 @@ import { StudentCancelModalComponent } from './components/student-cancel-modal/s
 import { ProfessorConfirmModalComponent } from './components/professor-confirm-modal/professor-confirm-modal.component';
 import { ProfessorScheduledModalComponent } from './components/professor-scheduled-modal/professor-scheduled-modal.component';
 import { AppointmentListViewComponent } from './pages/appointment-list-view/appointment-list-view.component';
+import { AppointmentListViewItemComponent } from './components/appointment-list-view-item/appointment-list-view-item.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AppointmentListViewComponent } from './pages/appointment-list-view/appo
     StudentCancelModalComponent,
     ProfessorConfirmModalComponent,
     ProfessorScheduledModalComponent,
-    AppointmentListViewComponent
+    AppointmentListViewComponent,
+    AppointmentListViewItemComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
