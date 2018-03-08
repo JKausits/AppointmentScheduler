@@ -10,9 +10,10 @@ using System;
 namespace AppointmentScheduler.Migrations
 {
     [DbContext(typeof(AppointmentSchedulerContext))]
-    partial class AppointmentSchedulerContextModelSnapshot : ModelSnapshot
+    [Migration("20180308033832_added BannerID to appointment")]
+    partial class addedBannerIDtoappointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

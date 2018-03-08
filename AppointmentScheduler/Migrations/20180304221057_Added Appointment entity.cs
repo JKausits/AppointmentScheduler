@@ -34,12 +34,6 @@ namespace AppointmentScheduler.Migrations
                         principalTable: "Professors",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Appointments_ScheduledHours_ScheduledHourID",
-                        column: x => x.ScheduledHourID,
-                        principalTable: "ScheduledHours",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -47,10 +41,6 @@ namespace AppointmentScheduler.Migrations
                 table: "Appointments",
                 column: "ProfessorID");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_ScheduledHourID",
-                table: "Appointments",
-                column: "ScheduledHourID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
