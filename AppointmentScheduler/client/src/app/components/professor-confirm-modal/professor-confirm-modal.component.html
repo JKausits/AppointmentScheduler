@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Confrim Appointment</h5>
-        <button id="student-cancel-dismiss-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button id="professor-confirm-dismiss-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
       </div>
@@ -12,13 +12,26 @@
         <div>
           <strong>Professor: </strong><span>{{professor.name}}</span>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!isRescheduling">
           <div class="col-md-4">
             <strong>Date: </strong><span>{{selectedAppointment.dateTime | date: 'mediumDate'}}</span>
           </div>
           <div class="col-md-4">
             <strong>Time: </strong><span>{{selectedAppointment.dateTime | date: 'shortTime'}}</span>
           </div>
+        </div>
+        <div *ngIf="isRescheduling">
+          <form>
+            <div class="form-group row">
+              <label class="col-md-2"><strong>Date: </strong></label>
+              <input [(ngModel)]="appointmentDate" type="date" class="form-control col-md-8" name="date" id="date">
+
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2"><strong>Time: </strong></label>
+              <input [(ngModel)]="appointmentTime" type="time" class="form-control col-md-8" name="time" id="time" step="900">
+            </div>
+          </form>
         </div>
         <div>
           <strong>First Name: </strong><span>{{selectedAppointment.firstName}}</span>
@@ -32,14 +45,15 @@
         <div>
           <strong>Banner ID: </strong><span>{{selectedAppointment.bannerID}}</span>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-success" (click)="acceptAppointment()">Accept</button>
-          <button class="btn btn-danger" (click)="rejectAppointment()">Reject</button>
-          <button class="btn btn-warning" (click)="rescheduleAppointment()">Reschedule</button>
-
-        </div>
 
 
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!isRescheduling" class="btn btn-success" (click)="acceptAppointment()">Accept</button>
+        <button *ngIf="!isRescheduling" class="btn btn-danger" (click)="rejectAppointment()">Reject</button>
+        <button *ngIf="!isRescheduling" class="btn btn-warning" (click)="toggleRescheduleAppointment()">Reschedule</button>
+        <button *ngIf="isRescheduling" class="btn btn-primary" (click)="rescheduleAppointment()">Reschedule</button>
+        <button *ngIf="isRescheduling" class="btn btn-danger" (click)="toggleRescheduleAppointment()">Cancel</button>
       </div>
     </div>
   </div>

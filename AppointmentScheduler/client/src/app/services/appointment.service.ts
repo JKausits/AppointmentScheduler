@@ -31,4 +31,22 @@ export class AppointmentService {
       {}
     );
   }
+
+  acceptAppointment(id) {
+    return this.http.put(`${this.baseUrl}/api/Appointment/accept/${id}`, {});
+  }
+
+  rejectAppointment(id) {
+    return this.http.put(`${this.baseUrl}/api/Appointment/reject/${id}`, {});
+  }
+
+  rescheduleAppointment(id, requestedDateTime) {
+    console.log(requestedDateTime.toISOString());
+
+    return this.http.post(
+      `${this.baseUrl}/api/Appointment/reschedule/${id}
+    ?requestedDateTime=${requestedDateTime.toISOString()}`,
+      {}
+    );
+  }
 }
