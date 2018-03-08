@@ -1,5 +1,11 @@
-<div>
+<div class="card">
+  <div class="card-body">
 
+    <div class="card-title">
+      <span id="title"><strong>  Appointments</strong></span>
+      <a routerLink="/list" class="btn-primary btn float-right" *ngIf="auth.isLoggedIn()">List View</a>
+    </div>
+  </div>
   <app-calendar (appointmentSelected)="onAppointmentSelected($event)" [parentRefreshed]="refreshedOn"></app-calendar>
   <app-student-schedule-modal [selectedAppointment]="selectedAppointment" (appointmentScheduled)="onAppointmentScheduled($event)"></app-student-schedule-modal>
   <app-student-cancel-modal [selectedAppointment]="selectedAppointment" (appointmentCancelled)="onAppointmentCancelled($event)"></app-student-cancel-modal>

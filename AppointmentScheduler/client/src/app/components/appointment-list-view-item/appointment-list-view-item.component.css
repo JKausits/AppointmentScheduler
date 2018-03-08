@@ -11,30 +11,6 @@
   max-width: 15px;
 }
 
-.pending {
-  background-color: lightgoldenrodyellow;
-}
-
-.pending-student {
-  background-color: lightsalmon;
-}
-
-.btn-danger {
-  background-color: lightcoral;
-}
-
-.btn-warning {
-  background-color: lightgoldenrodyellow;
-}
-
-.btn-success {
-  background-color: lightgreen;
-}
-
-.btn-primary {
-  background-color: lightblue;
-}
-
 .btn {
   min-width: 110px;
 }

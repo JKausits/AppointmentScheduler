@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ProfessorService } from './../../services/professor.service';
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
@@ -12,7 +13,10 @@ export class CalendarViewComponent implements OnInit {
   refreshedOn = new Date();
   professor: any;
 
-  constructor(private professorService: ProfessorService) {}
+  constructor(
+    private professorService: ProfessorService,
+    private auth: AuthService
+  ) {}
   ngOnInit() {}
   onAppointmentSelected(appointment) {
     this.selectedAppointment = appointment;

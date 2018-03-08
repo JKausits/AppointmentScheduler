@@ -1,10 +1,14 @@
 <div class="card">
   <div class="card-body">
     <div class="card-title">
-      <h3>Appointments</h3>
+      <span id="title"><strong>  Appointments</strong></span>
+      <a routerLink="/calendar" *ngIf="auth.isLoggedIn()" class="btn-primary btn float-right">Calendar View</a>
     </div>
+    <br>
     <div *ngFor="let appointment of appointments">
+
       <app-appointment-list-view-item [appointment]="appointment" (appointmentRejected)="onAppointmentRejected($event)"></app-appointment-list-view-item>
+
+
     </div>
   </div>
-</div>
