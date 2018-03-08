@@ -15,18 +15,17 @@ namespace AppointmentScheduler.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public int ProfessorID { get; set; }
-        public int ScheduledHourID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string CancelCode { get; set; }
+        public string BannerID { get; set; }
         public StatusType Status { get; set; }
         public DateTime DateTime { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
 
         public virtual Professor Professor { get; set; }
-        public virtual ScheduledHour ScheduledHour { get; set; }
 
         public void generateCancelationCode()
         {

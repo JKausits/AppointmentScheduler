@@ -22,7 +22,6 @@ namespace AppointmentScheduler.Migrations
                     LastName = table.Column<string>(nullable: true),
                     ModifiedAt = table.Column<DateTime>(nullable: false),
                     ProfessorID = table.Column<int>(nullable: false),
-                    ScheduledHourID = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

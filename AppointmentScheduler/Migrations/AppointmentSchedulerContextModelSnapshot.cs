@@ -109,7 +109,6 @@ namespace AppointmentScheduler.Migrations
 
                     b.HasIndex("ProfessorID");
 
-                    b.ToTable("ScheduledHours");
                 });
 
             modelBuilder.Entity("AppointmentScheduler.Entities.Appointment", b =>
