@@ -24,4 +24,8 @@ export class ProfessorService {
       }
     );
   }
+
+  getActiveProfessors() {
+    return this.httpClient.get(`${this.baseUrl}/api/professor/active`);
+  }
 }

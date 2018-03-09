@@ -25,6 +25,8 @@ import { ProfessorConfirmModalComponent } from './components/professor-confirm-m
 import { ProfessorScheduledModalComponent } from './components/professor-scheduled-modal/professor-scheduled-modal.component';
 import { AppointmentListViewComponent } from './pages/appointment-list-view/appointment-list-view.component';
 import { AppointmentListViewItemComponent } from './components/appointment-list-view-item/appointment-list-view-item.component';
+import { ProfessorInfoCardComponent } from './components/professor-info-card/professor-info-card.component';
+import { ProfessorsComponent } from './pages/professors/professors.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { AppointmentListViewItemComponent } from './components/appointment-list-
     ProfessorConfirmModalComponent,
     ProfessorScheduledModalComponent,
     AppointmentListViewComponent,
-    AppointmentListViewItemComponent
+    AppointmentListViewItemComponent,
+    ProfessorInfoCardComponent,
+    ProfessorsComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

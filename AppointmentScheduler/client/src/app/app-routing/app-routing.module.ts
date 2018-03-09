@@ -1,3 +1,4 @@
+import { ProfessorsComponent } from './../pages/professors/professors.component';
 import { AppointmentListViewComponent } from './../pages/appointment-list-view/appointment-list-view.component';
 import { CalendarViewComponent } from './../pages/calendar-view/calendar-view.component';
 import { AccessGuard } from './../access.guard';
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'list',
     component: AppointmentListViewComponent
+  },
+  {
+    path: '',
+    component: ProfessorsComponent
   }
 ];
 

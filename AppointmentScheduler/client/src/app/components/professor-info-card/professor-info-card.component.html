@@ -1,0 +1,11 @@
+<a class="card" routerLink="calendar/{{professor.id}}">
+  <div class="card-body" *ngIf="professor">
+    <div class="card-title">
+      <h4>{{professor.name}}</h4>
+    </div>
+    <div><strong>Title: </strong><span>{{professor.title}}</span></div>
+    <div><strong>Office #: </strong><span>{{professor.roomNumber}}</span></div>
+    <div><strong>Email: </strong><span>{{professor.email}}</span></div>
+
+  </div>
+</a>
