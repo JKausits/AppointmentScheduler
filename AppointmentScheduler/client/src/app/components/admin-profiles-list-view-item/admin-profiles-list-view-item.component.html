@@ -1,30 +1,37 @@
 <div class="card">
   <div class="card-body">
-    <div>
-      <strong>Professor Name: </strong>
-      <span>{{professor.name}}</span>
+    <div class="row">
+      <strong class="col-md-2">Professor Name: </strong>
+      <span *ngIf="!isEdit" class="col-md-4">{{professor.name}}</span>
+      <input type="text" *ngIf="isEdit" [(ngModel)]="name" class="form-control col-md-4">
     </div>
-    <div>
-      <strong>Email: </strong>
-      <span>{{professor.email}}</span>
+    <div class="row">
+      <strong class="col-md-2">Email: </strong>
+      <span class="col-md-4" *ngIf="!isEdit">{{professor.email}}</span>
+      <input type="text" *ngIf="isEdit" [(ngModel)]="email" class="form-control col-md-4">
     </div>
-    <div>
-      <strong>Room Number: </strong>
-      <span>{{professor.roomNumber}}</span>
+    <div class="row">
+      <strong class="col-md-2">Room Number: </strong>
+      <span class="col-md-4" *ngIf="!isEdit">{{professor.roomNumber}}</span>
+      <input type="text" *ngIf="isEdit" [(ngModel)]="roomNumber" class="form-control col-md-4">
     </div>
-    <div>
-      <strong>Title: </strong>
-      <span>{{professor.title}}</span>
+    <div class="row">
+      <strong class="col-md-2">Title: </strong>
+      <span class="col-md-4" *ngIf="!isEdit">{{professor.title}}</span>
+      <input type="text" *ngIf="isEdit" [(ngModel)]="title" class="form-control col-md-4">
     </div>
-    <div>
-      <strong>Status: </strong>
-      <span>{{professor.active ? 'Active': 'Inactive'}}</span>
+    <div class="row">
+      <strong class="col-md-2">Status: </strong>
+      <span class="col-md-4">{{professor.active ? 'Active': 'Inactive'}}</span>
     </div>
-    <div>
-      <button class="btn btn-warning float-right">Edit</button>
+    <div *ngIf="!isEdit">
+      <button class="btn btn-warning float-right" (click)="toggleEdit()">Edit</button>
       <button class="btn float-right" [class.btn-success]="!professor.active" [class.btn-danger]="professor.active" (click)="toggleActivate()">{{professor.active ? 'Deactive' : 'Activate'}}</button>
-      <button class="btn float-right" [class.btn-success]="!professor.admin" [class.btn-danger]="professor.admin">{{professor.admin ? 'Revoke Admin' : 'Grant Admin'}}</button>
-
+      <button class="btn float-right" [class.btn-success]="!professor.admin" [class.btn-danger]="professor.admin" (click)="toggleAdmin()">{{professor.admin ? 'Revoke Admin' : 'Grant Admin'}}</button>
+    </div>
+    <div *ngIf="isEdit">
+      <button class="btn float-right btn-danger" (click)="toggleEdit()">Cancel</button>
+      <button class="btn float-right btn-primary" (click)="updateInfo()">Update</button>
     </div>
   </div>
 </div>

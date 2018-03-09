@@ -8,9 +8,16 @@ import swal from 'sweetalert2';
 })
 export class AdminProfilesListViewItemComponent implements OnInit {
   @Input() professor;
+  isEdit = false;
+  name: string;
+  email: string;
+  roomNumber: string;
+  title: string;
   constructor(private professorService: ProfessorService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setValues();
+  }
 
   toggleActivate() {
     this.professor.active = !this.professor.active;
@@ -25,7 +32,73 @@ export class AdminProfilesListViewItemComponent implements OnInit {
             type: 'success'
           });
         } else {
-          swal({ title: 'Could not activate/deactive account', type: 'error' });
+          swal({ title: 'Could Not Activate/Deactive Account', type: 'error' });
+          this.professor.active = !this.professor.active;
+        }
+      });
+  }
+
+  toggleAdmin() {
+    this.professor.admin = !this.professor.admin;
+    this.professorService
+      .updateProfessorPrivateInfo(this.professor)
+      .subscribe((res: any) => {
+        if (res.success) {
+          swal({
+            title: this.professor.admin
+              ? 'Professor Granted Admin Privileges'
+              : 'Professor Revoked of Admin Privileges',
+            type: 'success'
+          });
+        } else {
+          swal({
+            title: 'Could Not Grant/Revoke Admin Privileges',
+            type: 'error'
+          });
+          this.professor.admin = !this.professor.admin;
+        }
+      });
+  }
+
+  toggleEdit() {
+    this.isEdit = !this.isEdit;
+    if (this.isEdit) {
+      this.setValues();
+    }
+  }
+
+  setValues() {
+    this.name = this.professor.name;
+    this.email = this.professor.email;
+    this.roomNumber = this.professor.roomNumber;
+    this.title = this.professor.title;
+  }
+
+  updateInfo() {
+    const newProfessorInfo = {
+      id: this.professor.id,
+      name: this.name,
+      email: this.email,
+      title: this.title,
+      roomNumber: this.roomNumber,
+      active: this.professor.active,
+      admin: this.professor.admin
+    };
+
+    this.professorService
+      .updateProfessorPrivateInfo(newProfessorInfo)
+      .subscribe((res: any) => {
+        if (res.success) {
+          swal({ title: 'Professor Information Updated', type: 'success' });
+          this.professor.name = this.name;
+          this.professor.email = this.email;
+          this.professor.roomNumber = this.roomNumber;
+          this.professor.title = this.title;
+          this.isEdit = false;
+        } else {
+          swal({ title: 'Could Not Update Information', type: 'error' });
+          this.setValues();
+          this.isEdit = false;
         }
       });
   }
