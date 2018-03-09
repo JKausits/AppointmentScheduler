@@ -1,3 +1,4 @@
+import { AdminProfilesListViewComponent } from './../pages/admin-profiles-list-view/admin-profiles-list-view.component';
 import { ProfessorsComponent } from './../pages/professors/professors.component';
 import { AppointmentListViewComponent } from './../pages/appointment-list-view/appointment-list-view.component';
 import { CalendarViewComponent } from './../pages/calendar-view/calendar-view.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfessorsComponent
+  },
+  {
+    path: 'admin',
+    component: AdminProfilesListViewComponent
   }
 ];
 

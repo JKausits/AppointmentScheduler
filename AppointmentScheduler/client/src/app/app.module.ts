@@ -27,6 +27,8 @@ import { AppointmentListViewComponent } from './pages/appointment-list-view/appo
 import { AppointmentListViewItemComponent } from './components/appointment-list-view-item/appointment-list-view-item.component';
 import { ProfessorInfoCardComponent } from './components/professor-info-card/professor-info-card.component';
 import { ProfessorsComponent } from './pages/professors/professors.component';
+import { AdminProfilesListViewComponent } from './pages/admin-profiles-list-view/admin-profiles-list-view.component';
+import { AdminProfilesListViewItemComponent } from './components/admin-profiles-list-view-item/admin-profiles-list-view-item.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ProfessorsComponent } from './pages/professors/professors.component';
     AppointmentListViewComponent,
     AppointmentListViewItemComponent,
     ProfessorInfoCardComponent,
-    ProfessorsComponent
+    ProfessorsComponent,
+    AdminProfilesListViewComponent,
+    AdminProfilesListViewItemComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
