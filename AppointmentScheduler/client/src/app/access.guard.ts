@@ -36,14 +36,11 @@ export class AccessGuard implements CanActivate {
     }
 
     const requiresAdmin = next.data.requiresAdmin || false;
+    const isAdmin: boolean = this.auth.isAdmin();
 
     if (requiresAdmin) {
-      const isAdmin: boolean = this.auth.isAdmin();
-
       if (!isAdmin && isLoggedIn) {
         location.replace('/home');
-        // console.log('Send to home');
-
         return false;
       } else if (!isAdmin) {
         location.replace('/login');
@@ -51,6 +48,15 @@ export class AccessGuard implements CanActivate {
       }
 
       return true;
+    }
+
+    const requiresAdminOrAnonymous =
+      next.data.requiresAdminOrAnonymous || false;
+    if (requiresAdminOrAnonymous) {
+      if (!isAdmin || !isLoggedIn) {
+        location.replace('/calendar');
+        return false;
+      }
     }
 
     return true;

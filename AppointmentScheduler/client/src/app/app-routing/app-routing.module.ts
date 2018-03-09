@@ -31,11 +31,15 @@ const routes: Routes = [
   },
   {
     path: 'calendar/:id',
-    component: CalendarViewComponent
+    component: CalendarViewComponent,
+    data: { requiresAdminOrAnonymous: true },
+    canActivate: [AccessGuard]
   },
   {
     path: 'calendar',
-    component: CalendarViewComponent
+    component: CalendarViewComponent,
+    data: { requiresLogin: true },
+    canActivate: [AccessGuard]
   },
   {
     path: 'list',
@@ -45,7 +49,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: ProfessorsComponent
+    component: ProfessorsComponent,
+    data: { requiresAdminOrAnonymous: true },
+    canActivate: [AccessGuard]
   },
   {
     path: 'admin',
