@@ -54,8 +54,19 @@ namespace AppointmentScheduler.Controllers
 
 
         [HttpPut("cancel/{id}")]
-        public IActionResult CancelAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode) {
-            return new ObjectResult(_repository.CancelAppointment(id, cancelCode));
+        public IActionResult StudentCancelScheduledAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode) {
+            return new ObjectResult(_repository.StudentCancelScheduledAppointment(id, cancelCode));
+        }
+
+        [HttpPut("professor/cancel/{id}")]
+        public IActionResult CancelAppointment(int id) {
+            return new ObjectResult(_repository.CancelAppointment(id));
+        }
+
+        [HttpPut("professor/uncancel/{id}")]
+        public IActionResult UncancelAppointment(int id)
+        {
+            return new ObjectResult(_repository.UncancelAppointment(id));
         }
 
         [HttpPost]

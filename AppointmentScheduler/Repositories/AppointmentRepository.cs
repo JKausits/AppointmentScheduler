@@ -48,6 +48,7 @@ namespace AppointmentScheduler.Repositories
         }
 
 
+
         public Object ScheduleAppointment(Appointment entity) {
             var appointment = _context.Appointments.FirstOrDefault(a => a.ID == entity.ID);
             if (appointment == null)
@@ -69,7 +70,39 @@ namespace AppointmentScheduler.Repositories
             return new { success = true, message = "Appointment scheduled, you will be receiving a cancellation code in your email shortly" };
         }
 
-        public Object CancelAppointment(int id, string cancelCode) {
+        public Object CancelAppointment(int id) {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
+            if (appointment == null) {
+                return new { success = false, message = "Unable to find appointment" };
+            }
+
+            appointment.Status = Appointment.StatusType.Cancelled;
+            appointment.FirstName = null;
+            appointment.LastName = null;
+            appointment.Email = null;
+            appointment.CancelCode = null;
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+
+            return new { success = true, message = "Appointment Cancelled" }; ;
+        }
+
+        public Object UncancelAppointment(int id)
+        {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
+            if (appointment == null)
+            {
+                return new { success = false, message = "Unable to find appointment" };
+            }
+
+            appointment.Status = Appointment.StatusType.Open;
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+
+            return new { success = true, message = "Appointment Uncancelled" }; ;
+        }
+
+        public Object StudentCancelScheduledAppointment(int id, string cancelCode) {
             var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
             if (appointment == null) {
                 return new { success = false, message = "Could not find appointment" };
