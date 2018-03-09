@@ -4,6 +4,7 @@ using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace AppointmentScheduler.Controllers
 {
@@ -39,12 +40,19 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(professor);
         }
 
+        [HttpGet("active")]
+        public IEnumerable<ProfessorPublicDTO> GetActiveProfessors() {
+            return _respository.GetActiveProfessors();
+        }
+
         [HttpPut("{id}")]
         public IActionResult UpdatePublic(int id, [FromBody] ProfessorPublicDTO professor) {
 
    
             return new ObjectResult(_respository.UpdatePublic(id, professor));
         }
+
+       
         
     }
 }
