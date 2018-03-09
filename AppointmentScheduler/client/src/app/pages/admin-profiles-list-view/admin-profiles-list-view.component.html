@@ -4,5 +4,8 @@
     <div class="card-title">
       <h4>Profiles</h4>
     </div>
+    <div *ngFor="let professor of professors">
+      <app-admin-profiles-list-view-item [professor]="professor"></app-admin-profiles-list-view-item>
+    </div>
   </div>
 </div>

@@ -14,7 +14,14 @@ export class AdminProfilesListViewComponent implements OnInit {
     private auth: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getProfessors();
+  }
 
-  getProfessors() {}
+  getProfessors() {
+    this.professorService.getProfessors().subscribe((res: any) => {
+      this.professors = res;
+      console.log(this.professors);
+    });
+  }
 }
