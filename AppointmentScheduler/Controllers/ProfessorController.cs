@@ -57,6 +57,11 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(_respository.UpdatePublic(id, professor));
         }
 
+        [HttpPut("private/{id}")]
+        public IActionResult UpdatePrivate(int id, [FromBody] ProfessorPrivateDTO professor) {
+            return new ObjectResult(_respository.UpdatePrivate(id, professor));
+        }
+
        
         
     }

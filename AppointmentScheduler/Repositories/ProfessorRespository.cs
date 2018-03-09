@@ -69,5 +69,25 @@ namespace AppointmentScheduler.Repositories
             _context.SaveChanges();
             return new { success = true, message = "Information updated" };
         }
+
+        public Object UpdatePrivate(int id, ProfessorPrivateDTO entity)
+        {
+            var professor = _context.Professors.SingleOrDefault(p => p.ID == id);
+            if (professor == null)
+            {
+                return new { success = false, message = "Could not find professor" };
+            }
+
+            professor.Email = entity.Email;
+            professor.Name = entity.Name;
+            professor.RoomNumber = entity.RoomNumber;
+            professor.Title = entity.Title;
+            professor.Active = entity.Active;
+            professor.Admin = entity.Admin;
+
+            _context.Professors.Update(professor);
+            _context.SaveChanges();
+            return new { success = true, message = "Information updated" };
+        }
     }
 }
