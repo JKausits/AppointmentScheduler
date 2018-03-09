@@ -45,6 +45,11 @@ namespace AppointmentScheduler.Controllers
             return _respository.GetActiveProfessors();
         }
 
+        [HttpGet]
+        public IEnumerable<ProfessorPrivateDTO> GetProfessors() {
+            return _respository.GetProfessors();
+        }
+
         [HttpPut("{id}")]
         public IActionResult UpdatePublic(int id, [FromBody] ProfessorPublicDTO professor) {
 

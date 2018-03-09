@@ -42,6 +42,10 @@ namespace AppointmentScheduler.Repositories
             return _context.Professors.FirstOrDefault(p => p.Email == email);
         }
 
+        public IEnumerable<ProfessorPrivateDTO> GetProfessors() {
+            return _context.Professors.Select(p => new ProfessorPrivateDTO { ID = p.ID, Email = p.Email, Name = p.Name, RoomNumber = p.RoomNumber, Title = p.Title , Admin = p.Admin, Active = p.Active}).OrderBy(p => p.Name);
+        }
+
         public IEnumerable<ProfessorPublicDTO> GetActiveProfessors() {
             return _context.Professors.Where(p => p.Active).Select(p => new ProfessorPublicDTO { ID = p.ID, Email = p.Email, Name = p.Name, RoomNumber = p.RoomNumber, Title = p.Title });
         }
