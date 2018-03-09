@@ -34,7 +34,14 @@ export class AuthService {
     return this.token != null;
   }
 
+  isAdmin() {
+    return this.getTokenData().admin === 'True';
+  }
+
   getTokenData() {
+    this.token =
+      window.sessionStorage.getItem('token') ||
+      window.localStorage.getItem('token');
     const jwtHelper = new JwtHelper();
     return jwtHelper.decodeToken(this.token);
   }

@@ -18,6 +18,9 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
+          <a href="admin" *ngIf="auth.isAdmin()" class="nav-link">Manage Profiles</a>
+        </li>
+        <li class="nav-item">
           <a href="login" (click)="logout()" class="nav-link">Logout</a>
         </li>
       </ul>

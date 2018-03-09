@@ -35,6 +35,24 @@ export class AccessGuard implements CanActivate {
       return true;
     }
 
+    const requiresAdmin = next.data.requiresAdmin || false;
+
+    if (requiresAdmin) {
+      const isAdmin: boolean = this.auth.isAdmin();
+
+      if (!isAdmin && isLoggedIn) {
+        location.replace('/home');
+        // console.log('Send to home');
+
+        return false;
+      } else if (!isAdmin) {
+        location.replace('/login');
+        return false;
+      }
+
+      return true;
+    }
+
     return true;
   }
 }

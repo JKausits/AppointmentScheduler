@@ -39,7 +39,9 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: AppointmentListViewComponent
+    component: AppointmentListViewComponent,
+    data: { requiresLogin: true },
+    canActivate: [AccessGuard]
   },
   {
     path: '',
@@ -47,7 +49,9 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminProfilesListViewComponent
+    component: AdminProfilesListViewComponent,
+    data: { requiresAdmin: true },
+    canActivate: [AccessGuard]
   }
 ];
 
