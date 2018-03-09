@@ -25,6 +25,22 @@ export class ProfessorService {
     );
   }
 
+  updateProfessorPrivateInfo(professor) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${window.localStorage.getItem('token') ||
+        window.sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.httpClient.put(
+      `${this.baseUrl}/api/professor/private/${professor.id}`,
+      professor,
+      {
+        headers
+      }
+    );
+  }
+
   getActiveProfessors() {
     return this.httpClient.get(`${this.baseUrl}/api/professor/active`);
   }
