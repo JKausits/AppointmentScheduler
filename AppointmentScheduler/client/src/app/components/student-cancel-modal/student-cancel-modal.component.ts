@@ -49,7 +49,10 @@ export class StudentCancelModalComponent implements OnInit {
       this.cancelCodeError = `You didn't enter in a code`;
     } else {
       this.appointmentService
-        .cancelAppointment(this.selectedAppointment.id, this.cancellationCode)
+        .studentCancelScheduledAppointment(
+          this.selectedAppointment.id,
+          this.cancellationCode
+        )
         .subscribe((res: any) => {
           if (res.success) {
             this.resetValues();

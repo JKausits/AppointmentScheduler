@@ -29,6 +29,7 @@ import { ProfessorInfoCardComponent } from './components/professor-info-card/pro
 import { ProfessorsComponent } from './pages/professors/professors.component';
 import { AdminProfilesListViewComponent } from './pages/admin-profiles-list-view/admin-profiles-list-view.component';
 import { AdminProfilesListViewItemComponent } from './components/admin-profiles-list-view-item/admin-profiles-list-view-item.component';
+import { ProfessorUncancelModalComponent } from './components/professor-uncancel-modal/professor-uncancel-modal.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AdminProfilesListViewItemComponent } from './components/admin-profiles-
     ProfessorInfoCardComponent,
     ProfessorsComponent,
     AdminProfilesListViewComponent,
-    AdminProfilesListViewItemComponent
+    AdminProfilesListViewItemComponent,
+    ProfessorUncancelModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

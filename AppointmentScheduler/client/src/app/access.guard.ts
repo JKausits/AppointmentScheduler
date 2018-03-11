@@ -17,6 +17,11 @@ export class AccessGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const requiresLogin = next.data.requiresLogin || false;
+    const requiresAnonymous = next.data.requiresAnonymous || false;
+    const requiresAdmin = next.data.requiresAdmin || false;
+    const requiresAdminOrAnonymous =
+      next.data.requiresAdminOrAnonymous || false;
+
     const isLoggedIn = this.auth.isLoggedIn();
     if (requiresLogin) {
       if (!isLoggedIn) {
@@ -26,7 +31,6 @@ export class AccessGuard implements CanActivate {
       return true;
     }
 
-    const requiresAnonymous = next.data.requiresAnonymous || false;
     if (requiresAnonymous) {
       if (isLoggedIn) {
         location.replace('/home');
@@ -35,8 +39,7 @@ export class AccessGuard implements CanActivate {
       return true;
     }
 
-    const requiresAdmin = next.data.requiresAdmin || false;
-    const isAdmin: boolean = this.auth.isAdmin();
+    const isAdmin: boolean = isLoggedIn ? this.auth.isAdmin() : false;
 
     if (requiresAdmin) {
       if (!isAdmin && isLoggedIn) {
@@ -50,10 +53,8 @@ export class AccessGuard implements CanActivate {
       return true;
     }
 
-    const requiresAdminOrAnonymous =
-      next.data.requiresAdminOrAnonymous || false;
     if (requiresAdminOrAnonymous) {
-      if (!isAdmin || !isLoggedIn) {
+      if (!isAdmin && isLoggedIn) {
         location.replace('/calendar');
         return false;
       }

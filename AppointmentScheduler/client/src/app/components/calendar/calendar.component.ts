@@ -123,6 +123,10 @@ export class CalendarComponent implements OnInit {
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 4) {
         cell.classList.add('cancelled');
+        if (isLoggedIn) {
+          cell.dataset.toggle = 'modal';
+          cell.dataset.target = '#professorUncancelAppointmentModal';
+        }
       } else {
         cell.classList.add('appointment');
         cell.dataset.toggle = 'modal';

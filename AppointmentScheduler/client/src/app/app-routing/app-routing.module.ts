@@ -32,12 +32,14 @@ const routes: Routes = [
   {
     path: 'calendar/:id',
     component: CalendarViewComponent,
+    pathMatch: 'full',
     data: { requiresAdminOrAnonymous: true },
     canActivate: [AccessGuard]
   },
   {
     path: 'calendar',
     component: CalendarViewComponent,
+    pathMatch: 'full',
     data: { requiresLogin: true },
     canActivate: [AccessGuard]
   },
@@ -49,9 +51,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: ProfessorsComponent,
-    data: { requiresAdminOrAnonymous: true },
-    canActivate: [AccessGuard]
+    component: ProfessorsComponent
   },
   {
     path: 'admin',

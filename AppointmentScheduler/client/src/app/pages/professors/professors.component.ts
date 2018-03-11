@@ -17,7 +17,6 @@ export class ProfessorsComponent implements OnInit {
   getProfessors() {
     this.professorService.getActiveProfessors().subscribe((res: any) => {
       this.professors = res;
-      console.log(this.professors);
     });
   }
 }

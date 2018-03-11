@@ -36,9 +36,23 @@ export class AppointmentService {
     return this.http.post(`${this.baseUrl}/api/Appointment`, appointment);
   }
 
-  cancelAppointment(id, cancelCode) {
+  studentCancelScheduledAppointment(id, cancelCode) {
     return this.http.put(
       `${this.baseUrl}/api/Appointment/cancel/${id}?cancelCode=${cancelCode}`,
+      {}
+    );
+  }
+
+  cancelAppointment(id) {
+    return this.http.put(
+      `${this.baseUrl}/api/Appointment/professor/cancel/${id}`,
+      {}
+    );
+  }
+
+  uncancelAppointment(id) {
+    return this.http.put(
+      `${this.baseUrl}/api/Appointment/professor/uncancel/${id}`,
       {}
     );
   }

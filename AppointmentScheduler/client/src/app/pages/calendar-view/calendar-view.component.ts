@@ -48,6 +48,14 @@ export class CalendarViewComponent implements OnInit {
     this.refreshedOn = new Date();
   }
 
+  onAppointmentUncancelled(event) {
+    swal({
+      title: 'Appointment Uncancelled',
+      type: 'success'
+    });
+    this.refreshedOn = new Date();
+  }
+
   onAppointmentAccepted(event) {
     swal({
       title: 'Appointment Accepted',

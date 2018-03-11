@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { AppointmentService } from './../../services/appointment.service';
 import { ProfessorService } from './../../services/professor.service';
 
@@ -23,14 +24,19 @@ export class StudentScheduleModalComponent implements OnInit {
   firstName;
   lastName;
   bannerID;
+  isLoggedIn: boolean;
   errors: any = {};
   @Output() appointmentScheduled = new EventEmitter();
+  @Output() appointmentCancelled = new EventEmitter();
   constructor(
     private professorService: ProfessorService,
-    private appointmentSevice: AppointmentService
+    private appointmentSevice: AppointmentService,
+    private auth: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isLoggedIn = this.auth.isLoggedIn();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.selectedAppointment) {
@@ -69,6 +75,18 @@ export class StudentScheduleModalComponent implements OnInit {
     } else {
       console.log(this.errors);
     }
+  }
+
+  cancelAppointment() {
+    this.appointmentSevice
+      .cancelAppointment(this.selectedAppointment.id)
+      .subscribe((res: any) => {
+        if (res.success) {
+          this.resetValues();
+          document.getElementById('dismiss-button').click();
+          this.appointmentCancelled.emit(res);
+        }
+      });
   }
 
   validateData() {

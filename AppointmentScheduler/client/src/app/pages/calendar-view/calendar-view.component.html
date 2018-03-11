@@ -9,10 +9,12 @@
       back</a>
   </div>
   <app-calendar (appointmentSelected)="onAppointmentSelected($event)" [parentRefreshed]="refreshedOn"></app-calendar>
-  <app-student-schedule-modal [selectedAppointment]="selectedAppointment" (appointmentScheduled)="onAppointmentScheduled($event)"></app-student-schedule-modal>
+  <app-student-schedule-modal [selectedAppointment]="selectedAppointment" (appointmentScheduled)="onAppointmentScheduled($event)"
+    (appointmentCancelled)="onAppointmentCancelled($event)"></app-student-schedule-modal>
   <app-student-cancel-modal [selectedAppointment]="selectedAppointment" (appointmentCancelled)="onAppointmentCancelled($event)"></app-student-cancel-modal>
   <app-professor-confirm-modal [selectedAppointment]="selectedAppointment" [professor]="professor" (appointmentAccepted)="onAppointmentAccepted($event)"
     (appointmentRejected)="onAppointmentRejected($event)" (appointmentRescheduled)="onAppointmentRescheduled($event)"></app-professor-confirm-modal>
   <app-professor-scheduled-modal [selectedAppointment]="selectedAppointment" [professor]="professor" (appointmentRescheduled)="onAppointmentRescheduled($event)"
     (appointmentRejected)="onAppointmentCancelled($event)"></app-professor-scheduled-modal>
+  <app-professor-uncancel-modal [selectedAppointment]="selectedAppointment" [professor]="professor" (appointmentUncancelled)="onAppointmentUncancelled($event)"></app-professor-uncancel-modal>
 </div>
