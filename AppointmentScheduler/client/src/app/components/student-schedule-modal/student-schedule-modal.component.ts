@@ -19,7 +19,7 @@ import {
 })
 export class StudentScheduleModalComponent implements OnInit {
   @Input() selectedAppointment;
-  professor;
+  @Input() professor;
   email;
   firstName;
   lastName;
@@ -35,16 +35,6 @@ export class StudentScheduleModalComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn = this.auth.isLoggedIn();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.selectedAppointment) {
-      this.professorService
-        .getProfessorInfo(this.selectedAppointment.professorID)
-        .subscribe(res => {
-          this.professor = res;
-        });
-    }
   }
 
   resetValues() {

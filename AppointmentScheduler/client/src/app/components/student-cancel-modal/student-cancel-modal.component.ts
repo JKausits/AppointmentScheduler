@@ -18,7 +18,7 @@ import {
 export class StudentCancelModalComponent implements OnInit {
   @Input() selectedAppointment: any;
   @Output() appointmentChanged = new EventEmitter();
-  professor: any;
+  @Input() professor: any;
   cancellationCode = '';
   cancelCodeError: string;
   constructor(
@@ -27,17 +27,6 @@ export class StudentCancelModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.selectedAppointment) {
-      this.professorService
-        .getProfessorInfo(this.selectedAppointment.professorID)
-        .subscribe(res => {
-          this.professor = res;
-        });
-    }
-  }
 
   resetValues() {
     this.cancellationCode = '';
