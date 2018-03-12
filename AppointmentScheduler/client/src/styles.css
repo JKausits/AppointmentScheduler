@@ -2,13 +2,7 @@
 body {
   background-color: #a71930;
 }
-.pending {
-  background-color: lightgoldenrodyellow;
-}
 
-.pending-student {
-  background-color: lightsalmon;
-}
 
 .btn-danger {
   background-color: lightcoral;

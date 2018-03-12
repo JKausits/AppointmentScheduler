@@ -79,4 +79,12 @@ export class CalendarViewComponent implements OnInit {
     });
     this.refreshedOn = new Date();
   }
+
+  onAppointmentChanged(message) {
+    swal({
+      title: message,
+      type: 'success'
+    });
+    this.refreshedOn = new Date();
+  }
 }

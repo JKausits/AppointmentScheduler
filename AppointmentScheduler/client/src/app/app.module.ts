@@ -30,6 +30,7 @@ import { ProfessorsComponent } from './pages/professors/professors.component';
 import { AdminProfilesListViewComponent } from './pages/admin-profiles-list-view/admin-profiles-list-view.component';
 import { AdminProfilesListViewItemComponent } from './components/admin-profiles-list-view-item/admin-profiles-list-view-item.component';
 import { ProfessorUncancelModalComponent } from './components/professor-uncancel-modal/professor-uncancel-modal.component';
+import { StudentPendingModalComponent } from './components/student-pending-modal/student-pending-modal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ProfessorUncancelModalComponent } from './components/professor-uncancel
     ProfessorsComponent,
     AdminProfilesListViewComponent,
     AdminProfilesListViewItemComponent,
-    ProfessorUncancelModalComponent
+    ProfessorUncancelModalComponent,
+    StudentPendingModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

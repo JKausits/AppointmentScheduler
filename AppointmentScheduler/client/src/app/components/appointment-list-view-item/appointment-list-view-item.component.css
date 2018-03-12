@@ -14,3 +14,11 @@
 .btn {
   min-width: 110px;
 }
+
+.pending {
+  background-color: lightgoldenrodyellow;
+}
+
+.pending-student {
+  background-color: lightsalmon;
+}

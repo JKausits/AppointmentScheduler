@@ -51,14 +51,14 @@ namespace AppointmentScheduler.Repositories
             }
         }
 
-        public Object StudentAcceptAppointment(Appointment entity) {
-            var appointment = _context.Appointments.Where(a => a.ID == entity.ID).Include(a => a.Professor).FirstOrDefault();
+        public Object StudentAcceptAppointment(int id, string cancelCode) {
+            var appointment = _context.Appointments.Where(a => a.ID == id).Include(a => a.Professor).FirstOrDefault();
             if (appointment == null)
             {
                 return new { success = false, message = "Could not find appointment" };
             }
 
-            if (appointment.CancelCode != entity.CancelCode) {
+            if (appointment.CancelCode != cancelCode) {
                 return new { success = false, message = "Invalid code" };
             }
             appointment.Status = Appointment.StatusType.Scheduled;

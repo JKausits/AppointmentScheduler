@@ -59,6 +59,12 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(_repository.StudentCancelScheduledAppointment(id, cancelCode));
         }
 
+        [HttpPut("student/accept/{id}")]
+        public IActionResult StudentConfirmAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode)
+        {
+            return new ObjectResult(_repository.StudentAcceptAppointment(id, cancelCode));
+        }
+
         [HttpPut("professor/cancel/{id}")]
         public IActionResult CancelAppointment(int id) {
             return new ObjectResult(_repository.CancelAppointment(id));
@@ -70,10 +76,7 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(_repository.UncancelAppointment(id));
         }
 
-        [HttpPut("student/accept")]
-        public IActionResult StudentConfirmAppointment([FromBody] Appointment appointment) {
-            return new ObjectResult(_repository.StudentAcceptAppointment(appointment));
-        }
+        
 
 
         [HttpPost]

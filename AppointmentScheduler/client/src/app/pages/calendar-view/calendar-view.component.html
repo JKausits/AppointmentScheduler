@@ -12,6 +12,8 @@
   <app-student-schedule-modal [selectedAppointment]="selectedAppointment" (appointmentScheduled)="onAppointmentScheduled($event)"
     (appointmentCancelled)="onAppointmentCancelled($event)"></app-student-schedule-modal>
   <app-student-cancel-modal [selectedAppointment]="selectedAppointment" (appointmentCancelled)="onAppointmentCancelled($event)"></app-student-cancel-modal>
+  <app-student-pending-modal [selectedAppointment]="selectedAppointment" [professor]="professor" (appointmentChanged)="onAppointmentChanged($event)"></app-student-pending-modal>
+
   <app-professor-confirm-modal [selectedAppointment]="selectedAppointment" [professor]="professor" (appointmentAccepted)="onAppointmentAccepted($event)"
     (appointmentRejected)="onAppointmentRejected($event)" (appointmentRescheduled)="onAppointmentRescheduled($event)"></app-professor-confirm-modal>
   <app-professor-scheduled-modal [selectedAppointment]="selectedAppointment" [professor]="professor" (appointmentRescheduled)="onAppointmentRescheduled($event)"

@@ -43,6 +43,14 @@ export class AppointmentService {
     );
   }
 
+  studentConfirmAppointment(id, cancelCode) {
+    return this.http.put(
+      `${this
+        .baseUrl}/api/Appointment/student/accept/${id}?cancelCode=${cancelCode}`,
+      {}
+    );
+  }
+
   cancelAppointment(id) {
     return this.http.put(
       `${this.baseUrl}/api/Appointment/professor/cancel/${id}`,

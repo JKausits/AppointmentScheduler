@@ -111,7 +111,7 @@ export class CalendarComponent implements OnInit {
         cell.dataset.toggle = 'modal';
         cell.dataset.target = isLoggedIn
           ? '#professorScheduledModal'
-          : '#studentCancelModal';
+          : '#studentPendingModal';
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 3) {
         cell.classList.add('appointment');
