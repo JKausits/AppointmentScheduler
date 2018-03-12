@@ -17,7 +17,7 @@ import {
 })
 export class StudentCancelModalComponent implements OnInit {
   @Input() selectedAppointment: any;
-  @Output() appointmentCancelled = new EventEmitter();
+  @Output() appointmentChanged = new EventEmitter();
   professor: any;
   cancellationCode = '';
   cancelCodeError: string;
@@ -57,7 +57,7 @@ export class StudentCancelModalComponent implements OnInit {
           if (res.success) {
             this.resetValues();
             document.getElementById('student-cancel-dismiss-button').click();
-            this.appointmentCancelled.emit(res);
+            this.appointmentChanged.emit({ title: 'Appointment Cancelled' });
           } else {
             this.cancelCodeError = res.message;
           }

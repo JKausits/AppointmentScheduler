@@ -18,6 +18,7 @@ export class CalendarViewComponent implements OnInit {
     private auth: AuthService
   ) {}
   ngOnInit() {}
+
   onAppointmentSelected(appointment) {
     this.selectedAppointment = appointment;
     this.getProfessor();
@@ -31,58 +32,10 @@ export class CalendarViewComponent implements OnInit {
       });
   }
 
-  onAppointmentScheduled(event) {
+  onAppointmentChanged(res) {
     swal({
-      title: 'Appointment Scheduled',
-      text: event.message,
-      type: 'success'
-    });
-    this.refreshedOn = new Date();
-  }
-
-  onAppointmentCancelled(event) {
-    swal({
-      title: 'Appointment Cancelled',
-      type: 'success'
-    });
-    this.refreshedOn = new Date();
-  }
-
-  onAppointmentUncancelled(event) {
-    swal({
-      title: 'Appointment Uncancelled',
-      type: 'success'
-    });
-    this.refreshedOn = new Date();
-  }
-
-  onAppointmentAccepted(event) {
-    swal({
-      title: 'Appointment Accepted',
-      type: 'success'
-    });
-    this.refreshedOn = new Date();
-  }
-
-  onAppointmentRejected(event) {
-    swal({
-      title: 'Appointment Rejected',
-      type: 'success'
-    });
-    this.refreshedOn = new Date();
-  }
-
-  onAppointmentRescheduled(event) {
-    swal({
-      title: 'Appointment Rejected',
-      type: 'success'
-    });
-    this.refreshedOn = new Date();
-  }
-
-  onAppointmentChanged(message) {
-    swal({
-      title: message,
+      title: res.title,
+      text: res.message,
       type: 'success'
     });
     this.refreshedOn = new Date();

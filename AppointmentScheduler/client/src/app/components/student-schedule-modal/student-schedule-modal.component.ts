@@ -26,8 +26,7 @@ export class StudentScheduleModalComponent implements OnInit {
   bannerID;
   isLoggedIn: boolean;
   errors: any = {};
-  @Output() appointmentScheduled = new EventEmitter();
-  @Output() appointmentCancelled = new EventEmitter();
+  @Output() appointmentChanged = new EventEmitter();
   constructor(
     private professorService: ProfessorService,
     private appointmentSevice: AppointmentService,
@@ -67,7 +66,10 @@ export class StudentScheduleModalComponent implements OnInit {
         .scheduleAppointment(this.selectedAppointment)
         .subscribe((res: any) => {
           if (res.success) {
-            this.appointmentScheduled.emit(res);
+            this.appointmentChanged.emit({
+              title: 'Appointment Scheduled',
+              message: res.message
+            });
             document.getElementById('dismiss-button').click();
             this.resetValues();
           }
@@ -84,7 +86,7 @@ export class StudentScheduleModalComponent implements OnInit {
         if (res.success) {
           this.resetValues();
           document.getElementById('dismiss-button').click();
-          this.appointmentCancelled.emit(res);
+          this.appointmentChanged.emit({ title: 'Appointment Cancelled' });
         }
       });
   }

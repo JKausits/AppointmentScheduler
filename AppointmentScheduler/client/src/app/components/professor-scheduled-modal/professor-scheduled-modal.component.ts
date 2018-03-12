@@ -9,8 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ProfessorScheduledModalComponent implements OnInit {
   @Input() selectedAppointment;
   @Input() professor;
-  @Output() appointmentRejected = new EventEmitter();
-  @Output() appointmentRescheduled = new EventEmitter();
+  @Output() appointmentChanged = new EventEmitter();
   appointmentError;
   isRescheduling = false;
   appointmentDate: string;
@@ -33,7 +32,9 @@ export class ProfessorScheduledModalComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           document.getElementById('professor-scheduled-dismiss-button').click();
-          this.appointmentRejected.emit(res);
+          this.appointmentChanged.emit({
+            title: 'Appointment Rejected'
+          });
         } else {
           this.appointmentError = res.message;
         }
@@ -48,7 +49,10 @@ export class ProfessorScheduledModalComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           document.getElementById('professor-scheduled-dismiss-button').click();
-          this.appointmentRescheduled.emit(res);
+          this.appointmentChanged.emit({
+            title: 'Appointment Rescheduled',
+            message: 'Waiting on student confirmation'
+          });
         } else {
           this.appointmentError = res.message;
         }

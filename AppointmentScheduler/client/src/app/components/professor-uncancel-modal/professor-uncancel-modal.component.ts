@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ProfessorUncancelModalComponent implements OnInit {
   @Input() selectedAppointment;
   @Input() professor;
-  @Output() appointmentUncancelled = new EventEmitter();
+  @Output() appointmentChanged = new EventEmitter();
   constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit() {}
@@ -20,7 +20,7 @@ export class ProfessorUncancelModalComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           document.getElementById('professor-uncancel-dismiss-button').click();
-          this.appointmentUncancelled.emit(res);
+          this.appointmentChanged.emit({ title: 'Appointment Uncancelled' });
         }
       });
   }

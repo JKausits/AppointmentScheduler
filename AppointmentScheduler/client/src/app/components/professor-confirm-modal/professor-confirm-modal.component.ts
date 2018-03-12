@@ -9,9 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ProfessorConfirmModalComponent implements OnInit {
   @Input() selectedAppointment;
   @Input() professor;
-  @Output() appointmentAccepted = new EventEmitter();
-  @Output() appointmentRejected = new EventEmitter();
-  @Output() appointmentRescheduled = new EventEmitter();
+  @Output() appointmentChanged = new EventEmitter();
   appointmentError;
   isRescheduling = false;
   appointmentDate: string;
@@ -26,7 +24,7 @@ export class ProfessorConfirmModalComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           document.getElementById('professor-confirm-dismiss-button').click();
-          this.appointmentAccepted.emit(res);
+          this.appointmentChanged.emit({ title: 'Appointment Accepted' });
         } else {
           this.appointmentError = res.message;
         }
@@ -39,7 +37,7 @@ export class ProfessorConfirmModalComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           document.getElementById('professor-confirm-dismiss-button').click();
-          this.appointmentRejected.emit(res);
+          this.appointmentChanged.emit({ title: 'Appointment Rejected' });
         } else {
           this.appointmentError = res.message;
         }
@@ -55,7 +53,10 @@ export class ProfessorConfirmModalComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           document.getElementById('professor-confirm-dismiss-button').click();
-          this.appointmentRescheduled.emit(res);
+          this.appointmentChanged.emit({
+            title: 'Appointment Rescheduled',
+            message: 'Waiting on student confirmation'
+          });
         } else {
           this.appointmentError = res.message;
         }

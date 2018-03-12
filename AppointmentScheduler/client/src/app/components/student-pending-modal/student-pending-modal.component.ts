@@ -25,7 +25,7 @@ export class StudentPendingModalComponent implements OnInit {
         if (res.success) {
           this.resetValues();
           document.getElementById('student-pending-dismiss-button').click();
-          this.appointmentChanged.emit('Appointment Accepted');
+          this.appointmentChanged.emit({ title: 'Appointment Accepted' });
         }
       });
   }
@@ -40,7 +40,7 @@ export class StudentPendingModalComponent implements OnInit {
         if (res.success) {
           this.resetValues();
           document.getElementById('student-pending-dismiss-button').click();
-          this.appointmentChanged.emit('Appointment Cancelled');
+          this.appointmentChanged.emit({ title: 'Appointment Cancelled' });
         }
       });
   }
