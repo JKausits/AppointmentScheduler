@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +53,13 @@ namespace AppointmentScheduler
             {
                 options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
             });
+
+            //Configure to use DI for Email Settings
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
+            //Configure to use DI for Email Service
+            services.AddTransient<EmailService>();
+
             services.AddMvc();
         }
 

@@ -1,4 +1,5 @@
 ﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ namespace AppointmentScheduler.Repositories
     public class ProfessorRespository
     {
         private readonly AppointmentSchedulerContext _context;
-
-        public ProfessorRespository(AppointmentSchedulerContext context)
+        private readonly EmailService _emailService;
+        public ProfessorRespository(AppointmentSchedulerContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         public Object Insert(Professor entity) {
@@ -77,17 +79,61 @@ namespace AppointmentScheduler.Repositories
             {
                 return new { success = false, message = "Could not find professor" };
             }
+            
 
             professor.Email = entity.Email;
             professor.Name = entity.Name;
             professor.RoomNumber = entity.RoomNumber;
             professor.Title = entity.Title;
-            professor.Active = entity.Active;
+
+            if (!professor.Active && entity.Active)
+            {
+                //Send email that their profile has been activated
+                sendActivatedEmail(professor);
+            }
+            else if (professor.Active && !entity.Active)
+            {
+                //Send email that their profile has been deactivated
+                sendDeactivatedEmail(professor);
+            }else if (!professor.Admin && entity.Admin)
+            {
+                //Send email that they have been granted admin access
+                sendAdminGranted(professor);
+            }
+            else if (professor.Admin && !entity.Admin)
+            {
+                //Send email that their admin access has been revoked
+                sendAdminRevoked(professor);
+            }
+                professor.Active = entity.Active;
             professor.Admin = entity.Admin;
 
             _context.Professors.Update(professor);
             _context.SaveChanges();
             return new { success = true, message = "Information updated" };
+        }
+
+        private async void sendActivatedEmail(Professor entity) {
+            string message = String.Format("Your account has been activated");
+            await _emailService.Send(entity.Email, "Account Activated", message);
+        }
+
+        private async void sendDeactivatedEmail(Professor entity)
+        {
+            string message = String.Format("Your account has been deactivated");
+            await _emailService.Send(entity.Email, "Account Deactivated", message);
+        }
+
+        private async void sendAdminGranted(Professor entity)
+        {
+            string message = String.Format("Your account has been granted admin access");
+            await _emailService.Send(entity.Email, "Admin Access Granted", message);
+        }
+
+        private async void sendAdminRevoked(Professor entity)
+        {
+            string message = String.Format("Your account has been revoked of admin rights");
+            await _emailService.Send(entity.Email, "Admin Access Revoked", message);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Cors;
@@ -16,9 +17,9 @@ namespace AppointmentScheduler.Controllers
         private readonly ProfessorRespository _respository;
 
 
-        public ProfessorController(AppointmentSchedulerContext context)
+        public ProfessorController(AppointmentSchedulerContext context, EmailService emailService)
         {
-            _respository = new ProfessorRespository(context);
+            _respository = new ProfessorRespository(context, emailService);
         }
 
         [HttpPost]

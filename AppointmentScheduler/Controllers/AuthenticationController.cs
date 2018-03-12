@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -26,9 +27,9 @@ namespace AppointmentScheduler.Controllers
         private readonly ProfessorRespository _respository;
 
 
-        public AuthenticationController(AppointmentSchedulerContext context, IConfiguration configuration)
+        public AuthenticationController(AppointmentSchedulerContext context, IConfiguration configuration, EmailService emailService)
         {
-            _respository = new ProfessorRespository(context);
+            _respository = new ProfessorRespository(context, emailService);
             _configuration = configuration;
         }
 

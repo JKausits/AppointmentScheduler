@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.DTO;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Cors;
@@ -19,9 +20,9 @@ namespace AppointmentScheduler.Controllers
 
         private readonly AppointmentRepository _repository;
 
-        public AppointmentController(AppointmentSchedulerContext context)
+        public AppointmentController(AppointmentSchedulerContext context, EmailService emailService)
         {
-            _repository = new AppointmentRepository(context);
+            _repository = new AppointmentRepository(context, emailService);
 
         }
 
@@ -68,6 +69,12 @@ namespace AppointmentScheduler.Controllers
         {
             return new ObjectResult(_repository.UncancelAppointment(id));
         }
+
+        [HttpPut("student/accept")]
+        public IActionResult StudentConfirmAppointment([FromBody] Appointment appointment) {
+            return new ObjectResult(_repository.StudentAcceptAppointment(appointment));
+        }
+
 
         [HttpPost]
         public IActionResult ScheduleAppointment([FromBody] Appointment appointment) {
