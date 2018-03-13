@@ -2,6 +2,7 @@
 using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,7 +23,7 @@ namespace AppointmentScheduler.Controllers
             _respository = new ProfessorRespository(context, emailService);
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public IActionResult Create([FromBody] Professor professor) {
             if (professor == null) {
                 return BadRequest();
@@ -31,7 +32,7 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(_respository.Insert(professor));
         }
 
-        [HttpGet("{id}", Name = "GetProfessor")]
+        [HttpGet("{id}", Name = "GetProfessor"), AllowAnonymous]
         public IActionResult GetById(int id) {
             var professor = _respository.GetById(id);
             if (professor == null) {
@@ -41,24 +42,24 @@ namespace AppointmentScheduler.Controllers
             return new ObjectResult(professor);
         }
 
-        [HttpGet("active")]
+        [HttpGet("active"), AllowAnonymous]
         public IEnumerable<ProfessorPublicDTO> GetActiveProfessors() {
             return _respository.GetActiveProfessors();
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IEnumerable<ProfessorPrivateDTO> GetProfessors() {
             return _respository.GetProfessors();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public IActionResult UpdatePublic(int id, [FromBody] ProfessorPublicDTO professor) {
 
    
             return new ObjectResult(_respository.UpdatePublic(id, professor));
         }
 
-        [HttpPut("private/{id}")]
+        [HttpPut("private/{id}"), Authorize]
         public IActionResult UpdatePrivate(int id, [FromBody] ProfessorPrivateDTO professor) {
             return new ObjectResult(_respository.UpdatePrivate(id, professor));
         }

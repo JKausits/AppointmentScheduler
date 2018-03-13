@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,19 +22,19 @@ namespace AppointmentScheduler.Controllers
             _respository = new ScheduledHourRepository(context);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public IActionResult GetByID(int id) {
             return new ObjectResult(_respository.GetProfessorHours(id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult CreateScheduledHour([FromBody] ScheduledHour scheduledHour) {
            
             return new ObjectResult(_respository.CreateScheduledHour(scheduledHour));
 
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public IActionResult DeleteScheduledHour(int id) {
             return new ObjectResult(_respository.DeleteScheduledHour(id));
         }

@@ -6,6 +6,7 @@ using AppointmentScheduler.DTO;
 using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace AppointmentScheduler.Controllers
 
         }
 
-        [HttpGet("professor/{id}")]
+        [HttpGet("professor/{id}"), AllowAnonymous]
         public IEnumerable<AppointmentDTO> GetAppointmentsByProfessor(int id, [FromQuery(Name = "currentWeek")] DateTime? currentWeek) {
             if(currentWeek.HasValue)
             {
@@ -36,41 +37,41 @@ namespace AppointmentScheduler.Controllers
         }
 
 
-        [HttpGet("professor/active/{id}")]
+        [HttpGet("professor/active/{id}"), Authorize]
         public IEnumerable<AppointmentDTO> GetPendingOrScheduledAppointmentsByProfessor(int id, [FromQuery(Name = "currentDate")] DateTime? currentDate) {
 
             return _repository.GetPendingOrScheduledAppointmentsByProfessor(id, currentDate);
         }
 
 
-        [HttpPut("accept/{id}")]
+        [HttpPut("accept/{id}"), Authorize]
         public IActionResult ConfirmAppointment(int id) {
             return new ObjectResult(_repository.AcceptAppointment(id));
         }
 
-        [HttpPut("reject/{id}")]
+        [HttpPut("reject/{id}"), Authorize]
         public IActionResult RejectAppointment(int id) {
             return new ObjectResult(_repository.RejectAppointment(id));
         }
 
 
-        [HttpPut("cancel/{id}")]
+        [HttpPut("cancel/{id}"), AllowAnonymous]
         public IActionResult StudentCancelScheduledAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode) {
             return new ObjectResult(_repository.StudentCancelScheduledAppointment(id, cancelCode));
         }
 
-        [HttpPut("student/accept/{id}")]
+        [HttpPut("student/accept/{id}"), AllowAnonymous]
         public IActionResult StudentConfirmAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode)
         {
             return new ObjectResult(_repository.StudentAcceptAppointment(id, cancelCode));
         }
 
-        [HttpPut("professor/cancel/{id}")]
+        [HttpPut("professor/cancel/{id}"), Authorize]
         public IActionResult CancelAppointment(int id) {
             return new ObjectResult(_repository.CancelAppointment(id));
         }
 
-        [HttpPut("professor/uncancel/{id}")]
+        [HttpPut("professor/uncancel/{id}"), Authorize]
         public IActionResult UncancelAppointment(int id)
         {
             return new ObjectResult(_repository.UncancelAppointment(id));
@@ -79,12 +80,12 @@ namespace AppointmentScheduler.Controllers
         
 
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public IActionResult ScheduleAppointment([FromBody] Appointment appointment) {
             return new ObjectResult(_repository.ScheduleAppointment(appointment));
         }
 
-        [HttpPost("reschedule/{id}")]
+        [HttpPost("reschedule/{id}"), Authorize]
         public IActionResult RescheduleAppointment(int id, [FromQuery(Name = "requestedDateTime")] DateTime requestedDateTime) {
             Console.WriteLine(requestedDateTime);
             return new ObjectResult(_repository.RescheduleAppointment(id, requestedDateTime));
