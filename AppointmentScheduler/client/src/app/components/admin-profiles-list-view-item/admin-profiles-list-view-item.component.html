@@ -3,22 +3,26 @@
     <div class="row">
       <strong class="col-md-2">Professor Name: </strong>
       <span *ngIf="!isEdit" class="col-md-4">{{professor.name}}</span>
-      <input type="text" *ngIf="isEdit" [(ngModel)]="name" class="form-control col-md-4">
+      <input type="text" *ngIf="isEdit" [(ngModel)]="name" class="form-control col-md-4" [class.is-invalid]="errors.name">
+      <div class="invalid-feedback offset-md-2" *ngIf="errors.name">{{errors.name}}</div>
     </div>
     <div class="row">
       <strong class="col-md-2">Email: </strong>
       <span class="col-md-4" *ngIf="!isEdit">{{professor.email}}</span>
-      <input type="text" *ngIf="isEdit" [(ngModel)]="email" class="form-control col-md-4">
+      <input type="text" *ngIf="isEdit" [(ngModel)]="email" class="form-control col-md-4" [class.is-invalid]="errors.email">
+      <div class="invalid-feedback offset-md-2" *ngIf="errors.email">{{errors.email}}</div>
     </div>
     <div class="row">
       <strong class="col-md-2">Room Number: </strong>
       <span class="col-md-4" *ngIf="!isEdit">{{professor.roomNumber}}</span>
-      <input type="text" *ngIf="isEdit" [(ngModel)]="roomNumber" class="form-control col-md-4">
+      <input type="text" *ngIf="isEdit" [(ngModel)]="roomNumber" class="form-control col-md-4" [class.is-invalid]="errors.roomNumber">
+      <div class="invalid-feedback offset-md-2" *ngIf="errors.roomNumber">{{errors.roomNumber}}</div>
     </div>
     <div class="row">
       <strong class="col-md-2">Title: </strong>
       <span class="col-md-4" *ngIf="!isEdit">{{professor.title}}</span>
-      <input type="text" *ngIf="isEdit" [(ngModel)]="title" class="form-control col-md-4">
+      <input type="text" *ngIf="isEdit" [(ngModel)]="title" class="form-control col-md-4" [class.is-invalid]="errors.title">
+      <div class="invalid-feedback offset-md-2" *ngIf="errors.title">{{errors.title}}</div>
     </div>
     <div class="row">
       <strong class="col-md-2">Status: </strong>

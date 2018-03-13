@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 export class AppointmentListViewItemComponent implements OnInit {
   @Input() appointment;
   @Output() appointmentRejected = new EventEmitter();
+  errors: any = {};
   isReschedule = false;
   appointmentError;
   appointmentTime;
@@ -22,6 +23,7 @@ export class AppointmentListViewItemComponent implements OnInit {
 
   toggleReschedule() {
     this.isReschedule = !this.isReschedule;
+    this.errors = {};
     if (this.isReschedule) {
       this.appointmentDate = this.getDateString();
       this.appointmentTime = this.getTimeString();
@@ -59,21 +61,24 @@ export class AppointmentListViewItemComponent implements OnInit {
   }
 
   rescheduleAppointment() {
-    const requestedDateTime = new Date(
-      `${this.appointmentDate} ${this.appointmentTime}`
-    );
-    this.appointmentService
-      .rescheduleAppointment(this.appointment.id, requestedDateTime)
-      .subscribe((res: any) => {
-        if (res.success) {
-          this.appointment.status = 2;
-          this.appointment.dateTime = requestedDateTime;
-          this.toggleReschedule();
-          swal({ title: 'Appointment Rescheduled', type: 'success' });
-        } else {
-          this.appointmentError = res.message;
-        }
-      });
+    this.validateData();
+    if (Object.keys(this.errors).length === 0) {
+      const requestedDateTime = new Date(
+        `${this.appointmentDate} ${this.appointmentTime}`
+      );
+      this.appointmentService
+        .rescheduleAppointment(this.appointment.id, requestedDateTime)
+        .subscribe((res: any) => {
+          if (res.success) {
+            this.appointment.status = 2;
+            this.appointment.dateTime = requestedDateTime;
+            this.toggleReschedule();
+            swal({ title: 'Appointment Rescheduled', type: 'success' });
+          } else {
+            this.appointmentError = res.message;
+          }
+        });
+    }
   }
 
   rejectAppointment() {
@@ -100,5 +105,16 @@ export class AppointmentListViewItemComponent implements OnInit {
           this.appointmentError = res.message;
         }
       });
+  }
+
+  validateData() {
+    this.errors = {};
+    if (this.appointmentDate === '' || !this.appointmentDate) {
+      this.errors.appointmentDate = 'You must enter in an appointment date';
+    }
+
+    if (this.appointmentTime === '' || !this.appointmentTime) {
+      this.errors.appointmentTime = 'You must enter in an appointment time';
+    }
   }
 }

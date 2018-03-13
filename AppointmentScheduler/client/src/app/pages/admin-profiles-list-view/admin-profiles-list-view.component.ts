@@ -21,7 +21,6 @@ export class AdminProfilesListViewComponent implements OnInit {
   getProfessors() {
     this.professorService.getProfessors().subscribe((res: any) => {
       this.professors = res;
-      console.log(this.professors);
     });
   }
 }

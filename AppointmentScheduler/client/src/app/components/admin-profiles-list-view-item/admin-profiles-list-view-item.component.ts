@@ -13,6 +13,7 @@ export class AdminProfilesListViewItemComponent implements OnInit {
   email: string;
   roomNumber: string;
   title: string;
+  errors: any = {};
   constructor(private professorService: ProfessorService) {}
 
   ngOnInit() {
@@ -72,34 +73,57 @@ export class AdminProfilesListViewItemComponent implements OnInit {
     this.email = this.professor.email;
     this.roomNumber = this.professor.roomNumber;
     this.title = this.professor.title;
+    this.errors = {};
   }
 
   updateInfo() {
-    const newProfessorInfo = {
-      id: this.professor.id,
-      name: this.name,
-      email: this.email,
-      title: this.title,
-      roomNumber: this.roomNumber,
-      active: this.professor.active,
-      admin: this.professor.admin
-    };
+    this.validateData();
+    if (Object.keys(this.errors).length === 0) {
+      const newProfessorInfo = {
+        id: this.professor.id,
+        name: this.name,
+        email: this.email,
+        title: this.title,
+        roomNumber: this.roomNumber,
+        active: this.professor.active,
+        admin: this.professor.admin
+      };
 
-    this.professorService
-      .updateProfessorPrivateInfo(newProfessorInfo)
-      .subscribe((res: any) => {
-        if (res.success) {
-          swal({ title: 'Professor Information Updated', type: 'success' });
-          this.professor.name = this.name;
-          this.professor.email = this.email;
-          this.professor.roomNumber = this.roomNumber;
-          this.professor.title = this.title;
-          this.isEdit = false;
-        } else {
-          swal({ title: 'Could Not Update Information', type: 'error' });
-          this.setValues();
-          this.isEdit = false;
-        }
-      });
+      this.professorService
+        .updateProfessorPrivateInfo(newProfessorInfo)
+        .subscribe((res: any) => {
+          if (res.success) {
+            swal({ title: 'Professor Information Updated', type: 'success' });
+            this.professor.name = this.name;
+            this.professor.email = this.email;
+            this.professor.roomNumber = this.roomNumber;
+            this.professor.title = this.title;
+            this.isEdit = false;
+          } else {
+            swal({ title: 'Could Not Update Information', type: 'error' });
+            this.setValues();
+            this.isEdit = false;
+          }
+        });
+    }
+  }
+
+  validateData() {
+    this.errors = {};
+    if (this.email === '' || !this.email) {
+      this.errors.email = 'You must provide an email';
+    }
+
+    if (this.name === '' || !this.name) {
+      this.errors.name = 'You must provide a name';
+    }
+
+    if (this.title === '' || !this.title) {
+      this.errors.title = 'You must provide a title';
+    }
+
+    if (this.roomNumber === '' || !this.roomNumber) {
+      this.errors.roomNumber = 'You must provide a room number';
+    }
   }
 }

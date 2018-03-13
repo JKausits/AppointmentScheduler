@@ -11,13 +11,15 @@
       <div class="col-md-4">
         <strong>Date: </strong>
         <span *ngIf="!isReschedule">{{appointment.dateTime | date: 'shortDate' }}</span>
-        <input type="date" *ngIf="isReschedule" [(ngModel)]="appointmentDate" class="form-control">
-
+        <input type="date" *ngIf="isReschedule" [(ngModel)]="appointmentDate" class="form-control" [class.is-invalid]="errors.appointmentDate">
+        <div class="invalid-feedback" *ngIf="errors.appointmentDate">{{errors.appointmentDate}}</div>
       </div>
       <div class="col-md-4">
         <strong>Time: </strong>
         <span *ngIf="!isReschedule">{{appointment.dateTime | date: 'shortTime' }}</span>
-        <input type="time" *ngIf="isReschedule" [(ngModel)]="appointmentTime" class="form-control" step="900">
+        <input type="time" *ngIf="isReschedule" [(ngModel)]="appointmentTime" class="form-control" [class.is-invalid]="errors.appointmentTime"
+          step="900">
+        <div class="invalid-feedback" *ngIf="errors.appointmentTime">{{errors.appointmentTime}}</div>
       </div>
     </div>
     <div>
