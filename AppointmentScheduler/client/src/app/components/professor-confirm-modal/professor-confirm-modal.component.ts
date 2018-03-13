@@ -11,6 +11,7 @@ export class ProfessorConfirmModalComponent implements OnInit {
   @Input() professor;
   @Output() appointmentChanged = new EventEmitter();
   appointmentError;
+  errors: any = {};
   isRescheduling = false;
   appointmentDate: string;
   appointmentTime: string;
@@ -31,6 +32,10 @@ export class ProfessorConfirmModalComponent implements OnInit {
       });
   }
 
+  resetValues() {
+    this.isRescheduling = false;
+  }
+
   rejectAppointment() {
     this.appointmentService
       .rejectAppointment(this.selectedAppointment.id)
@@ -45,22 +50,25 @@ export class ProfessorConfirmModalComponent implements OnInit {
   }
 
   rescheduleAppointment() {
-    const requestedDateTime = new Date(
-      `${this.appointmentDate} ${this.appointmentTime}`
-    );
-    this.appointmentService
-      .rescheduleAppointment(this.selectedAppointment.id, requestedDateTime)
-      .subscribe((res: any) => {
-        if (res.success) {
-          document.getElementById('professor-confirm-dismiss-button').click();
-          this.appointmentChanged.emit({
-            title: 'Appointment Rescheduled',
-            message: 'Waiting on student confirmation'
-          });
-        } else {
-          this.appointmentError = res.message;
-        }
-      });
+    this.validateData();
+    if (Object.keys(this.errors).length === 0) {
+      const requestedDateTime = new Date(
+        `${this.appointmentDate} ${this.appointmentTime}`
+      );
+      this.appointmentService
+        .rescheduleAppointment(this.selectedAppointment.id, requestedDateTime)
+        .subscribe((res: any) => {
+          if (res.success) {
+            document.getElementById('professor-confirm-dismiss-button').click();
+            this.appointmentChanged.emit({
+              title: 'Appointment Rescheduled',
+              message: 'Waiting on student confirmation'
+            });
+          } else {
+            this.appointmentError = res.message;
+          }
+        });
+    }
   }
 
   toggleRescheduleAppointment() {
@@ -99,5 +107,16 @@ export class ProfessorConfirmModalComponent implements OnInit {
     }
 
     return `${hours}:${minutes}`;
+  }
+
+  validateData() {
+    this.errors = {};
+    if (this.appointmentDate === '' || !this.appointmentDate) {
+      this.errors.appointmentDate = 'You must enter in an appointment date.';
+    }
+
+    if (this.appointmentTime === '' || !this.appointmentTime) {
+      this.errors.appointmentTime = 'You must enter in an appointment time.';
+    }
   }
 }

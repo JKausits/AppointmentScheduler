@@ -4,19 +4,24 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Confrim Appointment</h5>
-        <button id="professor-confirm-dismiss-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button id="professor-confirm-dismiss-button" type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetValues()">
                 <span aria-hidden="true">&times;</span>
               </button>
       </div>
       <div class="modal-body" *ngIf="professor">
+        <div class="alert alert-danger" *ngIf="appointmentError">{{appointmentError}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
         <div>
           <strong>Professor: </strong><span>{{professor.name}}</span>
         </div>
         <div class="row" *ngIf="!isRescheduling">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <strong>Date: </strong><span>{{selectedAppointment.dateTime | date: 'mediumDate'}}</span>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <strong>Time: </strong><span>{{selectedAppointment.dateTime | date: 'shortTime'}}</span>
           </div>
         </div>
@@ -24,12 +29,16 @@
           <form>
             <div class="form-group row">
               <label class="col-md-2"><strong>Date: </strong></label>
-              <input [(ngModel)]="appointmentDate" type="date" class="form-control col-md-8" name="date" id="date">
+              <input [(ngModel)]="appointmentDate" type="date" class="form-control col-md-8" [class.is-invalid]="errors.appointmentDate"
+                name="date" id="date">
+              <div class="invalid-feedback offset-md-2" *ngIf="errors.appointmentDate">{{errors.appointmentDate}}</div>
 
             </div>
             <div class="form-group row">
               <label class="col-md-2"><strong>Time: </strong></label>
-              <input [(ngModel)]="appointmentTime" type="time" class="form-control col-md-8" name="time" id="time" step="900">
+              <input [(ngModel)]="appointmentTime" type="time" class="form-control col-md-8" [class.is-invalid]="errors.appointmentTime"
+                name="time" id="time" step="900">
+              <div class="invalid-feedback offset-md-2" *ngIf="errors.appointmentTime">{{errors.appointmentTime}}</div>
             </div>
           </form>
         </div>
