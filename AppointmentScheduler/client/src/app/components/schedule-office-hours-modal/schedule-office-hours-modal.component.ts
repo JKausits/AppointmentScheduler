@@ -48,6 +48,14 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
     this.startTime = '';
     this.endTime = '';
     this.typeID = '';
+    this.errors = {
+      daysSelected: '',
+      startDate: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      typeID: ''
+    };
   }
 
   addOfficeHour() {

@@ -42,23 +42,32 @@
       <form>
         <div class="form-group row">
           <label for="name" class="col-md-2"><strong>Name:</strong></label>
-          <input type="text" [(ngModel)]="info.name" name="name" id="name" class="form-control col-md-10">
+          <input type="text" [(ngModel)]="info.name" name="name" id="name" class="form-control col-md-10" [class.is-invalid]="errors.name"
+            autocomplete="name">
+          <div class="invalid-feedback  offset-md-2" *ngIf="errors.name">{{errors.name}}</div>
+
         </div>
         <div class="form-group row">
           <label for="title" class="col-md-2"><strong>Title:</strong></label>
-          <input type="text" [(ngModel)]="info.title" name="title" id="title" class="form-control col-md-10">
+          <input type="text" [(ngModel)]="info.title" name="title" id="title" class="form-control col-md-10" [class.is-invalid]="errors.title">
+          <div class="invalid-feedback offset-md-2" *ngIf="errors.title">{{errors.title}}</div>
+
         </div>
         <div class="form-group row">
           <label for="email" class="col-md-2"><strong>Email:</strong></label>
-          <input type="email" [(ngModel)]="info.email" name="email" id="email" class="form-control col-md-10">
+          <input type="email" [(ngModel)]="info.email" name="email" id="email" class="form-control col-md-10" [class.is-invalid]="errors.email"
+            autocomplete="email">
+          <div class="invalid-feedback offset-md-2" *ngIf="errors.email">{{errors.email}}</div>
+
         </div>
         <div class="form-group row">
           <label for="roomNumber" class="col-md-2"><strong>Room Number:</strong></label>
-          <input type="text" [(ngModel)]="info.roomNumber" name="roomNumber" id="roomNumber" class="form-control col-md-10">
+          <input type="text" [(ngModel)]="info.roomNumber" name="roomNumber" id="roomNumber" class="form-control col-md-10" [class.is-invalid]="errors.roomNumber">
+          <div class="invalid-feedback offset-md-2" *ngIf="errors.roomNumber">{{errors.roomNumber}}</div>
         </div>
       </form>
       <button class="btn btn-success" (click)="updateInformation()">Update</button>
-      <button class="btn btn-danger" (click)="isEdit = false">Cancel</button>
+      <button class="btn btn-danger" (click)="cancelEdit()">Cancel</button>
     </div>
   </div>
 </div>
