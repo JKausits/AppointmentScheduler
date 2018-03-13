@@ -1,10 +1,11 @@
+import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ProfessorService {
   baseUrl = 'http://localhost:49495';
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private auth: AuthService) {}
   getProfessorInfo(id) {
     return this.httpClient.get(`${this.baseUrl}/api/professor/${id}`);
   }
@@ -26,17 +27,11 @@ export class ProfessorService {
   }
 
   updateProfessorPrivateInfo(professor) {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${window.localStorage.getItem('token') ||
-        window.sessionStorage.getItem('token')}`,
-      'Content-Type': 'application/json'
-    });
-
     return this.httpClient.put(
       `${this.baseUrl}/api/professor/private/${professor.id}`,
       professor,
       {
-        headers
+        headers: this.auth.getAuthHeader()
       }
     );
   }
@@ -46,6 +41,8 @@ export class ProfessorService {
   }
 
   getProfessors() {
-    return this.httpClient.get(`${this.baseUrl}/api/professor/`);
+    return this.httpClient.get(`${this.baseUrl}/api/professor/`, {
+      headers: this.auth.getAuthHeader()
+    });
   }
 }

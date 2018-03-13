@@ -45,4 +45,12 @@ export class AuthService {
     const jwtHelper = new JwtHelper();
     return jwtHelper.decodeToken(this.token);
   }
+
+  getAuthHeader() {
+    return new HttpHeaders({
+      Authorization: `Bearer ${window.localStorage.getItem('token') ||
+        window.sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    });
+  }
 }
