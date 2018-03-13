@@ -11,41 +11,59 @@ export class StudentPendingModalComponent implements OnInit {
   @Input() selectedAppointment;
   @Output() appointmentChanged = new EventEmitter();
   cancellationCode: string;
+  errors: any = {};
   constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit() {}
 
   acceptAppointment() {
-    this.appointmentService
-      .studentConfirmAppointment(
-        this.selectedAppointment.id,
-        this.cancellationCode
-      )
-      .subscribe((res: any) => {
-        if (res.success) {
-          this.resetValues();
-          document.getElementById('student-pending-dismiss-button').click();
-          this.appointmentChanged.emit({ title: 'Appointment Accepted' });
-        }
-      });
+    this.validateData();
+    if (Object.keys(this.errors).length === 0) {
+      this.appointmentService
+        .studentConfirmAppointment(
+          this.selectedAppointment.id,
+          this.cancellationCode
+        )
+        .subscribe((res: any) => {
+          if (res.success) {
+            this.resetValues();
+            document.getElementById('student-pending-dismiss-button').click();
+            this.appointmentChanged.emit({ title: 'Appointment Accepted' });
+          } else {
+            this.errors.cancellationCode = 'Invalid Code';
+          }
+        });
+    }
   }
 
   rejectAppointment() {
-    this.appointmentService
-      .studentCancelScheduledAppointment(
-        this.selectedAppointment.id,
-        this.cancellationCode
-      )
-      .subscribe((res: any) => {
-        if (res.success) {
-          this.resetValues();
-          document.getElementById('student-pending-dismiss-button').click();
-          this.appointmentChanged.emit({ title: 'Appointment Cancelled' });
-        }
-      });
+    this.validateData();
+    if (Object.keys(this.errors).length === 0) {
+      this.appointmentService
+        .studentCancelScheduledAppointment(
+          this.selectedAppointment.id,
+          this.cancellationCode
+        )
+        .subscribe((res: any) => {
+          if (res.success) {
+            this.resetValues();
+            document.getElementById('student-pending-dismiss-button').click();
+            this.appointmentChanged.emit({ title: 'Appointment Cancelled' });
+          } else {
+            this.errors.cancellationCode = 'Invalid Code';
+          }
+        });
+    }
   }
 
   resetValues() {
     this.cancellationCode = '';
+  }
+
+  validateData() {
+    this.errors = {};
+    if (this.cancellationCode === '' || !this.cancellationCode) {
+      this.errors.cancellationCode = 'You must enter in a code';
+    }
   }
 }

@@ -14,10 +14,10 @@
             <strong>Professor: </strong><span>{{professor.name}}</span>
           </div>
           <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
               <strong>Date: </strong><span>{{selectedAppointment.dateTime | date: 'mediumDate'}}</span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
               <strong>Time: </strong><span>{{selectedAppointment.dateTime | date: 'shortTime'}}</span>
             </div>
           </div>
@@ -31,8 +31,8 @@
             <div class="row">
               <label for="cancellationCode" class="col-md-5"><strong>Cancellation Code: </strong></label>
               <input type="text" id="cancellationCode" name="cancellationCode" [(ngModel)]="cancellationCode" class="form-control col-md-6"
-                required [class.is-invalid]="cancelCodeError">
-              <div class="invalid-feedback offset-md-5" *ngIf="cancelCodeError">{{cancelCodeError}}</div>
+                required [class.is-invalid]="errors.cancellationCode">
+              <div class="invalid-feedback offset-md-5" *ngIf="errors.cancellationCode">{{errors.cancellationCode}}</div>
             </div>
           </div>
           <div class="modal-footer">
