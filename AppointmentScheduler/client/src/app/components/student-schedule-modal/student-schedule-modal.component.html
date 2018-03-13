@@ -14,43 +14,55 @@
             <strong>Professor: </strong><span>{{professor.name}}</span>
           </div>
           <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
               <strong>Date: </strong><span>{{selectedAppointment.dateTime | date: 'mediumDate'}}</span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
               <strong>Time: </strong><span>{{selectedAppointment.dateTime | date: 'shortTime'}}</span>
             </div>
           </div>
           <div class="form-group">
             <div class="row">
               <label for="firstName" class="col-md-3"><strong>First Name:</strong> </label>
-              <input type="text" [(ngModel)]="firstName" name="firstName" id="firstName" class="form-control col-md-8" required autocomplete="given-name">
+              <input type="text" [(ngModel)]="firstName" name="firstName" id="firstName" class="form-control col-md-8" [class.is-invalid]="errors.firstName"
+                required autocomplete="given-name">
+              <div class="invalid-feedback offset-md-3" *ngIf="errors.firstName">{{errors.firstName}}</div>
+
             </div>
           </div>
           <div class="form-group">
             <div class="row">
               <label for="lastName" class="col-md-3"><strong>Last Name:</strong> </label>
-              <input type="text" [(ngModel)]="lastName" name="lastName" id="lastName" class="form-control col-md-8" required autocomplete="family-name">
+              <input type="text" [(ngModel)]="lastName" name="lastName" id="lastName" class="form-control col-md-8" [class.is-invalid]="errors.lastName"
+                required autocomplete="family-name">
+              <div class="invalid-feedback offset-md-3" *ngIf="errors.lastName">{{errors.lastName}}</div>
+
             </div>
           </div>
           <div class="form-group">
             <div class="row">
               <label for="email" class="col-md-3"><strong>Email:</strong> </label>
-              <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control col-md-8" required autocomplete="email">
+              <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control col-md-8" [class.is-invalid]="errors.email"
+                required autocomplete="email">
+              <div class="invalid-feedback offset-md-3" *ngIf="errors.email">{{errors.email}}</div>
+
             </div>
           </div>
           <div class="form-group">
             <div class="row">
               <label for="bannerID" class="col-md-3"><strong>Banner ID:</strong> </label>
-              <input type="text" [(ngModel)]="bannerID" name="bannerID" id="bannerID" class="form-control col-md-8" required>
+              <input type="text" [(ngModel)]="bannerID" name="bannerID" id="bannerID" class="form-control col-md-8" [class.is-invalid]="errors.bannerID"
+                required>
+              <div class="invalid-feedback offset-md-3" *ngIf="errors.bannerID">{{errors.bannerID}}</div>
+
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" (click)="scheduleAppointment()">Submit</button>
-            <button class="btn btn-danger" *ngIf="isLoggedIn" (click)="cancelAppointment()">Cancel Appointment</button>
           </div>
 
         </form>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="scheduleAppointment()">Submit</button>
+          <button class="btn btn-danger" *ngIf="isLoggedIn" (click)="cancelAppointment()">Cancel Appointment</button>
+        </div>
       </div>
     </div>
   </div>

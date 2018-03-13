@@ -64,8 +64,6 @@ export class StudentScheduleModalComponent implements OnInit {
             this.resetValues();
           }
         });
-    } else {
-      console.log(this.errors);
     }
   }
 
