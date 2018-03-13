@@ -33,7 +33,6 @@ namespace AppointmentScheduler.Controllers
             _configuration = configuration;
         }
 
-
         [HttpPost, AllowAnonymous]
         public IActionResult Login([FromBody] TokenRequest request) {
             var professor = Authenticate(request);

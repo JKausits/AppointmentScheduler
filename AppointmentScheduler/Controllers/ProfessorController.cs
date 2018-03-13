@@ -4,9 +4,12 @@ using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace AppointmentScheduler.Controllers
 {
@@ -49,7 +52,13 @@ namespace AppointmentScheduler.Controllers
 
         [HttpGet, Authorize]
         public IEnumerable<ProfessorPrivateDTO> GetProfessors() {
-            return _respository.GetProfessors();
+            if (isAdmin(HttpContext))
+            {
+                return _respository.GetProfessors();
+            }
+            else { 
+                return null;
+            }
         }
 
         [HttpPut("{id}"), Authorize]
@@ -61,10 +70,26 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPut("private/{id}"), Authorize]
         public IActionResult UpdatePrivate(int id, [FromBody] ProfessorPrivateDTO professor) {
-            return new ObjectResult(_respository.UpdatePrivate(id, professor));
+            if (isAdmin(HttpContext))
+            {
+                return new ObjectResult(_respository.UpdatePrivate(id, professor));
+            }
+            else {
+                return new UnauthorizedResult();
+            }
         }
 
-       
-        
+
+        private JwtSecurityToken decodeJWT(HttpContext context) {
+            string raw = context.Request.Headers["Authorization"];
+            raw = raw.Split(" ")[1];
+            var handler = new JwtSecurityTokenHandler();
+            return handler.ReadJwtToken(raw) as JwtSecurityToken;
+        }
+
+        private bool isAdmin(HttpContext context) {
+            var token = decodeJWT(context);
+            return token.Claims.First(claim => claim.Type == "admin").Value == "True";
+        }
     }
 }
