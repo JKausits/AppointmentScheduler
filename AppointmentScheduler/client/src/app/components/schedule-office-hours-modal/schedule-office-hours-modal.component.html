@@ -11,6 +11,11 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
+            <div class="alert alert-danger" *ngIf="errors.daysSelected">{{errors.daysSelected}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
             <label><strong>Day(s):</strong></label>
             <div class="form-check form-check-inline">
               <input class="form-check-input" [(ngModel)]="monday" type="checkbox" id="monday" name="monday">
@@ -36,30 +41,38 @@
           <div class="row">
             <div class="form-group col-md-6">
               <label for="startTime"><strong>Start Time:</strong></label>
-              <input type="time" [(ngModel)]="startTime" name="startTime" id="startTime" class="form-control">
+              <input type="time" [(ngModel)]="startTime" name="startTime" id="startTime" [class.is-invalid]="errors.startTime" class="form-control"
+                step="900">
+              <div class="invalid-feedback" *ngIf="errors.startTime">{{errors.startTime}}</div>
             </div>
             <div class="form-group col-md-6">
               <label for="endTime"><strong>End Time: </strong> </label>
-              <input type="time" [(ngModel)]="endTime" name="endTime" id="endTime" class="form-control">
+              <input type="time" [(ngModel)]="endTime" name="endTime" id="endTime" [class.is-invalid]="errors.endTime" class="form-control"
+                step="900">
+              <div class="invalid-feedback" *ngIf="errors.endTime">{{errors.endTime}}</div>
             </div>
           </div>
           <div class="row">
             <div class="form-group col-md-6">
               <label for="startDate"><strong>Start Date:</strong></label>
-              <input type="date" [(ngModel)]="startDate" name="startDate" id="startDate" class="form-control">
+              <input type="date" [(ngModel)]="startDate" name="startDate" id="startDate" [class.is-invalid]="errors.startDate" class="form-control">
+              <div class="invalid-feedback" *ngIf="errors.startDate">{{errors.startDate}}</div>
             </div>
             <div class="form-group col-md-6">
               <label for="endDate"><strong>End Date: </strong> </label>
-              <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate" class="form-control">
+              <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate" [class.is-invalid]="errors.endDate" class="form-control">
+              <div class="invalid-feedback" *ngIf="errors.endDate">{{errors.endDate}}</div>
+
             </div>
           </div>
           <div class="row">
             <div class="form-group col-md-12">
               <label for="typeID"><strong>Type: </strong></label>
-              <select [(ngModel)]="typeID" name="typeID" id="typeID" class="form-control">
+              <select [(ngModel)]="typeID" name="typeID" id="typeID" class="form-control" [class.is-invalid]="errors.typeID">
                 <option value="0">Office Hour</option>
                 <option value="1">Cancellation</option>
               </select>
+              <div class="invalid-feedback" *ngIf="errors.typeID">{{errors.typeID}}</div>
             </div>
           </div>
         </form>

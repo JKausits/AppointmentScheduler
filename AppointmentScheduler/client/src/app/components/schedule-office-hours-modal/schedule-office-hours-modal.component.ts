@@ -11,6 +11,14 @@ import ScheduledHourResult from '../../scheduledHourResult';
 export class ScheduleOfficeHoursModalComponent implements OnInit {
   @Input() professorID: number;
   @Output() addScheduledHour = new EventEmitter();
+  errors: any = {
+    daysSelected: '',
+    startDate: '',
+    endDate: '',
+    startTime: '',
+    endTime: '',
+    typeID: ''
+  };
   monday = false;
   tuesday = false;
   wednesday = false;
@@ -56,16 +64,30 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
       typeID: this.typeID,
       professorID: this.auth.getTokenData().ID
     };
-    this.scheduledHourService.createScheduledHour(info).subscribe(res => {
-      this.result = res;
-      if (this.result.success) {
-        this.addScheduledHour.emit(this.result.scheduledHour);
-        document.getElementById('dismiss-button').click();
-      }
-    });
+
+    this.validateInfo();
+    if (!this.hasErrors()) {
+      this.scheduledHourService.createScheduledHour(info).subscribe(res => {
+        this.result = res;
+        if (this.result.success) {
+          this.addScheduledHour.emit(this.result.scheduledHour);
+          document.getElementById('dismiss-button').click();
+        }
+      });
+    }
   }
 
   validateInfo() {
+    this.errors = {
+      daysSelected: '',
+      startDate: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      typeID: ''
+    };
+
+    // Validate Days
     if (
       !this.monday &&
       !this.tuesday &&
@@ -73,10 +95,56 @@ export class ScheduleOfficeHoursModalComponent implements OnInit {
       !this.thursday &&
       !this.friday
     ) {
-      return {
-        success: false,
-        message: 'At least one day of the week must be selected'
-      };
+      this.errors.daysSelected =
+        'At least one day of the week must be selected';
     }
+
+    // Validate Dates
+    if (this.startDate === '' || !this.startDate) {
+      this.errors.startDate = 'You must enter in a start date';
+    }
+
+    if (this.endDate === '' || !this.endDate) {
+      this.errors.endDate = 'You must enter in an end date';
+    }
+
+    if (
+      this.errors.startDate === '' &&
+      this.errors.endDate === '' &&
+      new Date(this.startDate) >= new Date(this.endDate)
+    ) {
+      this.errors.startDate = 'Start date cannot be after the end date';
+    }
+    // Validate Times
+    if (this.startTime === '' || !this.startTime) {
+      this.errors.startTime = 'You must enter in a start time';
+    }
+
+    if (this.endTime === '' || !this.endTime) {
+      this.errors.endTime = 'You must enter in an end time';
+    }
+
+    if (
+      this.errors.startTime === '' &&
+      this.errors.endTime === '' &&
+      this.startTime >= this.endTime
+    ) {
+      this.errors.startTime = 'Start time cannot be after the end time';
+    }
+
+    // Validate Type
+    if (this.typeID === '' || !this.typeID) {
+      this.errors.typeID = 'You must select the type of office hour';
+    }
+  }
+
+  hasErrors() {
+    let count = 0;
+    for (let key in this.errors) {
+      if (this.errors.hasOwnProperty(key) && this.errors[key] !== '') {
+        count++;
+      }
+    }
+    return count > 0;
   }
 }
