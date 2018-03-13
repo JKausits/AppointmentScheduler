@@ -1,5 +1,7 @@
 ﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,11 @@ namespace AppointmentScheduler.Repositories
     public class ScheduledHourRepository
     {
         private readonly AppointmentSchedulerContext _context;
-
-        public ScheduledHourRepository(AppointmentSchedulerContext context)
+        private readonly EmailService _emailService;
+        public ScheduledHourRepository(AppointmentSchedulerContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         public IEnumerable<ScheduledHourDTO> GetProfessorHours(int id)
@@ -83,10 +86,7 @@ namespace AppointmentScheduler.Repositories
                         appointment.ProfessorID = entity.ProfessorID;
                         appointment.Status = Appointment.StatusType.Open;
                         appointment.DateTime = currentDate + currentTime;
-                        //appointment.ScheduledHourID = entity.ID;
                         _context.Appointments.Add(appointment);
-
-
                         currentTime = currentTime.Add(appointmentLength);
                     }
                     _context.SaveChanges();
@@ -130,7 +130,7 @@ namespace AppointmentScheduler.Repositories
 
                                 if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
                                 {
-                                    AlertAppointmentChange(appointment);
+                                    emailAppointmentCancelled(appointment);
                                 }
                             }
                             appointment.Status = status;
@@ -164,13 +164,13 @@ namespace AppointmentScheduler.Repositories
                     while (currentTime < entity.EndTime)
                     {
                         var currentDateTime = currentDate + currentTime;
-                        var appointment = _context.Appointments.FirstOrDefault(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID);
+                        var appointment = _context.Appointments.Where(a => a.DateTime == currentDateTime && a.ProfessorID == entity.ProfessorID).Include(a => a.Professor).FirstOrDefault();
                         if (appointment != null)
                         {
 
                             if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
                             {
-                                AlertAppointmentChange(appointment);
+                                emailAppointmentCancelled(appointment);
                             }
                             _context.Appointments.Remove(appointment);
                         }
@@ -184,9 +184,10 @@ namespace AppointmentScheduler.Repositories
             }
         }
 
-        private void AlertAppointmentChange(Appointment entity)
+        private async void emailAppointmentCancelled(Appointment entity)
         {
-            Console.WriteLine("Cancelled Pending/Scheduled Appointment, Sending Email");
+            String message = String.Format("{0} {1},<br/><br/>The appointment that you requested with {2} on {3} at {4} has been rejected or cancelled", entity.FirstName, entity.LastName, entity.Professor.Name, entity.DateTime.ToShortDateString(), entity.DateTime.ToShortTimeString());
+            await _emailService.Send(entity.Email, "Appointment Reschedule Request", message);
         }
 
         private bool CheckDayOfWeek(ScheduledHour entity, DateTime currentDate)

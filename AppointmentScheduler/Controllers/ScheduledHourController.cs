@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -17,9 +18,9 @@ namespace AppointmentScheduler.Controllers
     public class ScheduledHourController : Controller
     {
         private readonly ScheduledHourRepository _respository;
-        public ScheduledHourController(AppointmentSchedulerContext context)
+        public ScheduledHourController(AppointmentSchedulerContext context, EmailService emailService)
         {
-            _respository = new ScheduledHourRepository(context);
+            _respository = new ScheduledHourRepository(context, emailService);
         }
 
         [HttpGet("{id}"), Authorize]
