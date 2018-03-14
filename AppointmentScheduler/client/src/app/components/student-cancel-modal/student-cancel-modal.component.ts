@@ -32,6 +32,7 @@ export class StudentCancelModalComponent implements OnInit {
   resetValues() {
     this.cancellationCode = '';
     this.cancelCodeError = '';
+    this.cancellationReason = '';
   }
 
   cancelAppointment() {

@@ -36,6 +36,10 @@ export class AppointmentService {
     });
   }
 
+  getProfessorAppointmentCancellations(id) {
+    return this.http.get(`${this.baseUrl}/api/appointment/cancellations/${id}`);
+  }
+
   scheduleAppointment(appointment) {
     return this.http.post(`${this.baseUrl}/api/Appointment`, appointment);
   }

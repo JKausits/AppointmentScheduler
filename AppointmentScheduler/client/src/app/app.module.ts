@@ -31,6 +31,8 @@ import { AdminProfilesListViewComponent } from './pages/admin-profiles-list-view
 import { AdminProfilesListViewItemComponent } from './components/admin-profiles-list-view-item/admin-profiles-list-view-item.component';
 import { ProfessorUncancelModalComponent } from './components/professor-uncancel-modal/professor-uncancel-modal.component';
 import { StudentPendingModalComponent } from './components/student-pending-modal/student-pending-modal.component';
+import { CancelledAppointmentsListViewItemComponent } from './components/cancelled-appointments-list-view-item/cancelled-appointments-list-view-item.component';
+import { CancelledAppointmentsListViewComponent } from './components/cancelled-appointments-list-view/cancelled-appointments-list-view.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { StudentPendingModalComponent } from './components/student-pending-modal
     AdminProfilesListViewComponent,
     AdminProfilesListViewItemComponent,
     ProfessorUncancelModalComponent,
-    StudentPendingModalComponent
+    StudentPendingModalComponent,
+    CancelledAppointmentsListViewItemComponent,
+    CancelledAppointmentsListViewComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

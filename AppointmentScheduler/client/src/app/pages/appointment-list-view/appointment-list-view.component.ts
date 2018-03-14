@@ -9,20 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppointmentListViewComponent implements OnInit {
   appointments;
+  professorID;
   constructor(
     private appointmentService: AppointmentService,
     private auth: AuthService
   ) {}
 
   ngOnInit() {
+    this.professorID = this.auth.getTokenData().ID;
     this.getAppointments();
   }
 
   getAppointments() {
     this.appointmentService
-      .getPendingOrScheduleProfessorAppointmentsAfterThisWeek(
-        this.auth.getTokenData().ID
-      )
+      .getPendingOrScheduleProfessorAppointmentsAfterThisWeek(this.professorID)
       .subscribe((res: any) => {
         this.appointments = res;
       });

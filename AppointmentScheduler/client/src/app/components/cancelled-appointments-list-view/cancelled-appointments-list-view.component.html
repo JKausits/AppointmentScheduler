@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-body">
+    <div class="card-title">
+      <div>
+        <span id="title">
+          <strong>Appointment Cancellations</strong>
+        </span>
+        <button class="btn btn-primary float-right" (click)="isHidden = !isHidden">{{ isHidden ? 'Show' : 'Hide'}}</button>
+      </div>
+      <div *ngIf="!isHidden">
+
+        <div *ngFor="let appointment of cancelledAppointments">
+          <app-cancelled-appointments-list-view-item [appointment]="appointment"></app-cancelled-appointments-list-view-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

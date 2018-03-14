@@ -1,0 +1,37 @@
+<div class="card" *ngIf="appointment">
+  <div class="card-body" style="position: relative;">
+    <div class="status-bar" [class.pending]="appointment.status == 1" [class.pending-student]="appointment.status == 2"></div>
+    <div class="row">
+      <div class="col-md-4">
+        <strong>Appointment Date: </strong>
+        <span>{{appointment.dateTime | date: 'shortDate' }}</span>
+      </div>
+      <div class="col-md-4">
+        <strong>Appointment Time: </strong>
+        <span>{{appointment.dateTime | date: 'shortTime' }}</span>
+      </div>
+    </div>
+    <div>
+      <strong>First Name: </strong><span>{{appointment.firstName}}</span>
+    </div>
+    <div>
+      <strong>Last Name: </strong><span>{{appointment.lastName}}</span>
+    </div>
+    <div>
+      <strong>Reason: </strong><span>{{appointment.reason}}</span>
+    </div>
+    <div>
+      <strong>Cancelled: </strong><span>{{appointment.created | date: 'shortDate'}} at {{appointment.created | date: 'shortTime'}}</span>
+
+    </div>
+    <div *ngIf="appointment.status == 1">
+      <strong>Status at cancellation: </strong><span>Pending</span>
+    </div>
+    <div *ngIf="appointment.status == 2">
+      <strong>Status at cancellation: </strong><span>Pending Student</span>
+    </div>
+    <div *ngIf="appointment.status == 3">
+      <strong>Status at cancellation: </strong><span>Scheduled</span>
+    </div>
+  </div>
+</div>
