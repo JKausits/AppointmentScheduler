@@ -51,6 +51,12 @@ namespace AppointmentScheduler.Repositories
             }
         }
 
+        public IEnumerable<AppointmentCancellation> GetWeeklyAppointmentCancellationsByProfessor(int id) {
+            DateTime date = DateTime.Today;
+            date = date.AddDays(-5);
+            return _context.AppointmentCancellations.Where(a => a.ProfessorID == id && a.DateTime >= date);
+        }
+
         public Object StudentAcceptAppointment(int id, string cancelCode) {
             var appointment = _context.Appointments.Where(a => a.ID == id).Include(a => a.Professor).FirstOrDefault();
             if (appointment == null)
@@ -124,7 +130,7 @@ namespace AppointmentScheduler.Repositories
             return new { success = true, message = "Appointment Uncancelled" }; ;
         }
 
-        public Object StudentCancelScheduledAppointment(int id, string cancelCode) {
+        public Object StudentCancelScheduledAppointment(int id, string cancelCode, string cancellationReason) {
             var appointment = _context.Appointments.FirstOrDefault(a => a.ID == id);
             if (appointment == null) {
                 return new { success = false, message = "Could not find appointment" };
@@ -134,6 +140,8 @@ namespace AppointmentScheduler.Repositories
                 return new { success = false, message = "Invalid cancel code" };
             }
 
+            AppointmentCancellation appointmentCancellation = new AppointmentCancellation { FirstName = appointment.FirstName, LastName = appointment.LastName, Email = appointment.Email, DateTime = appointment.DateTime, ProfessorID = appointment.ProfessorID, Status = appointment.Status, Reason = cancellationReason, Created = DateTime.Now};
+
             appointment.FirstName = null;
             appointment.LastName = null;
             appointment.Email = null;
@@ -141,6 +149,7 @@ namespace AppointmentScheduler.Repositories
             appointment.ModifiedAt = DateTime.Now;
             appointment.Status = Appointment.StatusType.Open;
             _context.Appointments.Update(appointment);
+            _context.AppointmentCancellations.Add(appointmentCancellation);
             _context.SaveChanges();
 
             return new { success = true, message = "Appointment Cancelled" };
@@ -228,6 +237,7 @@ namespace AppointmentScheduler.Repositories
 
             return new { success = true, message = "Appointment Rescheduled"};
         }
+
 
 
         private async void emailCancellationCode(Appointment entity) {

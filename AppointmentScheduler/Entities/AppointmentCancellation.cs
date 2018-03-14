@@ -19,6 +19,7 @@ namespace AppointmentScheduler.Entities
         public string Email { get; set; }
         public StatusType Status { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime Created { get; set; }
         public string Reason { get; set; }
 
         public virtual Professor Professor { get; set; }

@@ -43,6 +43,10 @@ namespace AppointmentScheduler.Controllers
             return _repository.GetPendingOrScheduledAppointmentsByProfessor(id, currentDate);
         }
 
+        [HttpGet("cancellations/{id}")]
+        public IEnumerable<AppointmentCancellation> GetProfessorCancellations(int id) {
+            return _repository.GetWeeklyAppointmentCancellationsByProfessor(id);
+        }
 
         [HttpPut("accept/{id}"), Authorize]
         public IActionResult ConfirmAppointment(int id) {
@@ -56,8 +60,8 @@ namespace AppointmentScheduler.Controllers
 
 
         [HttpPut("cancel/{id}"), AllowAnonymous]
-        public IActionResult StudentCancelScheduledAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode) {
-            return new ObjectResult(_repository.StudentCancelScheduledAppointment(id, cancelCode));
+        public IActionResult StudentCancelScheduledAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode, [FromQuery(Name = "cancellationReason")] String cancellationReason) {
+            return new ObjectResult(_repository.StudentCancelScheduledAppointment(id, cancelCode, cancellationReason));
         }
 
         [HttpPut("student/accept/{id}"), AllowAnonymous]
