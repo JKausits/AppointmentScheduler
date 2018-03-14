@@ -20,6 +20,7 @@ export class StudentCancelModalComponent implements OnInit {
   @Output() appointmentChanged = new EventEmitter();
   @Input() professor: any;
   cancellationCode = '';
+  cancellationReason = '';
   cancelCodeError: string;
   constructor(
     private professorService: ProfessorService,
@@ -40,7 +41,8 @@ export class StudentCancelModalComponent implements OnInit {
       this.appointmentService
         .studentCancelScheduledAppointment(
           this.selectedAppointment.id,
-          this.cancellationCode
+          this.cancellationCode,
+          this.cancellationReason
         )
         .subscribe((res: any) => {
           if (res.success) {

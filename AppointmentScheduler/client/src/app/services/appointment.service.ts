@@ -40,9 +40,10 @@ export class AppointmentService {
     return this.http.post(`${this.baseUrl}/api/Appointment`, appointment);
   }
 
-  studentCancelScheduledAppointment(id, cancelCode) {
+  studentCancelScheduledAppointment(id, cancelCode, cancellationReason) {
     return this.http.put(
-      `${this.baseUrl}/api/Appointment/cancel/${id}?cancelCode=${cancelCode}`,
+      `${this
+        .baseUrl}/api/Appointment/cancel/${id}?cancelCode=${cancelCode}&cancellationReason=${cancellationReason}`,
       {}
     );
   }

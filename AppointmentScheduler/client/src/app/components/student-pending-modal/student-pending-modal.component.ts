@@ -42,7 +42,8 @@ export class StudentPendingModalComponent implements OnInit {
       this.appointmentService
         .studentCancelScheduledAppointment(
           this.selectedAppointment.id,
-          this.cancellationCode
+          this.cancellationCode,
+          ''
         )
         .subscribe((res: any) => {
           if (res.success) {

@@ -14,10 +14,10 @@
             <strong>Professor: </strong><span>{{professor.name}}</span>
           </div>
           <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
               <strong>Date: </strong><span>{{selectedAppointment.dateTime | date: 'mediumDate'}}</span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
               <strong>Time: </strong><span>{{selectedAppointment.dateTime | date: 'shortTime'}}</span>
             </div>
           </div>
@@ -34,6 +34,11 @@
                 required [class.is-invalid]="cancelCodeError">
               <div class="invalid-feedback offset-md-5" *ngIf="cancelCodeError">{{cancelCodeError}}</div>
             </div>
+          </div>
+          <div class="form-group">
+            <label for="cancellationReason"><strong>Reason(optional):</strong></label>
+            <textarea name="cancellationReason" id="cancellationReason" [(ngModel)]="cancellationReason" class="form-control" cols="30"
+              rows="3"></textarea>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-danger" (click)="cancelAppointment()">Cancel Appointment</button>
