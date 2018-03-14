@@ -16,5 +16,6 @@ namespace AppointmentScheduler.Entities
         public DbSet<Professor> Professors { get; set; }
         public DbSet<ScheduledHour> ScheduledHours { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<AppointmentCancellation> AppointmentCancellations { get; set; }
     }
 }
