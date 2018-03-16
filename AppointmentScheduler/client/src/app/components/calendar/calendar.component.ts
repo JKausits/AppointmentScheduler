@@ -88,6 +88,8 @@ export class CalendarComponent implements OnInit {
   }
 
   fillCalendarDates() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const table: any = document.getElementById('calendarTable');
     this.appointments.forEach((appointment, index) => {
       appointment.dateTime = new Date(appointment.dateTime);
@@ -96,41 +98,51 @@ export class CalendarComponent implements OnInit {
       const cell = table.rows[row].cells[column];
       const isLoggedIn = this.auth.isLoggedIn();
       cell.dataset.index = index;
-      // data-toggle="modal" data-target="#addOfficeHourModal"
       if (appointment.status === 1) {
-        cell.classList.add('appointment');
         cell.classList.add('pending');
-        cell.dataset.toggle = 'modal';
-        cell.dataset.target = isLoggedIn
-          ? '#professorConfirmModal'
-          : '#studentCancelModal';
+        if (isLoggedIn || appointment.dateTime > today) {
+          cell.classList.add('appointment');
+          cell.dataset.toggle = 'modal';
+          cell.dataset.target = isLoggedIn
+            ? '#professorConfirmModal'
+            : '#studentCancelModal';
+        }
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 2) {
-        cell.classList.add('appointment');
         cell.classList.add('pending-student');
-        cell.dataset.toggle = 'modal';
-        cell.dataset.target = isLoggedIn
-          ? '#professorScheduledModal'
-          : '#studentPendingModal';
+        if (isLoggedIn || appointment.dateTime > today) {
+          cell.classList.add('appointment');
+          cell.dataset.toggle = 'modal';
+          cell.dataset.target = isLoggedIn
+            ? '#professorScheduledModal'
+            : '#studentPendingModal';
+        }
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 3) {
-        cell.classList.add('appointment');
         cell.classList.add('scheduled');
-        cell.dataset.toggle = 'modal';
-        cell.dataset.target = isLoggedIn
-          ? '#professorScheduledModal'
-          : '#studentCancelModal';
+        if (isLoggedIn || appointment.dateTime > today) {
+          cell.classList.add('appointment');
+          cell.dataset.toggle = 'modal';
+          cell.dataset.target = isLoggedIn
+            ? '#professorScheduledModal'
+            : '#studentCancelModal';
+        }
         cell.innerHTML = `${appointment.firstName} ${appointment.lastName}`;
       } else if (appointment.status === 4) {
         cell.classList.add('cancelled');
         if (isLoggedIn) {
+          cell.classList.add('appointment');
           cell.dataset.toggle = 'modal';
           cell.dataset.target = '#professorUncancelAppointmentModal';
         }
       } else {
         cell.classList.add('appointment');
-        cell.dataset.toggle = 'modal';
-        cell.dataset.target = '#studentScheduleModal';
+        if (appointment.dateTime > today) {
+          cell.dataset.toggle = 'modal';
+          cell.dataset.target = '#studentScheduleModal';
+        } else {
+          cell.classList.add('non-click');
+        }
       }
     });
   }

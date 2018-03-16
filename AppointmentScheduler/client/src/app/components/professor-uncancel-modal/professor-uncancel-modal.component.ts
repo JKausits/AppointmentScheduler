@@ -10,9 +10,13 @@ export class ProfessorUncancelModalComponent implements OnInit {
   @Input() selectedAppointment;
   @Input() professor;
   @Output() appointmentChanged = new EventEmitter();
+  canEdit = true;
+  today = new Date();
   constructor(private appointmentService: AppointmentService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.today.setHours(0, 0, 0, 0);
+  }
 
   uncancelAppointment() {
     this.appointmentService

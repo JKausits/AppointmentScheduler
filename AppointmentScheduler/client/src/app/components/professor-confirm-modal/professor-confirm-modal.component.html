@@ -58,9 +58,9 @@
 
       </div>
       <div class="modal-footer">
-        <button *ngIf="!isRescheduling" class="btn btn-success" (click)="acceptAppointment()">Accept</button>
-        <button *ngIf="!isRescheduling" class="btn btn-danger" (click)="rejectAppointment()">Reject</button>
-        <button *ngIf="!isRescheduling" class="btn btn-warning" (click)="toggleRescheduleAppointment()">Reschedule</button>
+        <button *ngIf="!isRescheduling" class="btn btn-success" [disabled]="selectedAppointment.dateTime < today" (click)="acceptAppointment()">Accept</button>
+        <button *ngIf="!isRescheduling" class="btn btn-danger" [disabled]="selectedAppointment.dateTime < today" (click)="rejectAppointment()">Reject</button>
+        <button *ngIf="!isRescheduling" class="btn btn-warning" [disabled]="selectedAppointment.dateTime < today" (click)="toggleRescheduleAppointment()">Reschedule</button>
         <button *ngIf="isRescheduling" class="btn btn-primary" (click)="rescheduleAppointment()">Reschedule</button>
         <button *ngIf="isRescheduling" class="btn btn-danger" (click)="toggleRescheduleAppointment()">Cancel</button>
       </div>

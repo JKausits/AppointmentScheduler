@@ -40,3 +40,7 @@ td {
 .pending-student {
   background-color: lightsalmon;
 }
+
+.non-click {
+  cursor: not-allowed;
+}

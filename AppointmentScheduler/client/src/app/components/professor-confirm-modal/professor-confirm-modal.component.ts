@@ -15,9 +15,12 @@ export class ProfessorConfirmModalComponent implements OnInit {
   isRescheduling = false;
   appointmentDate: string;
   appointmentTime: string;
+  today = new Date();
   constructor(private appointmentService: AppointmentService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.today.setHours(0, 0, 0, 0);
+  }
 
   acceptAppointment() {
     this.appointmentService
