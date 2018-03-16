@@ -9,7 +9,8 @@ import {
   OnChanges,
   SimpleChanges,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild
 } from '@angular/core';
 
 @Component({
@@ -26,6 +27,7 @@ export class StudentScheduleModalComponent implements OnInit {
   bannerID;
   isLoggedIn: boolean;
   errors: any = {};
+  isTrusted = false;
   @Output() appointmentChanged = new EventEmitter();
   constructor(
     private professorService: ProfessorService,
@@ -62,9 +64,15 @@ export class StudentScheduleModalComponent implements OnInit {
             });
             document.getElementById('dismiss-button').click();
             this.resetValues();
+          } else {
+            console.log(res);
           }
         });
     }
+  }
+
+  resolved($event) {
+    this.isTrusted = event.isTrusted;
   }
 
   cancelAppointment() {
@@ -95,6 +103,10 @@ export class StudentScheduleModalComponent implements OnInit {
 
     if (!this.bannerID) {
       this.errors.bannerID = 'Must include a banner ID';
+    }
+
+    if (!this.isTrusted) {
+      this.errors.isTrusted = 'You must verify that you are a human';
     }
   }
 }

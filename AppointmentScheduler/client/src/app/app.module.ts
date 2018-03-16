@@ -5,6 +5,11 @@ import { AccessGuard } from './access.guard';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {
+  RecaptchaModule,
+  RecaptchaSettings,
+  RECAPTCHA_SETTINGS
+} from 'ng-recaptcha';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
@@ -33,7 +38,6 @@ import { ProfessorUncancelModalComponent } from './components/professor-uncancel
 import { StudentPendingModalComponent } from './components/student-pending-modal/student-pending-modal.component';
 import { CancelledAppointmentsListViewItemComponent } from './components/cancelled-appointments-list-view-item/cancelled-appointments-list-view-item.component';
 import { CancelledAppointmentsListViewComponent } from './components/cancelled-appointments-list-view/cancelled-appointments-list-view.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,13 +66,25 @@ import { CancelledAppointmentsListViewComponent } from './components/cancelled-a
     CancelledAppointmentsListViewItemComponent,
     CancelledAppointmentsListViewComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    RecaptchaModule.forRoot()
+  ],
   providers: [
     AuthService,
     AccessGuard,
     ProfessorService,
     ScheduledHourService,
-    AppointmentService
+    AppointmentService,
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: '6LcfuEwUAAAAADKUN81ylha4nfIits-KMt2eeWT3'
+      } as RecaptchaSettings
+    }
   ],
   bootstrap: [AppComponent]
 })

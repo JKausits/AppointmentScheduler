@@ -12,6 +12,7 @@ export class StudentPendingModalComponent implements OnInit {
   @Output() appointmentChanged = new EventEmitter();
   cancellationCode: string;
   errors: any = {};
+  isTrusted = false;
   constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit() {}
@@ -36,6 +37,10 @@ export class StudentPendingModalComponent implements OnInit {
     }
   }
 
+  resolved($event) {
+    this.isTrusted = event.isTrusted;
+  }
+
   rejectAppointment() {
     this.validateData();
     if (Object.keys(this.errors).length === 0) {
@@ -58,6 +63,7 @@ export class StudentPendingModalComponent implements OnInit {
   }
 
   resetValues() {
+    this.errors = {};
     this.cancellationCode = '';
   }
 
@@ -65,6 +71,10 @@ export class StudentPendingModalComponent implements OnInit {
     this.errors = {};
     if (this.cancellationCode === '' || !this.cancellationCode) {
       this.errors.cancellationCode = 'You must enter in a code';
+    }
+
+    if (!this.isTrusted) {
+      this.errors.isTrusted = 'You must verify that you are a human';
     }
   }
 }

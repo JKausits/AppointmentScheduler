@@ -22,6 +22,8 @@ export class StudentCancelModalComponent implements OnInit {
   cancellationCode = '';
   cancellationReason = '';
   cancelCodeError: string;
+  errors: any = {};
+  isTrusted = false;
   constructor(
     private professorService: ProfessorService,
     private appointmentService: AppointmentService
@@ -35,10 +37,19 @@ export class StudentCancelModalComponent implements OnInit {
     this.cancellationReason = '';
   }
 
+  resolved($event) {
+    this.isTrusted = event.isTrusted;
+  }
+
   cancelAppointment() {
-    if (this.cancellationCode === '') {
-      this.cancelCodeError = `You didn't enter in a code`;
-    } else {
+    this.validateErrors();
+    if (Object.keys(this.errors).length === 0) {
+      console.log(
+        this.selectedAppointment.id,
+        this.cancellationCode,
+        this.cancellationReason
+      );
+
       this.appointmentService
         .studentCancelScheduledAppointment(
           this.selectedAppointment.id,
@@ -51,9 +62,21 @@ export class StudentCancelModalComponent implements OnInit {
             document.getElementById('student-cancel-dismiss-button').click();
             this.appointmentChanged.emit({ title: 'Appointment Cancelled' });
           } else {
-            this.cancelCodeError = res.message;
+            this.errors.cancelCodeError = res.message;
           }
         });
+    } else {
+      console.log(this.errors);
+    }
+  }
+
+  validateErrors() {
+    this.errors = {};
+    if (this.cancellationCode === '') {
+      this.errors.cancelCodeError = `You didn't enter in a code`;
+    }
+    if (!this.isTrusted) {
+      this.errors.isTrusted = 'You must verify that you are a human';
     }
   }
 }

@@ -57,7 +57,12 @@
 
             </div>
           </div>
-
+          <div class="row">
+            <re-captcha class="offset-md-3" (resolved)="resolved($event)"></re-captcha>
+          </div>
+          <div class="row">
+            <div style="color: #dc3545; font-size: 80%;" class="offset-md-3" *ngIf="errors.isTrusted">{{errors.isTrusted}}</div>
+          </div>
         </form>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="scheduleAppointment()">Submit</button>

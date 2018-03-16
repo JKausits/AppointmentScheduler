@@ -31,14 +31,20 @@
             <div class="row">
               <label for="cancellationCode" class="col-md-5"><strong>Cancellation Code: </strong></label>
               <input type="text" id="cancellationCode" name="cancellationCode" [(ngModel)]="cancellationCode" class="form-control col-md-6"
-                required [class.is-invalid]="cancelCodeError">
-              <div class="invalid-feedback offset-md-5" *ngIf="cancelCodeError">{{cancelCodeError}}</div>
+                required [class.is-invalid]="errors.cancelCodeError">
+              <div class="invalid-feedback offset-md-5" *ngIf="errors.cancelCodeError">{{errors.cancelCodeError}}</div>
             </div>
           </div>
           <div class="form-group">
             <label for="cancellationReason"><strong>Reason(optional):</strong></label>
             <textarea name="cancellationReason" id="cancellationReason" [(ngModel)]="cancellationReason" class="form-control" cols="30"
               rows="3"></textarea>
+          </div>
+          <div class="row">
+            <re-captcha class="offset-md-3" (resolved)="resolved($event)"></re-captcha>
+          </div>
+          <div class="row">
+            <div style="color: #dc3545; font-size: 80%;" class="offset-md-3" *ngIf="errors.isTrusted">{{errors.isTrusted}}</div>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-danger" (click)="cancelAppointment()">Cancel Appointment</button>
