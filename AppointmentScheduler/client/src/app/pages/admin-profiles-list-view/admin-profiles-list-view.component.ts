@@ -1,6 +1,7 @@
 import { AuthService } from './../../services/auth.service';
 import { ProfessorService } from './../../services/professor.service';
 import { Component, OnInit } from '@angular/core';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-profiles-list-view',
@@ -22,5 +23,10 @@ export class AdminProfilesListViewComponent implements OnInit {
     this.professorService.getProfessors().subscribe((res: any) => {
       this.professors = res;
     });
+  }
+
+  onProfessorRegistered(event) {
+    swal({ title: event.message, type: 'success' });
+    this.getProfessors();
   }
 }

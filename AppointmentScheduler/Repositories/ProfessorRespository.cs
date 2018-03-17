@@ -19,8 +19,11 @@ namespace AppointmentScheduler.Repositories
         }
 
         public Object Insert(Professor entity) {
-            entity.Active = false;
-            entity.Admin = false;
+            Console.WriteLine("Name: " + entity.Name);
+            Console.WriteLine("Email: " + entity.Email);
+            Console.WriteLine("Password: " + entity.Password);
+            Console.WriteLine("Admin: " + entity.Admin);
+            Console.WriteLine("Active: " + entity.Active);
 
             if (entity.Password == "" || entity.Password == null) {
                 return new { success = false, message = "You must provide a password to create an account" };
@@ -37,7 +40,7 @@ namespace AppointmentScheduler.Repositories
             _context.Professors.Add(entity);
             _context.SaveChanges();
 
-            return new { success = true, message = "Account created! You will be notified when the account has been activated" };
+            return new { success = true, message = "Account created!" };
         }
 
         public Professor FindByEmail(string email) {

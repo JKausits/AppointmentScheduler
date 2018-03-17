@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div class="modal fade" id="registerUserModal" tabindex="-1" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register User</h5>
+        <button id="register-User-dismiss-button" type="button" (click)="resetValues()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" *ngIf="errors.registration">{{errors.registration}}</div>
+        <form>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input [(ngModel)]="name" name="name" type="text" id="name" class="form-control" [class.is-invalid]="errors.name" autocomplete="name">
+            <div class="invalid-feedback" *ngIf="errors.name">{{errors.name}}</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input [(ngModel)]="email" name="email" type="text" id="email" class="form-control" [class.is-invalid]="errors.email" autocomplete="email">
+            <div class="invalid-feedback" *ngIf="errors.email">{{errors.email}}</div>
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input [(ngModel)]="title" name="title" type="text" id="title" class="form-control" [class.is-invalid]="errors.title" autocomplete="name">
+            <div class="invalid-feedback" *ngIf="errors.title">{{errors.title}}</div>
+          </div>
+          <div class="form-group">
+            <label for="roomNumber">Room Number</label>
+            <input [(ngModel)]="roomNumber" name="roomNumber" type="text" id="roomNumber" class="form-control" [class.is-invalid]="errors.roomNumber"
+              autocomplete="name">
+            <div class="invalid-feedback" *ngIf="errors.roomNumber">{{errors.roomNumber}}</div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input [(ngModel)]="password" name="password" type="password" id="password" class="form-control" [class.is-invalid]="errors.password"
+              autocomplete="new-password">
+            <div class="invalid-feedback" *ngIf="errors.password">{{errors.password}}</div>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" id="confirmPassword" class="form-control" [class.is-invalid]="errors.confirmPassword"
+              autocomplete="new-password">
+            <div class="invalid-feedback" *ngIf="errors.confirmPassword">{{errors.confirmPassword}}</div>
+          </div>
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="isActive" type="checkbox" id="isActive" name="isActive">
+              <label class="form-check-label" for="isActive">Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" [(ngModel)]="isAdmin" type="checkbox" id="isAdmin" name="isAdmin">
+              <label class="form-check-label" for="isAdmin">Admin</label>
+            </div>
+          </div>
+          <button class="btn btn-primary" (click)="register()">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

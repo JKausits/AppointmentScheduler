@@ -61,6 +61,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPut("cancel/{id}"), AllowAnonymous]
         public IActionResult StudentCancelScheduledAppointment(int id, [FromQuery(Name = "cancelCode")] String cancelCode, [FromQuery(Name = "cancellationReason")] String cancellationReason) {
+            
             return new ObjectResult(_repository.StudentCancelScheduledAppointment(id, cancelCode, cancellationReason));
         }
 

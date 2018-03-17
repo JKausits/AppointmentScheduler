@@ -15,7 +15,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfessorHomeComponent } from './pages/professor-home/professor-home.component';
 import { ProfessorInfoComponent } from './components/professor-info/professor-info.component';
@@ -38,11 +37,11 @@ import { ProfessorUncancelModalComponent } from './components/professor-uncancel
 import { StudentPendingModalComponent } from './components/student-pending-modal/student-pending-modal.component';
 import { CancelledAppointmentsListViewItemComponent } from './components/cancelled-appointments-list-view-item/cancelled-appointments-list-view-item.component';
 import { CancelledAppointmentsListViewComponent } from './components/cancelled-appointments-list-view/cancelled-appointments-list-view.component';
+import { RegisterModalComponent } from './components/register-modal/register-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    RegisterComponent,
     LoginComponent,
     ProfessorHomeComponent,
     ProfessorInfoComponent,
@@ -64,7 +63,8 @@ import { CancelledAppointmentsListViewComponent } from './components/cancelled-a
     ProfessorUncancelModalComponent,
     StudentPendingModalComponent,
     CancelledAppointmentsListViewItemComponent,
-    CancelledAppointmentsListViewComponent
+    CancelledAppointmentsListViewComponent,
+    RegisterModalComponent
   ],
   imports: [
     BrowserModule,

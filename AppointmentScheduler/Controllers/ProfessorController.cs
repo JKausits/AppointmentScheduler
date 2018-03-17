@@ -2,6 +2,7 @@
 using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
+using AppointmentScheduler.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -26,13 +27,20 @@ namespace AppointmentScheduler.Controllers
             _respository = new ProfessorRespository(context, emailService);
         }
 
-        [HttpPost, AllowAnonymous]
+        [HttpPost, Authorize]
         public IActionResult Create([FromBody] Professor professor) {
             if (professor == null) {
                 return BadRequest();
             }
 
-            return new ObjectResult(_respository.Insert(professor));
+
+            if (AuthService.isAdmin(HttpContext))
+            {
+                return new ObjectResult(_respository.Insert(professor));
+            }
+            else {
+                return Unauthorized();
+            }
         }
 
         [HttpGet("{id}", Name = "GetProfessor"), AllowAnonymous]
@@ -52,7 +60,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpGet, Authorize]
         public IEnumerable<ProfessorPrivateDTO> GetProfessors() {
-            if (isAdmin(HttpContext))
+            if (AuthService.isAdmin(HttpContext))
             {
                 return _respository.GetProfessors();
             }
@@ -70,7 +78,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPut("private/{id}"), Authorize]
         public IActionResult UpdatePrivate(int id, [FromBody] ProfessorPrivateDTO professor) {
-            if (isAdmin(HttpContext))
+            if (AuthService.isAdmin(HttpContext))
             {
                 return new ObjectResult(_respository.UpdatePrivate(id, professor));
             }
@@ -80,16 +88,6 @@ namespace AppointmentScheduler.Controllers
         }
 
 
-        private JwtSecurityToken decodeJWT(HttpContext context) {
-            string raw = context.Request.Headers["Authorization"];
-            raw = raw.Split(" ")[1];
-            var handler = new JwtSecurityTokenHandler();
-            return handler.ReadJwtToken(raw) as JwtSecurityToken;
-        }
-
-        private bool isAdmin(HttpContext context) {
-            var token = decodeJWT(context);
-            return token.Claims.First(claim => claim.Type == "admin").Value == "True";
-        }
+        
     }
 }

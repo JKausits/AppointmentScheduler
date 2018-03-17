@@ -2,10 +2,12 @@
 
   <div class="card-body">
     <div class="card-title">
+      <button class="btn btn-success float-right" data-toggle="modal" data-target="#registerUserModal">Register User</button>
       <h4>Profiles</h4>
     </div>
     <div *ngFor="let professor of professors">
       <app-admin-profiles-list-view-item [professor]="professor"></app-admin-profiles-list-view-item>
     </div>
   </div>
+  <app-register-modal (registered)="onProfessorRegistered($event)"></app-register-modal>
 </div>

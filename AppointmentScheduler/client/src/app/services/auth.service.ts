@@ -7,10 +7,15 @@ export class AuthService {
   token: string;
   constructor(private httpClient: HttpClient) {}
 
-  register(email, password) {
+  register(email, password, name, admin, active, title, roomNumber) {
     return this.httpClient.post(`${this.baseUrl}/api/professor`, {
       email,
-      password
+      password,
+      name,
+      admin,
+      active,
+      title,
+      roomNumber
     });
   }
 
