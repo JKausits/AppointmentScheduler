@@ -71,10 +71,9 @@ export class CalendarComponent implements OnInit {
   }
 
   setProfessorID() {
-    if (this.auth.isLoggedIn()) {
+    this.professorID = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    if (!this.professorID && this.auth.isLoggedIn()) {
       this.professorID = this.auth.getTokenData().ID;
-    } else {
-      this.professorID = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
   }
 
