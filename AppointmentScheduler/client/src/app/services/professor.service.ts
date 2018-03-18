@@ -36,6 +36,16 @@ export class ProfessorService {
     );
   }
 
+  resetPassword(id, password) {
+    return this.httpClient.put(
+      `${this.baseUrl}/api/professor/password/${id}?password=${password}`,
+      '',
+      {
+        headers: this.auth.getAuthHeader()
+      }
+    );
+  }
+
   getActiveProfessors() {
     return this.httpClient.get(`${this.baseUrl}/api/professor/active`);
   }

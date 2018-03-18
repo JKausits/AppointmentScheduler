@@ -1,5 +1,5 @@
 import { ProfessorService } from './../../services/professor.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-admin-profiles-list-view-item',
@@ -8,6 +8,7 @@ import swal from 'sweetalert2';
 })
 export class AdminProfilesListViewItemComponent implements OnInit {
   @Input() professor;
+  @Output() resetPassword = new EventEmitter();
   isEdit = false;
   name: string;
   email: string;
@@ -18,6 +19,7 @@ export class AdminProfilesListViewItemComponent implements OnInit {
 
   ngOnInit() {
     this.setValues();
+    console.log(this.professor);
   }
 
   toggleActivate() {
@@ -125,5 +127,9 @@ export class AdminProfilesListViewItemComponent implements OnInit {
     if (this.roomNumber === '' || !this.roomNumber) {
       this.errors.roomNumber = 'You must provide a room number';
     }
+  }
+
+  resetPasswordClick() {
+    this.resetPassword.emit(this.professor.id);
   }
 }

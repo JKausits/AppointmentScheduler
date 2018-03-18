@@ -38,6 +38,7 @@ import { StudentPendingModalComponent } from './components/student-pending-modal
 import { CancelledAppointmentsListViewItemComponent } from './components/cancelled-appointments-list-view-item/cancelled-appointments-list-view-item.component';
 import { CancelledAppointmentsListViewComponent } from './components/cancelled-appointments-list-view/cancelled-appointments-list-view.component';
 import { RegisterModalComponent } from './components/register-modal/register-modal.component';
+import { PasswordResetModalComponent } from './components/password-reset-modal/password-reset-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +65,8 @@ import { RegisterModalComponent } from './components/register-modal/register-mod
     StudentPendingModalComponent,
     CancelledAppointmentsListViewItemComponent,
     CancelledAppointmentsListViewComponent,
-    RegisterModalComponent
+    RegisterModalComponent,
+    PasswordResetModalComponent
   ],
   imports: [
     BrowserModule,

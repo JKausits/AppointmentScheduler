@@ -1,3 +1,4 @@
+import swal from 'sweetalert2';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import Result from '../../result';
 import { ProfessorService } from '../../services/professor.service';
@@ -84,5 +85,9 @@ export class ProfessorInfoComponent implements OnInit {
       }
     }
     return count > 0;
+  }
+
+  onPasswordReset(event) {
+    swal({ title: event, type: 'success' });
   }
 }

@@ -6,8 +6,10 @@
       <h4>Profiles</h4>
     </div>
     <div *ngFor="let professor of professors">
-      <app-admin-profiles-list-view-item [professor]="professor"></app-admin-profiles-list-view-item>
+      <app-admin-profiles-list-view-item [professor]="professor" (resetPassword)="onResetPasswordClick($event)"></app-admin-profiles-list-view-item>
     </div>
   </div>
   <app-register-modal (registered)="onProfessorRegistered($event)"></app-register-modal>
+  <app-password-reset-modal [professorID]="resetID" (passwordReset)="onPasswordReset($event)"></app-password-reset-modal>
+
 </div>

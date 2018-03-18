@@ -26,7 +26,9 @@ namespace AppointmentScheduler.Controllers
         {
             _respository = new ProfessorRespository(context, emailService);
         }
-
+        /*
+         *===================GET===================
+         */
         [HttpPost, Authorize]
         public IActionResult Create([FromBody] Professor professor) {
             if (professor == null) {
@@ -64,15 +66,19 @@ namespace AppointmentScheduler.Controllers
             {
                 return _respository.GetProfessors();
             }
-            else { 
+            else {
                 return null;
             }
         }
 
+
+        /*
+         *===================PUT===================
+         */
         [HttpPut("{id}"), Authorize]
         public IActionResult UpdatePublic(int id, [FromBody] ProfessorPublicDTO professor) {
 
-   
+
             return new ObjectResult(_respository.UpdatePublic(id, professor));
         }
 
@@ -87,7 +93,12 @@ namespace AppointmentScheduler.Controllers
             }
         }
 
-
+        [HttpPut("password/{id}"), Authorize]
+        public IActionResult ResetPassword(int id, [FromQuery(Name = "password")] string password)
+        {
+            Console.WriteLine("\n\n\nPassword: " + password + "\n\n\n");
+            return new ObjectResult(_respository.ResetPassword(id, password));
+        }
         
     }
 }

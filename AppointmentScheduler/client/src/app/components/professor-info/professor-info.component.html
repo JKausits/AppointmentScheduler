@@ -29,6 +29,8 @@
       <p>
         <strong>Room Number: </strong> {{professorData.roomNumber}}
       </p>
+      <button class="btn btn-primary float-right" data-target="#passwordResetModal" data-toggle="modal">Reset Password</button>
+
 
     </div>
     <div *ngIf="isEdit && !isHidden">
@@ -70,4 +72,5 @@
       <button class="btn btn-danger" (click)="cancelEdit()">Cancel</button>
     </div>
   </div>
+  <app-password-reset-modal [professorID]="professorData.id" (passwordReset)="onPasswordReset($event)"></app-password-reset-modal>
 </div>

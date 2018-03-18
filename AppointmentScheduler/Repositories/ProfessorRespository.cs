@@ -19,12 +19,6 @@ namespace AppointmentScheduler.Repositories
         }
 
         public Object Insert(Professor entity) {
-            Console.WriteLine("Name: " + entity.Name);
-            Console.WriteLine("Email: " + entity.Email);
-            Console.WriteLine("Password: " + entity.Password);
-            Console.WriteLine("Admin: " + entity.Admin);
-            Console.WriteLine("Active: " + entity.Active);
-
             if (entity.Password == "" || entity.Password == null) {
                 return new { success = false, message = "You must provide a password to create an account" };
             }
@@ -116,6 +110,17 @@ namespace AppointmentScheduler.Repositories
             return new { success = true, message = "Information updated" };
         }
 
+        public Object ResetPassword(int id, string password) {
+            var professor = _context.Professors.FirstOrDefault(p => p.ID == id);
+            if (professor == null) {
+                return new { success = false, message = "Unable to find professor with that ID" };
+            }
+
+            professor.Password = password;
+            _context.Professors.Update(professor);
+            _context.SaveChanges();
+            return new { success = true, message = "Password Reset" };
+        }
         private async void sendActivatedEmail(Professor entity) {
             string message = String.Format("Your account has been activated");
             await _emailService.Send(entity.Email, "Account Activated", message);

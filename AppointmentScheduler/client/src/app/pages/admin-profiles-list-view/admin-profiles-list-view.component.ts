@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 })
 export class AdminProfilesListViewComponent implements OnInit {
   professors;
+  resetID;
   constructor(
     private professorService: ProfessorService,
     private auth: AuthService
@@ -28,5 +29,13 @@ export class AdminProfilesListViewComponent implements OnInit {
   onProfessorRegistered(event) {
     swal({ title: event.message, type: 'success' });
     this.getProfessors();
+  }
+
+  onPasswordReset(event) {
+    swal({ title: event, type: 'success' });
+  }
+
+  onResetPasswordClick(event) {
+    this.resetID = event;
   }
 }

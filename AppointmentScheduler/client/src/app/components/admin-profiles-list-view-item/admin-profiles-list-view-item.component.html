@@ -30,6 +30,7 @@
     </div>
     <div *ngIf="!isEdit">
       <button class="btn btn-warning float-right" (click)="toggleEdit()">Edit</button>
+      <button class="btn btn-primary float-right" data-target="#passwordResetModal" data-toggle="modal" (click)="resetPasswordClick()">Password Reset</button>
       <button class="btn float-right" [class.btn-success]="!professor.active" [class.btn-danger]="professor.active" (click)="toggleActivate()">{{professor.active ? 'Deactive' : 'Activate'}}</button>
       <button class="btn float-right" [class.btn-success]="!professor.admin" [class.btn-danger]="professor.admin" (click)="toggleAdmin()">{{professor.admin ? 'Revoke Admin' : 'Grant Admin'}}</button>
     </div>
