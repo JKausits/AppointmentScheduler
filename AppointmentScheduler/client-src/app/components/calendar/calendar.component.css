@@ -14,10 +14,7 @@ td {
 }
 
 .btn-primary {
-  background-color: lightblue;
-  color: blue;
-  margin-left: 1px;
-  margin-right: 1px;
+  margin-bottom: 5px;
 }
 
 .appointment {

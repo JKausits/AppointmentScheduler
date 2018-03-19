@@ -34,7 +34,9 @@ export class CalendarComponent implements OnInit {
     private route: ActivatedRoute,
     private auth: AuthService,
     private appointmentService: AppointmentService
-  ) {}
+  ) {
+    this.currentWeek = new Date();
+  }
 
   ngOnInit() {
     this.setCurrentWeek();
@@ -46,12 +48,13 @@ export class CalendarComponent implements OnInit {
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnChanges(changes: SimpleChanges) {
     if (changes.parentRefreshed) {
-      this.setCurrentWeek();
       this.resetTable();
     }
   }
 
   resetTable() {
+    this.setCurrentWeek();
+    this.setWeekDays();
     this.clearAppointments();
     this.buildAppointmentArray();
     this.setProfessorID();
@@ -95,7 +98,13 @@ export class CalendarComponent implements OnInit {
       const column = this.getTableColumn(appointment);
       const row = this.getTableRow(appointment);
       const cell = table.rows[row].cells[column];
+      // console.log(`Row: ${row} Column: ${column}`);
+      if (!column) {
+        console.log(appointment);
+      }
+
       const isLoggedIn = this.auth.isLoggedIn();
+
       cell.dataset.index = index;
       if (appointment.status === 1) {
         cell.classList.add('pending');
@@ -186,10 +195,9 @@ export class CalendarComponent implements OnInit {
   }
 
   setCurrentWeek() {
-    const d = new Date();
-    const day = d.getDay(),
-      diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-    this.currentWeek = new Date(d.setDate(diff));
+    const day = this.currentWeek.getDay(),
+      diff = this.currentWeek.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    this.currentWeek = new Date(this.currentWeek.setDate(diff));
     this.setWeekDays();
   }
 
@@ -204,14 +212,21 @@ export class CalendarComponent implements OnInit {
 
   getNextWeek() {
     this.currentWeek.setDate(this.currentWeek.getDate() + 7);
-    this.setWeekDays();
     this.resetTable();
   }
 
   getPreviousWeek() {
     this.currentWeek.setDate(this.currentWeek.getDate() - 7);
-    this.setWeekDays();
-    this.getAppointments();
+    this.resetTable();
+  }
+
+  getNextMonth() {
+    this.currentWeek.setMonth(this.currentWeek.getMonth() + 1);
+    this.resetTable();
+  }
+
+  getPreviousMonth() {
+    this.currentWeek.setMonth(this.currentWeek.getMonth() - 1);
     this.resetTable();
   }
 

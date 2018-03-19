@@ -1,9 +1,22 @@
 <div class="card">
   <div class="card-body">
 
-    <button class="btn btn-primary float-right" (click)="getNextWeek()">>></button>
-    <button class="btn btn-primary float-right" (click)="getPreviousWeek()"><<</button>
+    <div class="float-right text-center">
+      <div>
+        <strong>Week</strong>
+      </div>
+      <button class="btn btn-primary" (click)="getPreviousWeek()"><<</button>
+      <button class="btn btn-primary" (click)="getNextWeek()">>></button>
 
+    </div>
+    <div class="float-right text-center" style="margin-right: 30px">
+      <div>
+        <strong>Month</strong>
+      </div>
+      <button class="btn btn-primary" (click)="getPreviousMonth()"><<</button>
+      <button class="btn btn-primary" (click)="getNextMonth()">>></button>
+
+    </div>
     <div class="table-responsive">
       <table class="table" id="calendarTable" (click)="handleTableClick($event)">
         <thead>
