@@ -37,6 +37,10 @@ namespace AppointmentScheduler.Email
 
                 using (SmtpClient smtp = new SmtpClient(_emailSettings.SecondayDomain, _emailSettings.SecondaryPort))
                 {
+                    Console.WriteLine("Email Username: " + _emailSettings.UsernameEmail);
+                    Console.WriteLine("Email Password: " + _emailSettings.UsernamePassword);
+
+                    
                     smtp.Credentials = new NetworkCredential(_emailSettings.UsernameEmail, _emailSettings.UsernamePassword);
                     smtp.EnableSsl = true;
                     await smtp.SendMailAsync(mail);

@@ -19,7 +19,6 @@ export class AdminProfilesListViewItemComponent implements OnInit {
 
   ngOnInit() {
     this.setValues();
-    console.log(this.professor);
   }
 
   toggleActivate() {
