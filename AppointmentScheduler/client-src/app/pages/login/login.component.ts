@@ -1,4 +1,5 @@
 import { AuthService } from './../../services/auth.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Result from '../../result';
 import { Location } from '@angular/common';
@@ -14,7 +15,11 @@ export class LoginComponent implements OnInit {
   result: Result;
   keepLogged = false;
   errors = { password: '', email: '' };
-  constructor(private auth: AuthService, private location: Location) {}
+  constructor(
+    private auth: AuthService,
+    private location: Location,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -38,7 +43,7 @@ export class LoginComponent implements OnInit {
           } else if (this.result.success) {
             window.sessionStorage.setItem('token', this.result.message);
           }
-          location.replace('home');
+          this.router.navigateByUrl('/home');
         }
       });
     }
