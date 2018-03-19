@@ -1,4 +1,4 @@
-﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.DTO;
 using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -86,6 +86,8 @@ namespace AppointmentScheduler.Repositories
                         appointment.ProfessorID = entity.ProfessorID;
                         appointment.Status = Appointment.StatusType.Open;
                         appointment.DateTime = currentDate + currentTime;
+                        appointment.ModifiedAt = DateTime.Now;
+                        appointment.CreatedAt = DateTime.Now;
                         _context.Appointments.Add(appointment);
                         currentTime = currentTime.Add(appointmentLength);
                     }
@@ -133,6 +135,8 @@ namespace AppointmentScheduler.Repositories
                                     emailAppointmentCancelled(appointment);
                                 }
                             }
+                            appointment.ModifiedAt = DateTime.Now;
+
                             appointment.Status = status;
                             _context.Appointments.Update(appointment);
                         }
@@ -168,11 +172,15 @@ namespace AppointmentScheduler.Repositories
                         if (appointment != null)
                         {
 
-                            if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
-                            {
-                                emailAppointmentCancelled(appointment);
-                            }
-                            _context.Appointments.Remove(appointment);
+                        if (appointment.Status != Appointment.StatusType.Open || appointment.Status != Appointment.StatusType.Cancelled)
+                        {
+                          AppointmentCancellation appointmentCancellation = new AppointmentCancellation { FirstName = appointment.FirstName, LastName = appointment.LastName, DateTime = appointment.DateTime, Created = DateTime.Now, Status = appointment.Status, Reason="Professor Cancelled Office Hour", Email = appointment.Email, ProfessorID = appointment.ProfessorID};
+                          emailAppointmentCancelled(appointment);
+                        }
+                          
+                        _context.Appointments.Remove(appointment);
+                        
+            
                         }
 
                         currentTime = currentTime.Add(appointmentLength);
