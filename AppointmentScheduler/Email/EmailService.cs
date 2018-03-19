@@ -1,4 +1,4 @@
-﻿using AppointmentScheduler.Entities;
+using AppointmentScheduler.Entities;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -35,12 +35,10 @@ namespace AppointmentScheduler.Email
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
 
-                using (SmtpClient smtp = new SmtpClient(_emailSettings.SecondayDomain, _emailSettings.SecondaryPort))
+                using (SmtpClient smtp = new SmtpClient(_emailSettings.PrimaryDomain, _emailSettings.PrimaryPort))
                 {
-                    Console.WriteLine("Email Username: " + _emailSettings.UsernameEmail);
-                    Console.WriteLine("Email Password: " + _emailSettings.UsernamePassword);
-
-                    
+                    smtp.Port = 25;
+                    smtp.UseDefaultCredentials = false;
                     smtp.Credentials = new NetworkCredential(_emailSettings.UsernameEmail, _emailSettings.UsernamePassword);
                     smtp.EnableSsl = true;
                     await smtp.SendMailAsync(mail);
