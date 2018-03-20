@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Produces("application/json")]
     [Route("api/Authentication")]
-    [EnableCors("SiteCorsPolicy")]
+    //[EnableCors("SiteCorsPolicy")]
     public class AuthenticationController : Controller
     {
 

@@ -1,4 +1,4 @@
-﻿using AppointmentScheduler.DTO;
+using AppointmentScheduler.DTO;
 using AppointmentScheduler.Email;
 using AppointmentScheduler.Entities;
 using AppointmentScheduler.Repositories;
@@ -16,7 +16,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Produces("application/json")]
     [Route("api/Professor")]
-    [EnableCors("SiteCorsPolicy")]
+    //[EnableCors("SiteCorsPolicy")]
     public class ProfessorController : Controller
     {
         private readonly ProfessorRespository _respository;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Produces("application/json")]
     [Route("api/ScheduledHour")]
-    [EnableCors("SiteCorsPolicy")]
+    //[EnableCors("SiteCorsPolicy")]
     public class ScheduledHourController : Controller
     {
         private readonly ScheduledHourRepository _respository;
