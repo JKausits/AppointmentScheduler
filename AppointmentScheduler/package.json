@@ -11,6 +11,7 @@
     "e2e": "ng e2e"
   },
   "private": true,
+  "prod": "node --stack_size=4048 node_modules/.bin/ng build --prod",
   "dependencies": {
     "@angular/animations": "^5.2.0",
     "@angular/common": "^5.2.0",
