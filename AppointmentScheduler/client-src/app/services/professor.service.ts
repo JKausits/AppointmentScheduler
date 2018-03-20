@@ -1,10 +1,10 @@
 import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class ProfessorService {
-  baseUrl = 'http://localhost:49495';
+  baseUrl = environment.apiUrl;
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
   getProfessorInfo(id) {
     return this.httpClient.get(`${this.baseUrl}/api/professor/${id}`);

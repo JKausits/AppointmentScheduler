@@ -1,10 +1,10 @@
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class ScheduledHourService {
-  baseUrl = 'http://localhost:49495';
+  baseUrl = environment.apiUrl;
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   createScheduledHour(scheduledHour) {

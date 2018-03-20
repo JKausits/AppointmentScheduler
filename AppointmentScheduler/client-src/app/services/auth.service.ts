@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
+import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
-  baseUrl = 'http://localhost:49495';
+  baseUrl = environment.apiUrl;
   token: string;
   constructor(private httpClient: HttpClient) {}
 
