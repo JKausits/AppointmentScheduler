@@ -12,7 +12,7 @@ export class AppointmentListViewComponent implements OnInit {
   professorID;
   constructor(
     private appointmentService: AppointmentService,
-    private auth: AuthService
+    public auth: AuthService
   ) {}
 
   ngOnInit() {

@@ -15,7 +15,7 @@ export class CalendarViewComponent implements OnInit {
 
   constructor(
     private professorService: ProfessorService,
-    private auth: AuthService
+    public auth: AuthService
   ) {}
   ngOnInit() {}
 
