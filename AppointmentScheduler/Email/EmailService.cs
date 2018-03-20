@@ -34,10 +34,10 @@ namespace AppointmentScheduler.Email
                 mail.Body = message;
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
-
+                Console.WriteLine("Sending Mail");
                 using (SmtpClient smtp = new SmtpClient(_emailSettings.PrimaryDomain, _emailSettings.PrimaryPort))
                 {
-                    smtp.Port = 25;
+                    smtp.Port = 587;
                     smtp.UseDefaultCredentials = false;
                     smtp.Credentials = new NetworkCredential(_emailSettings.UsernameEmail, _emailSettings.UsernamePassword);
                     smtp.EnableSsl = true;
